@@ -1,4 +1,4 @@
-import React from 'react';
+
 import windowImage from '../assets/Signup/Signup.png'; // Replace with actual paths to your images
 import { FaGoogle, FaApple } from 'react-icons/fa';
 import Logo from '../assets/home/logo.png';
