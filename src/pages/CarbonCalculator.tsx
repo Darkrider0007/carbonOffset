@@ -54,39 +54,39 @@ const CarbonCalculator = () => {
     return parseFloat((co2 * tokenConversion).toFixed(2));
   };
 
-  const makePayment = async () => {
-    const stripe = await loadStripe('pk_test_51NI9oZSDxZ4Y853IEjEc8LwTXw7YKpRX8im6bpIlLkHO0FGXmjeJ4KE8FlIzfZosg1Bh1aoX5LUm2o3ekJvBr7vq00FL7YPT91');
+  // const makePayment = async () => {
+  //   const stripe = await loadStripe('pk_test_51NI9oZSDxZ4Y853IEjEc8LwTXw7YKpRX8im6bpIlLkHO0FGXmjeJ4KE8FlIzfZosg1Bh1aoX5LUm2o3ekJvBr7vq00FL7YPT91');
 
-    if (!stripe) {
-      console.error("Stripe failed to load.");
-      return;
-    }
+  //   if (!stripe) {
+  //     console.error("Stripe failed to load.");
+  //     return;
+  //   }
 
-    const costDetails = {
-      totalCost: totalCost,
-      totalCO2: totalCO2
-    };
+  //   const costDetails = {
+  //     totalCost: totalCost,
+  //     totalCO2: totalCO2
+  //   };
 
-    try {
-      const response = await axios.post('api/create-checkout-session', costDetails, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+  //   try {
+  //     const response = await axios.post('api/create-checkout-session', costDetails, {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
 
-      const session = response.data;
+  //     const session = response.data;
 
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id
-      });
+  //     const result = await stripe.redirectToCheckout({
+  //       sessionId: session.id
+  //     });
 
-      if (result.error) {
-        console.error(result.error.message);
-      }
-    } catch (error) {
-      console.error("Payment failed:", error);
-    }
-  };
+  //     if (result.error) {
+  //       console.error(result.error.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Payment failed:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const co2 = calculateTotalCO2();

@@ -12,8 +12,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import TopUpWithdrawChart from "../components/TopUpWithdrawChart";
 import CarbonOffsetChart from "../components/CarbonOffsetChart";
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
+// import { useContext } from "react";
+// import UserContext from "../context/UserContext";
 
 export default function UserUpdates() {
   const navigate = useNavigate();

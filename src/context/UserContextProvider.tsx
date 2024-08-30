@@ -13,7 +13,7 @@ interface User {
 }
 
 const UserContextProvider: React.FC<UserContextProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | any>(null);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
