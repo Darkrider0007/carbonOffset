@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://carbonoffset-backend.onrender.com";
+// const BASE_URL = "https://carbonoffset-backend.onrender.com";
 
 export async function addNewProject(
   project: any
