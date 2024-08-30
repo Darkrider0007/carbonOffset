@@ -68,7 +68,7 @@ const CarbonCalculator = () => {
     };
 
     try {
-      const response = await axios.post('https://carbonoffset-backend.onrender.com/create-checkout-session', costDetails, {
+      const response = await axios.post('api/create-checkout-session', costDetails, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -168,12 +168,12 @@ const CarbonCalculator = () => {
                   Emmision total tokens
                 </h1>
                 <div className="bg-white px-2 w-48 py-3 rounded-md border border-black ">
-                  <h1 className="font-semibold">Total {totalCost / 10}</h1>
+                  <h1 className="font-semibold">{totalCost / 10}</h1>
                 </div>
               </div>
               <div className="flex gap-5">
                 <Button
-                  onClick={makePayment}
+                  // onClick={makePayment}
                   className="bg-green-600 hover:bg-green-500 w-48 py-8 text-white font-bold rounded-md">
                   Buy Now
                 </Button>

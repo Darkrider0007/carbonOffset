@@ -21,6 +21,7 @@ import Success from "./pages/Success";
 import FailurePage from "./pages/Failour";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import UserContextProvider from "./context/UserContextProvider";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider>
   </React.StrictMode>
 );

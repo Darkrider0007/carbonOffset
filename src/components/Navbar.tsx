@@ -1,9 +1,51 @@
 import { Link } from "react-router-dom";
-import { FaTree } from "react-icons/fa6";
+import { FaTree, FaUser } from "react-icons/fa6";
 import { RiWallet3Fill } from "react-icons/ri";
+import { useContext, useEffect, useState } from "react";
+import UserContext from "../context/UserContext";
+import { getUser, refreshToken } from "../api/auth/getUser";
 
 const Navbar = () => {
   //   const navigation = useNavigate();
+  const [userData, setUserData] = useState<any>(null);
+
+  const context = useContext(UserContext);
+
+  // Ensure context is defined before accessing properties
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserContextProvider');
+  }
+
+  const { user, setUser } = context;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await getUser();
+      setUserData(res.data.data);
+      console.log(res.data.data);
+      if (res.status == 201) {
+        setUser({
+          id: res.data.data._id,
+          firstName: res.data.data.firstName,
+          lastName: res.data.data.lastName,
+          email: res.data.data.email
+        });
+      } else {
+        const res = await refreshToken();
+        console.log(res);
+        if (res.status == 201) {
+          setUser({
+            id: res.data.id,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            email: res.data.email
+          });
+        }
+      }
+
+    }
+    fetchUser();
+  }, []);
   return (
     <div className="w-full h-28   flex items-center px-10 justify-between ">
       <div className="flex gap-14 items-center">
@@ -43,12 +85,25 @@ const Navbar = () => {
         >
           <FaTree /> Offset Now
         </Link>
-        <Link
-          to="/userDashboard"
-          className="px-5 py-2 ml-16 border-black border-2 rounded-xl  flex gap-2 items-center font-bold"
-        >
-          <RiWallet3Fill size={20} fill="black" /> Wallet
-        </Link>
+        {
+          user ? (
+            <Link
+              to="/userDashboard"
+              className="px-5 py-2 ml-16 border-black border-2 rounded-xl  flex gap-2 items-center font-bold"
+              state={{ user: userData }}
+            >
+              <RiWallet3Fill size={20} fill="black" /> Wallet
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="px-5 py-2 ml-16 border-black border-2 rounded-xl  flex gap-2 items-center font-bold"
+            >
+              <FaUser size={20} fill="black" /> Login
+            </Link>
+          )
+        }
+
       </div>
     </div>
   );

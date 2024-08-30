@@ -5,6 +5,8 @@ import certificate from "../assets/offset/certificate.png";
 import Footer from "../components/Footer";
 import { FaArrowRight, FaLock } from "react-icons/fa6";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 const OffsetNow = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -23,16 +25,49 @@ const OffsetNow = () => {
   useEffect(() => {
     if (selectedFrequency === "One-Time") setTokens(amount / 10);
 
-    if (selectedFrequency === "Monthly") setTokens(amount / 10 * 12);
+    if (selectedFrequency === "Monthly") setTokens(amount / (10 * 12));
 
-    if (selectedFrequency === "Quarterly") setTokens(amount / 10 * 4);
+    if (selectedFrequency === "Quarterly") setTokens(amount / (10 * 4));
 
     if (selectedFrequency === "Yearly") setTokens(amount / 10);
 
   }, [amount, selectedFrequency]);
 
-  const handleAddToWallet = () => {
+  const handleAddToWallet = async () => {
     console.log(`Added ${amount} to wallet`);
+    const stripe = await loadStripe('pk_test_51NI9oZSDxZ4Y853IEjEc8LwTXw7YKpRX8im6bpIlLkHO0FGXmjeJ4KE8FlIzfZosg1Bh1aoX5LUm2o3ekJvBr7vq00FL7YPT91');
+
+    if (!stripe) {
+      console.error("Stripe failed to load.");
+      return;
+    }
+
+    const costDetails = {
+      totalCost: amount,
+      totalCredit: tokens
+    };
+
+    try {
+      const response = await axios.post('api/create-checkout-session/token-purchase', costDetails, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const session = response.data;
+
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id
+      });
+
+      console.log(result);
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Payment failed:", error);
+    }
   };
 
   return (
