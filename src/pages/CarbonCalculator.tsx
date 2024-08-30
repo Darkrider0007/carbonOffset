@@ -10,9 +10,9 @@ import Electricity from "../components/Calculator/Electricity";
 import FuelOil from "../components/Calculator/FuelOil";
 import Propane from "../components/Calculator/Propane";
 import Waste from "../components/Calculator/Waste";
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import { Button } from "../components/ui/button";
-import axios from "axios";
+// import axios from "axios";
 
 
 const factors = ["Vehicle", "Natural Gas", "Electricity", "Fuel Oil", "Propane", "Waste"];
