@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {projectData.map((project, index) => (
+                {projectData && projectData.map((project, index) => (
                   <TableRow key={index}>
                     <TableCell>{project.name}</TableCell>
                     <TableCell>{project.location}</TableCell>
