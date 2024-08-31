@@ -141,7 +141,7 @@ const CarbonCalculator = () => {
 
         <div className="w-[80%] bg-[#EBFFEA] rounded-xl">
           <div className="flex p-10 px-20 justify-between items-center border-b border-black">
-            {factors.map((item, idx) => (
+            {!isSubmitted && factors.map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => {
@@ -168,15 +168,15 @@ const CarbonCalculator = () => {
 
           </div>
           <div className="w-full flex px-20 p-16">
-            <div className="w-1/2">
+            {!isSubmitted && <div className="w-1/2">
               {index === 0 && <Vehicle addInput={setVehicleCO2} />}
               {index === 1 && <NaturalGas addInput={setNaturalGasCO2} />}
               {index === 2 && <Electricity addInput={setElectricityCO2} />}
               {index === 3 && <FuelOil addInput={setFuelOilCO2} />}
               {index === 4 && <Waste addInput={setWasteCO2} />}
-            </div>
+            </div>}
 
-            <div className="w-1/2 flex flex-col gap-3 pl-40">
+            <div className=" items-end flex flex-col gap-3 pl-40">
               {isSubmitted && (
                 <div>
                   <h1 className="text-2xl font-bold text-green-600">

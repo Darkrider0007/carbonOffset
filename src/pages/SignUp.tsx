@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import windowImage from '../assets/Signup/Signup.png';
-import { FaGoogle, FaApple } from 'react-icons/fa';
+// import { FaGoogle, FaApple } from 'react-icons/fa';
 import Logo from '../assets/login/logo.png';
 import InputField from '../components/InputField';
 import { signup } from '../api/auth/signUp';
@@ -54,14 +54,14 @@ const SignUp: React.FC = () => {
                     </div>
 
                     {/* Social login buttons */}
-                    <div className="flex gap-4 mb-8 items-center justify-center">
+                    {/* <div className="flex gap-4 mb-8 items-center justify-center">
                         <button className="flex items-center justify-center bg-gray-100 border border-gray-300 rounded-md px-6 py-3 text-gray-600">
                             <FaGoogle className="mr-2" /> Sign In with Google
                         </button>
                         <button className="flex items-center justify-center bg-gray-100 border border-gray-300 rounded-md px-6 py-3 text-gray-600">
                             <FaApple className="mr-2" /> Sign In with Apple
                         </button>
-                    </div>
+                    </div> */}
 
                     {/* Sign Up form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4 mb-6">

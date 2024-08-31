@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import windowImage from '../assets/login/Login.png'; // Replace with actual paths to your images
-import { FaGoogle, FaApple } from 'react-icons/fa';
+// import { FaGoogle, FaApple } from 'react-icons/fa';
 import Logo from '../assets/login/logo.png';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../components/InputField';
@@ -77,7 +77,7 @@ function Login() {
                         </div>
 
                         {/* Social login buttons */}
-                        <div className='mt-6 w-full flex flex-row gap-2'>
+                        {/* <div className='mt-6 w-full flex flex-row gap-2'>
                             <button className='flex items-center justify-center bg-black border border-gray-300 rounded-md px-10 py-2 text-white mb-3'>
                                 <FaGoogle className='mr-2' /> Sign in with Google
                             </button>
@@ -90,7 +90,7 @@ function Login() {
                             <div className='border-t w-1/3 border-gray-300'></div>
                             <span className='text-xs text-gray-500 mx-3'>or continue with e-mail</span>
                             <div className='border-t w-1/3 border-gray-300'></div>
-                        </div>
+                        </div> */}
 
                         {/* Login form */}
                         <div className='flex w-full'>
