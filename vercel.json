@@ -1,9 +1,10 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" },
+{"source": "/api/(.*)","destination": "https://carbonoffset-backend.onrender.com/api/$1"}],
   "headers": [
     {
       "source": "/api/(.*)",
-      "destination": "https://carbonoffset-backend-c733.onrender.com",
+      
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
