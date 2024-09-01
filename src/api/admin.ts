@@ -2,7 +2,9 @@ import axios from "axios";
 
 export async function getAdminData(): Promise<{ data: any; status: number }> {
   try {
-    const res = await axios.get(`/api/dashboard`);
+    const res = await axios.get(
+      `https://carbonoffset-backend.onrender.com/api/dashboard`
+    );
     console.log(res.data);
 
     return { data: res.data, status: res.status };
