@@ -13,7 +13,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://carbonoffset-backend.onrender.com", // Backend server
+        target: "https://carbonoffset-backend-c733.onrender.com", // Backend server Client provided
+        // target: "https://carbonoffset-backend.onrender.com", // Backend server
         // target: "http://localhost:5000", // Backend server
         changeOrigin: true,
         secure: false, // Use false for HTTP, true for HTTPS
