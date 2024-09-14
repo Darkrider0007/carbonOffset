@@ -1,25 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import * as path from "path"; // Use correct import for path
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://carbonoffset-backend-c733.onrender.com", // Backend server Client provided
-        // target: "https://carbonoffset-backend.onrender.com", // Backend server
-        // target: "http://localhost:5000", // Backend server
-        changeOrigin: true,
-        secure: false, // Use false for HTTP, true for HTTPS
-        // rewrite: (path) => path.replace(/^\/api/, ''), // Uncomment if you need to strip /api
-      },
+      "@": path.resolve(__dirname, "./src"), // Ensure correct path resolution
     },
   },
 });

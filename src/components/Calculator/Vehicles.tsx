@@ -38,7 +38,7 @@ function Vehicle({ addInput }: VehicleProps) {
             <h1 className="text-3xl mb-8">
                 Annual Household Vehicles Emissions
             </h1>
-            <h1 className="text-xs">Miles per Year per Vehicle (miles)</h1>
+            <h1 className="text-xs">Miles per month per Vehicle (miles)</h1>
             <input
                 className="my-4 p-2 rounded-md w-80 border border-black"
                 placeholder="0"

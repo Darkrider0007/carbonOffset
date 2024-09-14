@@ -1,12 +1,14 @@
 import axios from "axios";
 
-// const BASE_URL = "https://carbonoffset-backend.onrender.com";
+// const BASE_URL = "https://carbonoffset-backend.onrender.com/api";
+const BASE_URL = "http://localhost:5000/api"; // No trailing slash
+
 
 export async function addNewProject(
   project: any
 ): Promise<{ data: any; status: number }> {
   try {
-    const res = await axios.post(`/api/add-project`, project, {
+    const res = await axios.post(`${BASE_URL}/add-project`, project, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -22,8 +24,10 @@ export async function addNewProject(
 
 export async function getProjects(): Promise<any> {
   try {
-    const res = await axios.get(`/api/add-project`);
-    return res.data;
+    // const res = await axios.get(`${BASE_URL}/add-project`);
+    const res = await axios.get("http://localhost:5000/api/add-project");
+    console.log("res",res);
+    return res;
   } catch (error) {
     console.error(
       "Error fetching projects:",

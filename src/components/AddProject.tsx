@@ -38,8 +38,10 @@ function AddProject({ isOpen, toggleModal, onAddProject }: AddProjectProps) {
             // formData.append("userCount", data.userCount.toString());
             formData.append("details", data.details);
 
+            console.log(data.image[0]);
+
             if (data.image && data.image.length > 0) {
-                formData.append("file", data.image[0]);
+                formData.append("image", data.image[0]);
             }
 
             // Iterating over FormData to log key-value pairs

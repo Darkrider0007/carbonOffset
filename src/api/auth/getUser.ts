@@ -1,9 +1,16 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const BASE_URL = "https://carbonoffset-backend-c733.onrender.com";
+// const BASE_URL = "http://localhost:8080";
 
 export async function getUser(): Promise<any> {
   try {
-    const res = await axios.get("/api/user/get-user", {
-      withCredentials: true, // Ensures cookies are sent with the request
+    const token = Cookies.get("accessToken");
+    const res = await axios.get(`${BASE_URL}/api/user/get-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return { data: res.data, status: res.status };
@@ -15,7 +22,7 @@ export async function getUser(): Promise<any> {
 
 export async function refreshToken(): Promise<any> {
   try {
-    const res = await axios.get("/api/user/refresh-token", {
+    const res = await axios.get(`${BASE_URL}/api/user/refresh-token`, {
       withCredentials: true, // Ensures cookies are sent with the request
     });
 
