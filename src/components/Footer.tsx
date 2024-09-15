@@ -1,16 +1,13 @@
 import logo from "../assets/home/logo.png";
-import { FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagramSquare } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaFacebook, FaInstagramSquare } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="bg-green-600 py-10 px-20 flex flex-col items-center">
-      <div className="flex justify-between w-full">
-        <div className="w-80">
-          <img src={logo} />
-          <h1 className="text-white">
+    <div className="bg-green-600 py-10 px-5 md:px-20 flex flex-col items-center">
+      <div className="flex flex-col md:flex-row justify-between w-full mb-5">
+        <div className="w-full md:w-80 mb-5 md:mb-0">
+          <img src={logo} alt="logo" />
+          <h1 className="text-white mt-3">
             "1 World 1 Nation" envisions global unity, advocating peace,
             sustainability, and equity across borders, aiming for a harmonious,
             interconnected future.
@@ -25,9 +22,9 @@ const Footer = () => {
           <h1> About Us</h1>
         </div>
       </div>
-      <div className="h-[1px] w-[90%] bg-white my-5 " />
-      <div className="w-full flex justify-between">
-        <h1 className="text-white">Copyright Reserved @2024</h1>
+      <div className="h-[1px] w-[90%] bg-white my-5" />
+      <div className="w-full flex flex-col md:flex-row justify-between items-center">
+        <h1 className="text-white mb-3 md:mb-0">Copyright Reserved @2024</h1>
         <div className="flex gap-5">
           <FaTwitter color="white" size={20} />
           <FaLinkedin color="white" size={20} />

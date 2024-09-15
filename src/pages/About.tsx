@@ -54,25 +54,24 @@ const About = () => {
         }}
         className="flex items-center justify-center relative"
       >
-        <h1 className="text-5xl font-bold text-white">About Us</h1>
+        <h1 className="text-3xl md:text-5xl font-bold text-white">About Us</h1>
 
         <img src={curve} className="absolute bottom-0 w-full" />
       </div>
 
-      {/* main section  */}
-
-      <div className="flex">
-        <div className="w-1/2 p-10">
-          <img src={about} />
+      {/* Main Section */}
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2 p-5 md:p-10">
+          <img src={about} alt="About us" />
         </div>
-        <div className="w-1/2 py-10 pr-10 flex flex-col ">
+        <div className="w-full md:w-1/2 py-5 md:py-10 px-5 md:pr-10 flex flex-col">
           <div className="flex gap-2 items-center text-green-600 font-semibold">
             <FaLeaf />
             <h1>The Tapestry of Change</h1>
           </div>
 
-          <h1 className="text-4xl font-bold">Who We Are</h1>
-          <h1 className="text-lg mt-5">
+          <h1 className="text-2xl md:text-4xl font-bold">Who We Are</h1>
+          <h1 className="text-base md:text-lg mt-3 md:mt-5">
             The Society for Universal Oneness (SFUO), born in the verdant
             landscapes of North Carolina in October 2002, represents more than
             an organization—it is a testament to the power of collective action
@@ -84,8 +83,10 @@ const About = () => {
             that every contribution furthers our shared mission and brings tax
             benefits to our supporters.
           </h1>
-          <h1 className="my-5 text-xl font-bold">Vision in Focus</h1>
-          <h1 className="text-lg">
+          <h1 className="my-3 md:my-5 text-lg md:text-xl font-bold">
+            Vision in Focus
+          </h1>
+          <h1 className="text-base md:text-lg">
             SFUO is the crucible where science and spirituality meld, forging
             solutions and systems that not only remedy the past but pave a
             verdant path to the future. Our vision is a mosaic of saved lives,
@@ -96,19 +97,20 @@ const About = () => {
         </div>
       </div>
 
-      {/* columns  */}
-
-      <div className="flex flex-wrap px-10">
-        {aboutData.map((item: any) => (
-          <div className="w-1/3 p-10 flex flex-col gap-3">
-            <h1 className="text-xl font-bold">{item.title}</h1>
-            <h1 className="text-lg">{item.description}</h1>
+      {/* About Data Columns */}
+      <div className="flex flex-col md:flex-wrap md:flex-row px-5 md:px-10">
+        {aboutData.map((item, index) => (
+          <div
+            key={index}
+            className="w-full md:w-1/2 lg:w-1/3 p-5 md:p-10 flex flex-col gap-3"
+          >
+            <h1 className="text-lg md:text-xl font-bold">{item.title}</h1>
+            <h1 className="text-base md:text-lg">{item.description}</h1>
           </div>
         ))}
       </div>
 
-      {/* newsletter  */}
-
+      {/* Newsletter */}
       <div
         style={{
           backgroundImage: `url(${newsletterbg})`,
@@ -116,18 +118,18 @@ const About = () => {
           backgroundPosition: "center",
           height: "150px",
         }}
-        className="flex items-center justify-between px-16"
+        className="flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-5"
       >
-        <div className="flex gap-16 items-center  ">
+        <div className="flex gap-5 md:gap-16 items-center">
           <img src={logo} alt="logo" />
-          <h1 className="text-xl text-white">Join Our Newsletter</h1>
+          <h1 className="text-lg md:text-xl text-white">Join Our Newsletter</h1>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5 md:mt-0">
           <input
-            className="w-60 h-10 rounded-md p-2 bg-white "
+            className="w-full md:w-60 h-10 rounded-md p-2 bg-white"
             placeholder="Enter your email"
           />
-          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md ">
+          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md">
             Submit
           </button>
         </div>

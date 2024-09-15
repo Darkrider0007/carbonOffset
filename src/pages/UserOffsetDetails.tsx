@@ -57,11 +57,15 @@ export default function UserOffsetDetails() {
   const navigate = useNavigate();
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] ">
+      {/* Sidebar for larger screens */}
+      <div className=" border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
         <Sidebar />
       </div>
+
+      {/* Main Content */}
       <div className="flex flex-col">
+        {/* Header Section */}
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
           <Link className="lg:hidden" to="#">
             <Package2Icon className="h-6 w-6" />
@@ -88,10 +92,14 @@ export default function UserOffsetDetails() {
             Logout
           </Button>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+
+        {/* Main Section */}
+        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-hidden">
           <h1 className="font-bold">John's Cards</h1>
-          <div className="grid h-[45vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
-            <Card className="bg-green-600 h-[50%]">
+
+          {/* Cards and Chart Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
+            <Card className="bg-green-600 h-full">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-white">
                   Available Tokens
@@ -101,7 +109,8 @@ export default function UserOffsetDetails() {
                 <div className="text-2xl font-bold text-white">450 Tokens</div>
               </CardContent>
             </Card>
-            <Card className="bg-green-600 h-[50%]">
+
+            <Card className="bg-green-600 h-full">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-white">
                   Used Tokens
@@ -111,14 +120,19 @@ export default function UserOffsetDetails() {
                 <div className="text-2xl font-bold text-white">100 Tokens</div>
               </CardContent>
             </Card>
-            <div className="h-[300px] w-[200%] ">
-              <ExpenseChart />
+
+            {/* Responsive Chart Container */}
+            <div className="col-span-1 lg:col-span-2 w-full h-full">
+              <div className="h-full w-full overflow-x-auto">
+                <ExpenseChart />
+              </div>
             </div>
           </div>
 
-          <div className="border shadow-sm rounded-lg p-4 mt-6 ">
+          {/* Expense Table */}
+          <div className="border shadow-sm rounded-lg p-4 mt-6 overflow-x-auto">
             <h2 className="font-bold mb-4">Expense Details</h2>
-            <Table>
+            <Table className="min-w-full">
               <TableHeader>
                 <TableRow>
                   <TableHead>Offset Name</TableHead>
@@ -145,6 +159,7 @@ export default function UserOffsetDetails() {
       </div>
     </div>
   );
+
 }
 
 function Package2Icon(props: React.SVGProps<SVGSVGElement>) {

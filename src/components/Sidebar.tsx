@@ -1,42 +1,95 @@
 import { Link } from "react-router-dom";
 import { GiMoneyStack } from "react-icons/gi";
 import { FaTree } from "react-icons/fa";
+import { useState } from "react";
 
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="flex h-full max-h-screen flex-col gap-2">
-      <div className="flex h-[60px] items-center border-b px-6">
-        <Link className="flex items-center gap-2 font-semibold" to="/">
-          <Package2Icon className="h-6 w-6" />
-          <span className="">Carbon Offset</span>
+    <>
+      {/* Mobile Dropdown Toggle Button */}
+      <div className="md:hidden flex items-center justify-between px-4 py-2">
+        <Link className="text-xl font-semibold" to="/">
+          Carbon Offset
         </Link>
+        <button
+          onClick={toggleDropdown}
+          className="text-gray-600 bg-gray-200 p-2 rounded-lg"
+        >
+          {isOpen ? "Close Menu" : "Open Menu"}
+        </button>
       </div>
-      <div className="flex-1 overflow-auto w-60 min-h-[90vh]   py-2 ">
-        <nav className="grid items-start px-4 text-md font-medium">
-          <Link
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/userDashboard"
-          >
-            <PackageIcon className="h-5 w-5" />
-            Dashboard
+
+      {/* Dropdown Menu for Mobile */}
+      {isOpen && (
+        <div className="md:hidden bg-white dark:bg-gray-800 p-4 shadow-lg">
+          <nav className="grid items-start px-4 text-md font-medium">
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userDashboard"
+            >
+              <PackageIcon className="h-5 w-5" />
+              Dashboard
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userTransactions"
+            >
+              <GiMoneyStack className="h-5 w-5" />
+              Transactions
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userOffsetDetails"
+            >
+              <FaTree className="h-5 w-5" />
+              Offset Details
+            </Link>
+          </nav>
+        </div>
+      )}
+
+
+      {/* Desktop Sidebar - Unchanged */}
+      <div className="hidden md:block h-full max-h-screen flex-col gap-2">
+        <div className="flex h-[60px] items-center border-b px-6">
+          <Link className="flex items-center gap-2 font-semibold" to="/">
+            <Package2Icon className="h-6 w-6" />
+            <span className="">Carbon Offset</span>
           </Link>
-          <Link
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/userTransactions"
-          >
-            <GiMoneyStack className="h-5 w-5" />
-            Transactions
-          </Link>
-          <Link
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/userOffsetDetails"
-          >
-            <FaTree className="h-5 w-5" />
-            Offset Details
-          </Link>
-        </nav>
+        </div>
+        <div className="flex-1 overflow-auto w-60 min-h-[90vh] py-2">
+          <nav className="grid items-start px-4 text-md font-medium">
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userDashboard"
+            >
+              <PackageIcon className="h-5 w-5" />
+              Dashboard
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userTransactions"
+            >
+              <GiMoneyStack className="h-5 w-5" />
+              Transactions
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              to="/userOffsetDetails"
+            >
+              <FaTree className="h-5 w-5" />
+              Offset Details
+            </Link>
+          </nav>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -71,66 +71,74 @@ const Home = () => {
         }}
         className="flex flex-col gap-3 justify-center items-center relative"
       >
-        <h1 className="text-white font-bold text-lg mt-20">
+        {/* Centered Heading */}
+        <h1 className="text-white font-bold text-lg mt-20 text-center">
           SAFEGUARDING NATURE FOR FUTURE GENERATIONS
         </h1>
-        <h1 className="text-white text-6xl font-bold w-1/2 text-center">
+
+        {/* Larger Text Heading */}
+        <h1 className="text-white text-4xl md:text-6xl font-bold w-full md:w-1/2 text-center">
           Working Towards A Sustainable World
         </h1>
+
+        {/* Button */}
         <button
-          onClick={() => navigate('/offsetNow')}
-          className="px-5 py-2 mt-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold">
+          onClick={() => navigate("/offsetNow")}
+          className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+        >
           <FaTree /> Offset Now
         </button>
 
+        {/* Curve Image */}
         <img src={curve} alt="curve" className="absolute bottom-20 w-full" />
 
+        {/* White Background at Bottom */}
         <div className="bg-white w-full h-20 absolute bottom-0"></div>
       </div>
 
+
       {/* Onboarding */}
-      <div className="bg-white h-[50vh]  relative">
-        <div className="bg-white mx-16 flex border border-green-600 absolute -top-44 ">
-          <div className="p-5 w-1/2 px-14 border-r border-green-600 ">
+      <div className="bg-white h-[50vh] relative">
+        <div className="bg-white mx-4 md:mx-16 flex flex-col md:flex-row border border-green-600 absolute -top-44 ">
+          <div className="p-5 w-full md:w-1/2 px-5 md:px-14 border-r border-green-600 ">
             <h1 className="uppercase text-sm font-bold ">
               Sustainability Options For
             </h1>
-            <h1 className="text-6xl font-bold my-3">Individuals</h1>
-            <h1 className="text-lg w-[90%] mb-10">
+            <h1 className="text-4xl md:text-6xl font-bold my-3">Individuals</h1>
+            <h1 className="text-lg mb-10">
               You can be a leader in the fight against climate change. Offset
               your carbon footprint and support our industry-leading projects!
             </h1>
             <div className="relative">
-              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full absolute -top-5 left-5">
+              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
                 <h1>Learn More</h1>
                 <FaArrowRight />
               </button>
-              <img src={individual} alt="individual" />
+              <img src={individual} alt="individual" className="mt-5 md:mt-0" />
             </div>
           </div>
 
-          <div className="p-5 w-1/2 px-14 border-r border-green-600 ">
+          <div className="p-5 w-full md:w-1/2 px-5 md:px-14 ">
             <h1 className="uppercase text-sm font-bold ">
               Sustainability Options For
             </h1>
-            <h1 className="text-6xl font-bold my-3">Farm Onboarding</h1>
-            <h1 className="text-lg w-[90%] mb-10">
+            <h1 className="text-4xl md:text-6xl font-bold my-3">Farm Onboarding</h1>
+            <h1 className="text-lg mb-10">
               We can help Farm Onborder of all sizes measure and offset their
               carbon footprint!
             </h1>
             <div className="relative">
-              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full absolute -top-5 left-5">
+              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
                 <h1>Learn More</h1>
                 <FaArrowRight />
               </button>
-              <img src={farm} alt="individual" />
+              <img src={farm} alt="farm" className="mt-5 md:mt-0" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* call to action  */}
-
+      {/* call to action */}
       <div
         style={{
           backgroundImage: `url(${bg})`,
@@ -139,10 +147,10 @@ const Home = () => {
           height: "100vh",
           width: "100%",
         }}
-        className="flex items-center"
+        className="flex flex-col md:flex-row items-center"
       >
-        <div className="w-1/2 p-14 flex flex-col gap-6 text-white">
-          <h1 className="text-5xl">Purchase Carbon Credits</h1>
+        <div className="w-full md:w-1/2 p-5 md:p-14 flex flex-col gap-6 text-white">
+          <h1 className="text-3xl md:text-5xl">Purchase Carbon Credits</h1>
           <h1 className="text-lg">
             A whopping 50,000 pounds a year! That’s the average carbon footprint
             from our home, work, travel and everything else we do and buy. You
@@ -150,17 +158,15 @@ const Home = () => {
             carbon footprint and support our industry-leading carbon reduction
             projects.
           </h1>
-          <h1 className="text-lg w-[80%] mt-4">
+          <h1 className="text-lg mt-4">
             Need help? Use our calculators find out how much carbon to offset.
           </h1>
-          <button className="bg-green-600 px-3 py-2 rounded-full w-80">
+          <button className="bg-green-600 px-3 py-2 rounded-full">
             Individual Carbon Footprint Calculator
           </button>
         </div>
 
-        {/* buying area  */}
-
-        <div className="w-1/2 flex flex-col gap-5 items-center h-[70%] text-white">
+        <div className="w-full hidden md:w-1/2 md:flex flex-col gap-5 items-center p-5  text-white">
           <h1 className="uppercase text-xs font-bold">I want to offset by</h1>
           <div className="flex gap-2">
             <button className="bg-white text-green-600 font-bold px-7 py-2 rounded-md">
@@ -170,31 +176,31 @@ const Home = () => {
               Credit Amount
             </button>
           </div>
-          <div className="bg-white text-black w-[80%] gap-4 p-5 rounded-md flex flex-col items-center ">
+          <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 rounded-md flex flex-col items-center ">
             <h1 className="font-semibold">Enter Dollar Amount</h1>
             <input
               placeholder="100 $"
               className="w-full h-14 text-4xl font-bold text-center border-b-2 border-black focus:outline-none focus:border-b-2"
             />
             <h1 className="font-semibold">Select Frequency</h1>
-            <div className="flex flex-wrap gap-3 w-[50%]">
-              <div className="w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
+            <div className="flex flex-wrap gap-3">
+              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
                 One-Time
               </div>
-              <div className="w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
+              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
                 Monthly
               </div>
-              <div className="w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
+              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
                 Quaterly
               </div>
-              <div className="w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
+              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
                 Yearly
               </div>
             </div>
             <h1 className="text-xs tracking-[4px] uppercase font-bold">
               total <span className="text-green-600">10 tokens</span>
             </h1>
-            <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-[80%] rounded-full">
+            <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[80%] rounded-full">
               <h1 className="font-bold">Add to Wallet</h1>
               <FaLock />
             </button>
@@ -203,39 +209,43 @@ const Home = () => {
       </div>
 
       {/* how we work  */}
-      <div className="flex justify-between items-center p-10">
-        <div className="w-1/3">
-          <div className="flex gap-2">
+      <div className="flex flex-col md:flex-row justify-between items-center p-5 md:p-10">
+        <div className="w-full md:w-1/2 mb-5 md:mb-0">
+          <div className="flex gap-2 items-center">
             <FaLeaf color="green" />{" "}
             <h1 className="uppercase font-bold text-sm text-green-600">
               How We Work
             </h1>
           </div>
 
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-2xl md:text-3xl font-bold mt-3">
             We Work Together For Bettering Tomorrow
           </h1>
         </div>
-        <img src={howWeWork} alt="how" />
+        <div className="w-full md:w-1/2 mt-5 md:mt-0">
+          <img src={howWeWork} alt="how" className="w-full h-auto" />
+        </div>
       </div>
-      <div className="flex justify-between px-32 py-5 gap-14">
+
+
+      <div className="flex flex-col md:flex-row justify-between md:px-32 py-5 gap-5 md:gap-14">
         {FutureData.map((item, index) => (
           <div
             key={index}
-            className="p-5  flex flex-col gap-3 border border-green-600"
+            className="p-5 flex flex-col gap-3 border border-green-600 w-full md:w-1/3"
           >
-            <img src={item.image} />
+            <img src={item.image} alt={item.title} />
             <h1 className="text-lg">{item.title}</h1>
             <FaArrowRight color="green" />
           </div>
         ))}
       </div>
 
-      {/* our projects  */}
+      {/* our projects */}
       <div>
-        <h1 className="text-center text-4xl font-bold my-5">Our Projects</h1>
+        <h1 className="text-center text-3xl md:text-4xl font-bold my-5">Our Projects</h1>
 
-        <div className="flex p-10 px-32 gap-20 ">
+        <div className="flex flex-col md:flex-row p-5 md:p-10 md:px-32 gap-5 md:gap-20 ">
           {ProjectData.map((item, index) => (
             <div
               key={index}
@@ -245,7 +255,7 @@ const Home = () => {
                 backgroundPosition: "center",
                 height: "450px",
               }}
-              className="w-[35%] flex flex-col gap-6 text-white "
+              className="w-full md:w-[35%] flex flex-col gap-6 text-white "
             >
               <div className="w-full h-full bg-black/[0.6] p-6">
                 <h1 className="text-2xl font-bold">{item.title}</h1>
@@ -254,15 +264,14 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="flex  justify-center">
-          <button className="bg-green-600 py-2 px-8 rounded-md text-white  item-center text-md font-bold my-5">
+        <div className="flex justify-center">
+          <button className="bg-green-600 py-2 px-8 rounded-md text-white item-center text-md font-bold my-5">
             View More Projects
           </button>
         </div>
       </div>
 
-      {/* newsletter  */}
-
+      {/* newsletter */}
       <div
         style={{
           backgroundImage: `url(${newsletterbg})`,
@@ -270,18 +279,18 @@ const Home = () => {
           backgroundPosition: "center",
           height: "150px",
         }}
-        className="flex items-center justify-between px-16"
+        className="flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-5 md:py-0"
       >
-        <div className="flex gap-16 items-center  ">
+        <div className="flex gap-5 md:gap-16 items-center">
           <img src={logo} alt="logo" />
           <h1 className="text-xl text-white">Join Our Newsletter</h1>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5 md:mt-0">
           <input
-            className="w-60 h-10 rounded-md p-2 bg-white "
+            className="w-60 h-10 rounded-md p-2 bg-white"
             placeholder="Enter your email"
           />
-          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md ">
+          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md">
             Submit
           </button>
         </div>

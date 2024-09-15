@@ -21,27 +21,20 @@ const Contact = () => {
           }}
           className="flex items-center justify-center relative"
         >
-          <h1 className="text-5xl font-bold text-white">Contact Us</h1>
-
-          <img src={curve} className="absolute bottom-0 w-full" />
+          <h1 className="text-3xl md:text-5xl font-bold text-white text-center">Contact Us</h1>
+          <img src={curve} className="absolute bottom-0 w-full" alt="curve" />
         </div>
       </div>
 
-      {/* contact form  */}
-
-      <div className="flex items-center my-16 ">
-        <div className="w-1/2  flex flex-col items-start p-20 bg-white ">
-          <h1 className="text-3xl font-bold mb-2">Contact Us</h1>
-          <h2 className="text-lg mb-6">
-            Our friendly team would love to hear from you
-          </h2>
+      {/* contact form */}
+      <div className="flex flex-col md:flex-row items-center my-16 px-5 md:px-20">
+        <div className="w-full md:w-1/2 flex flex-col items-start p-5 md:p-20 bg-white">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Contact Us</h1>
+          <h2 className="text-lg mb-6">Our friendly team would love to hear from you</h2>
           <form className="w-full">
-            <div className="flex mb-4 space-x-4">
-              <div className="w-1/2">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="firstName"
-                >
+            <div className="flex flex-col md:flex-row md:space-x-4 mb-4">
+              <div className="w-full md:w-1/2 mb-4 md:mb-0">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
                   First Name
                 </label>
                 <input
@@ -51,11 +44,8 @@ const Contact = () => {
                   placeholder="First name"
                 />
               </div>
-              <div className="w-1/2">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="lastName"
-                >
+              <div className="w-full md:w-1/2">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
                   Last Name
                 </label>
                 <input
@@ -67,10 +57,7 @@ const Contact = () => {
               </div>
             </div>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="email"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
               <input
@@ -81,10 +68,7 @@ const Contact = () => {
               />
             </div>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="phone"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                 Phone Number
               </label>
               <input
@@ -94,12 +78,8 @@ const Contact = () => {
                 placeholder="Your phone number"
               />
             </div>
-
             <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="message"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
                 Message
               </label>
               <textarea
@@ -119,13 +99,12 @@ const Contact = () => {
             </div>
           </form>
         </div>
-        <div className="w-1/2 p-10">
-          <img src={contact} className="" />
+        <div className="w-full md:w-1/2 p-5 md:p-10">
+          <img src={contact} alt="Contact" className="hidden md:block w-full" />
         </div>
       </div>
 
-      {/* newsletter  */}
-
+      {/* newsletter */}
       <div
         style={{
           backgroundImage: `url(${newsletterbg})`,
@@ -133,18 +112,18 @@ const Contact = () => {
           backgroundPosition: "center",
           height: "150px",
         }}
-        className="flex items-center justify-between px-16"
+        className="flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-5"
       >
-        <div className="flex gap-16 items-center  ">
+        <div className="flex gap-5 md:gap-16 items-center">
           <img src={logo} alt="logo" />
-          <h1 className="text-xl text-white">Join Our Newsletter</h1>
+          <h1 className="text-lg md:text-xl text-white">Join Our Newsletter</h1>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5 md:mt-0">
           <input
-            className="w-60 h-10 rounded-md p-2 bg-white "
+            className="w-full md:w-60 h-10 rounded-md p-2 bg-white"
             placeholder="Enter your email"
           />
-          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md ">
+          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md">
             Submit
           </button>
         </div>

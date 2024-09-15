@@ -16,7 +16,6 @@ import { AlertDialogDemo } from "../components/AleartBox";
 import { useNavigate } from "react-router-dom";
 import { GrPowerReset } from "react-icons/gr";
 
-// Constants for emission factors and conversion values
 const factors = ["Vehicle", "Natural Gas", "Electricity", "Fuel Oil", "Waste"];
 
 const emissionFactorVehicle = 19.6;
@@ -36,7 +35,6 @@ interface CalculateTotalCO2Props {
   wasteCO2: number;
 }
 
-// Helper function to calculate total CO2 emissions
 const calculateTotalCO2 = ({
   vehicleCO2,
   naturalGasCO2,
@@ -53,7 +51,6 @@ const calculateTotalCO2 = ({
   return parseFloat(totalEmissions.toFixed(2));
 };
 
-// Helper function to calculate total cost based on CO2 emissions
 const calculateTotalCost = (co2: number): number => {
   return parseFloat((co2 * tokenConversion).toFixed(2));
 };
@@ -69,12 +66,11 @@ const CarbonCalculator = () => {
   const [index, setIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedin, setIsLoggedin] = useState(false);
-  // const [isReseted, setIsReseted] = useState(false);
 
   const context = useContext(UserContext);
 
   if (!context) {
-    throw new Error('UserProfile must be used within a UserContextProvider');
+    throw new Error("UserProfile must be used within a UserContextProvider");
   }
 
   const { user } = context;
@@ -86,7 +82,13 @@ const CarbonCalculator = () => {
   }, [user]);
 
   useEffect(() => {
-    const co2 = calculateTotalCO2({ vehicleCO2, naturalGasCO2, electricityCO2, fuelOilCO2, wasteCO2 });
+    const co2 = calculateTotalCO2({
+      vehicleCO2,
+      naturalGasCO2,
+      electricityCO2,
+      fuelOilCO2,
+      wasteCO2,
+    });
     setTotalCO2(co2);
     setTotalCost(calculateTotalCost(co2));
   }, [vehicleCO2, naturalGasCO2, electricityCO2, fuelOilCO2, wasteCO2]);
@@ -109,8 +111,7 @@ const CarbonCalculator = () => {
     setTotalCost(0);
     setIsSubmitted(false);
     setIndex(0);
-    // setIsReseted(true);
-  }
+  };
 
   return (
     <div>
@@ -125,107 +126,112 @@ const CarbonCalculator = () => {
         }}
         className="flex items-center justify-center relative"
       >
-        <h1 className="text-5xl font-bold text-white">
+        <h1 className="text-3xl md:text-5xl font-bold text-white text-center">
           Individual Emissions Calculator
         </h1>
         <img src={curve} className="absolute bottom-0 w-full" alt="curve" />
       </div>
 
       {/* Calculator section */}
-      <div className="p-10 flex flex-col gap-20 items-center">
-        <h1 className="text-2xl w-[80%] text-center">
+      <div className="p-5 md:p-10 flex flex-col gap-10 md:gap-20 items-center">
+        <h1 className="text-lg md:text-2xl w-full md:w-[80%] text-center">
           Please complete each step of the emissions calculator that is relevant
           to your lifestyle, using actual (or estimated) annual operational
           data.
         </h1>
 
-        <div className="w-[80%] bg-[#EBFFEA] rounded-xl">
-          <div className="flex p-10 px-20 justify-between items-center border-b border-black">
-            {!isSubmitted && factors.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setIndex(idx);
-                }}
-                className={`px-5 py-2 ${factors[index] === item
-                  ? "bg-[#16A34A] border-white text-white"
-                  : "bg-white border-black"
-                  } rounded-full border uppercase shadow-xl text-xs`}
-              >
-                {item}
-              </button>
-            ))}
+        <div className="w-full md:w-[80%] bg-[#EBFFEA] rounded-xl">
+          <div className="flex flex-wrap justify-center p-5 md:px-20 border-b border-black">
+            {!isSubmitted &&
+              factors.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setIndex(idx);
+                  }}
+                  className={`px-3 py-2 text-xs md:px-5 md:py-2 my-1 ${factors[index] === item
+                    ? "bg-[#16A34A] border-white text-white"
+                    : "bg-white border-black"
+                    } rounded-full border uppercase shadow-xl mx-1`}
+                >
+                  {item}
+                </button>
+              ))}
             <AlertDialogDemo
               triggerText={<GrPowerReset className="cursor-pointer" />}
               triggerTextStyle="bg-grey-600 hover:bg-grey-500 p-2 rounded-full text-black font-bold rounded-md"
-              headingText="Are you conform to reset the calculator?"
+              headingText="Are you sure you want to reset the calculator?"
               contentText="You will lose all the data you have entered"
               submitBtn="Yes"
-              submitBtnNavigation={
-                handleReset
-              }
+              submitBtnNavigation={handleReset}
             />
-
           </div>
-          <div className="w-full flex px-20 p-16">
-            {!isSubmitted && <div className="w-1/2">
-              {index === 0 && <Vehicle addInput={setVehicleCO2} />}
-              {index === 1 && <NaturalGas addInput={setNaturalGasCO2} />}
-              {index === 2 && <Electricity addInput={setElectricityCO2} />}
-              {index === 3 && <FuelOil addInput={setFuelOilCO2} />}
-              {index === 4 && <Waste addInput={setWasteCO2} />}
-            </div>}
 
-            <div className=" items-end flex flex-col gap-3 pl-40">
+          <div className="w-full flex flex-col md:flex-row p-5 md:p-16">
+            {!isSubmitted && (
+              <div className="w-full md:w-1/2">
+                {index === 0 && <Vehicle addInput={setVehicleCO2} />}
+                {index === 1 && <NaturalGas addInput={setNaturalGasCO2} />}
+                {index === 2 && <Electricity addInput={setElectricityCO2} />}
+                {index === 3 && <FuelOil addInput={setFuelOilCO2} />}
+                {index === 4 && <Waste addInput={setWasteCO2} />}
+              </div>
+            )}
+
+            <div className="w-full md:w-1/2 flex flex-col gap-3 md:pl-20 items-center md:items-end">
               {isSubmitted && (
                 <div>
-                  <h1 className="text-2xl font-bold text-green-600">
+                  <h1 className="text-xl md:text-2xl font-bold text-green-600">
                     Your Emissions
                   </h1>
                   <div className="flex flex-col gap-3">
-                    <h1 className="my-3">
-                      Tonnes CO2 : <span className="font-bold">{totalCO2}</span>{" "}
+                    <h1 className="my-3 text-center">
+                      Tonnes CO2:{" "}
+                      <span className="font-bold">{totalCO2}</span>{" "}
                     </h1>
-                    <h1 className="uppercase text-xs font-semibold tracking-widest">
+                    <h1 className="uppercase text-xs font-semibold tracking-widest text-center">
                       Emission total tokens
                     </h1>
-                    <div className="bg-white px-2 w-48 py-3 rounded-md border border-black ">
+                    <div className="bg-white px-2 w-48 py-3 rounded-md border border-black text-center">
                       <h1 className="font-semibold">{totalCost}</h1>
                     </div>
                   </div>
                 </div>
               )}
-              <div className="flex flex-col gap-5">
+
+              <div className="flex flex-col gap-5 w-full">
                 {!isSubmitted && index === 4 && (
-                  !isLoggedin ? <AlertDialogDemo
-                    triggerText="Login in to calculate"
-                    triggerTextStyle="bg-green-600 hover:bg-green-500 w-48 py-8 text-white font-bold rounded-md"
-                    headingText="Login in to calculate"
-                    contentText="You need to login to calculate your emissions"
-                    submitBtn="Yes"
-                    submitBtnNavigation={() => {
-                      navigate("/login");
-                    }}
-                  /> :
+                  !isLoggedin ? (
+                    <AlertDialogDemo
+                      triggerText="Login to calculate"
+                      triggerTextStyle="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
+                      headingText="Login to calculate"
+                      contentText="You need to login to calculate your emissions"
+                      submitBtn="Yes"
+                      submitBtnNavigation={() => {
+                        navigate("/login");
+                      }}
+                    />
+                  ) : (
                     <Button
                       onClick={handleCalculate}
-                      className="bg-green-600 hover:bg-green-500 w-48 py-8 text-white font-bold rounded-md"
+                      className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
                     >
                       Calculate
                     </Button>
+                  )
                 )}
 
                 {isSubmitted && (
-                  <Button
-                    // onClick={makePayment}
-                    className="bg-green-600 hover:bg-green-500 w-48 py-8 text-white font-bold rounded-md"
+                  <Button className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
+                    onClick={() => navigate("/offsetNow")}
                   >
-                    Buy Now
+                    Offset Now
                   </Button>
                 )}
 
                 {!isSubmitted && (
-                  <div className="flex flex-row gap-5">
+                  <div className="flex justify-between gap-5 w-full">
                     <Button
                       onClick={() => {
                         if (index > 0) {
@@ -233,7 +239,7 @@ const CarbonCalculator = () => {
                         }
                       }}
                       disabled={index === 0}
-                      className="bg-gray-500 hover:bg-gray-600 px-4 py-8 text-white font-bold rounded-md"
+                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 md:py-8 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center"
                     >
                       <FaLeftLong style={{ marginRight: "8px" }} /> Prev
                     </Button>
@@ -245,7 +251,7 @@ const CarbonCalculator = () => {
                         }
                       }}
                       disabled={index === 4}
-                      className="bg-gray-500 hover:bg-gray-600 px-4 py-8 text-white font-bold rounded-md"
+                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 md:py-8 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center"
                     >
                       Next <FaRightLong style={{ marginLeft: "8px" }} />
                     </Button>
@@ -256,22 +262,22 @@ const CarbonCalculator = () => {
           </div>
         </div>
       </div>
+
       {/* Calculation methods */}
       <div
         style={{
           backgroundImage: `url(${subbg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "80vh",
-          width: "100%",
+          height: "auto",
         }}
-        className="px-48 flex items-center relative"
+        className="px-5 md:px-48 py-10 flex items-center relative"
       >
-        <div className="bg-white w-[40%] flex flex-col gap-3 p-6">
+        <div className="bg-white w-full md:w-[40%] flex flex-col gap-3 p-6">
           <h1 className="font-semibold text-xs uppercase">
             Calculation Methods
           </h1>
-          <h1 className="text-3xl">
+          <h1 className="text-xl md:text-3xl">
             The data for this calculator comes from the EPA and U.S. Department
             of Energy. See our Calculation Methods page for more information.
           </h1>
