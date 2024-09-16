@@ -24,6 +24,7 @@ import SignUp from "./pages/SignUp";
 import VerifyEmail from "./pages/VerifyEmail";
 import UserContextProvider from "./context/UserContextProvider";
 import { Toaster } from "./components/ui/toaster";
+import ForgetPassword from "./pages/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -110,6 +111,11 @@ const router = createBrowserRouter([
     path: '/verify-email/:id',
     element: <VerifyEmail />,
   },
+  {
+    path: '/forget-password',
+    element: <ForgetPassword />
+  }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

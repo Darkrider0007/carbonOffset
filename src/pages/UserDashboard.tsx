@@ -11,22 +11,62 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import TopUpWithdrawChart from "../components/TopUpWithdrawChart";
 import CarbonOffsetChart from "../components/CarbonOffsetChart";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getUser } from "../api/auth/getUser";
+import { logout } from "../api/auth/loginAndLogout";
+import { toast } from "../hooks/use-toast";
+import UserContext from "../context/UserContext";
 
 export default function UserUpdates() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser1] = useState<any>(null);
 
   const location = useLocation();
 
+  const context = useContext(UserContext);
+
+  // Ensure context is defined before accessing properties
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserContextProvider');
+  }
+
+  const { setUser } = context;
+
+  const handelLogout = async () => {
+    try {
+      const res = await logout();
+      console.log(res);
+      if (res.status === 200) {
+        setUser({
+          id: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+        })
+        toast({
+          title: "Logged out successfully"
+        })
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000)
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast({
+        title: "Error",
+        description: "Error during logout",
+        variant: "destructive"
+      })
+    }
+  }
+
   useEffect(() => {
     if (location.state && location.state.user) {
-      setUser(location.state.user);
+      setUser1(location.state.user);
     } else {
       const getUserDetails = async () => {
         const res = await getUser();
-        setUser(res.data.data);
+        setUser1(res.data.data);
       };
       getUserDetails();
     }
@@ -57,7 +97,7 @@ export default function UserUpdates() {
           </div>
           <Button
             onClick={() => {
-              navigate("/");
+              handelLogout();
             }}
           >
             Logout

@@ -17,26 +17,25 @@ const InputPassword = forwardRef<HTMLInputElement, InputFieldProps>(
                 <label htmlFor={id} className="block mb-1 text-sm font-medium">
                     {label}
                 </label>
-                <div className={`border bg-white border-gray-300 rounded-md w-full  flex flex-row items-center focus:outline-none ${error ? 'border-red-500' : ''
-                    } ${inputStyle}`}>
-
+                <div className={`border bg-white border-gray-300 rounded-md w-full flex flex-row items-center focus:outline-none ${error ? 'border-red-500' : ''} ${inputStyle}`}>
                     <input
                         id={id}
                         type={clicked ? 'text' : 'password'}
                         placeholder={placeholder}
                         ref={ref}
-                        className='p-3 w-full'
+                        className='py-3 w-full focus:ring-0 focus:outline-none' // Set pl-0 to remove left padding
                         {...rest}
                     />
-                    {
-                        clicked ? <div className='px-2'>
+                    <div className='px-2'>
+                        {clicked ? (
                             <Eye className="text-gray-500" onClick={() => setClicked(!clicked)} />
-                        </div> :
-                            <div className='px-2'>
-                                <EyeOff className="text-gray-500" onClick={() => setClicked(!clicked)} />
-                            </div>
-                    }
+                        ) : (
+                            <EyeOff className="text-gray-500" onClick={() => setClicked(!clicked)} />
+                        )}
+                    </div>
                 </div>
+
+
                 {error && <p className="text-red-500 text-sm">{error}</p>}
             </div>
         );

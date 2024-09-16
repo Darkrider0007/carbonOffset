@@ -7,6 +7,9 @@ const BASE_URL = "https://carbonoffset-backend-c733.onrender.com";
 export async function getUser(): Promise<any> {
   try {
     const token = Cookies.get("accessToken");
+    if (!token) {
+      return { message: "No token found" };
+    }
     const res = await axios.get(`${BASE_URL}/api/user/get-user`, {
       headers: {
         Authorization: `Bearer ${token}`,

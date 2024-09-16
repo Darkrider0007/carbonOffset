@@ -41,3 +41,27 @@ export async function login(loginData: {
     }
   }
 }
+
+export async function logout(): Promise<any> {
+  try {
+    const token = Cookies.get("accessToken");
+
+    const resposnse = await axios.post(
+      `${BASE_URL}/api/user/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    Cookies.remove("accessToken");
+    return {
+      data: resposnse.data,
+      status: resposnse.status,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}

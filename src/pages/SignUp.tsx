@@ -47,6 +47,7 @@ const SignUp: React.FC = () => {
                 toast({
                     title: 'Error creating account',
                     description: response.message,
+                    variant: "destructive",
                     duration: 5000,
                 })
             }
@@ -123,6 +124,7 @@ const SignUp: React.FC = () => {
                             id="password"
                             label="Password"
                             placeholder="Password"
+                            inputStyle="pl-3"
                             error={errors.password?.message}
                             {...register('password', {
                                 required: 'Password is required',
@@ -136,6 +138,7 @@ const SignUp: React.FC = () => {
                         <InputPassword
                             id="repeatPassword"
                             label="Repeat Password"
+                            inputStyle="pl-3"
                             placeholder="Repeat password"
                             error={errors.repeatPassword?.message}
                             {...register('repeatPassword', {
