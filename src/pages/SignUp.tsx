@@ -7,6 +7,8 @@ import InputField from '../components/InputField';
 import { signup } from '../api/auth/signUp';
 import { RiLoader2Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import InputPassword from '../components/InputPassword';
+import { toast } from '../hooks/use-toast';
 
 interface SignUpFormInputs {
     firstName: string;
@@ -32,11 +34,29 @@ const SignUp: React.FC = () => {
                 password: data.password
             }
             const response = await signup(dataForSend);
+            console.log(response);
 
             if (response.status === 201) {
-                navigate('/login');
+                toast({
+                    title: 'Account created successfully',
+                    description: 'Please check your email to verify your account',
+                    duration: 5000,
+                })
+                navigate(`/verify-email/${response.data._id}`);
+            } else if (response.status === 400) {
+                toast({
+                    title: 'Error creating account',
+                    description: response.message,
+                    duration: 5000,
+                })
             }
-        } catch (error) {
+        } catch (error: any) {
+            console.log(error);
+            toast({
+                title: 'Error creating account',
+                description: error.message,
+                duration: 5000,
+            })
 
         } finally {
             setSubmit(false);
@@ -47,7 +67,7 @@ const SignUp: React.FC = () => {
         <div className="min-h-screen w-full bg-[#F1F5F9] flex items-center justify-center">
             <div className="flex w-full">
                 {/* Left side - Logo and Form */}
-                <div className="w-1/2 p-8">
+                <div className="w-full md:w-1/2 p-8">
                     <img src={Logo} alt="Logo" className="object-cover h-40 w-40 mb-8" />
                     <div className="flex w-full items-center justify-center">
                         <h1 className="text-4xl font-bold mb-6">Join Us Today</h1>
@@ -99,10 +119,9 @@ const SignUp: React.FC = () => {
                             })}
                         // ref={emailRef}
                         />
-                        <InputField
+                        <InputPassword
                             id="password"
                             label="Password"
-                            type="password"
                             placeholder="Password"
                             error={errors.password?.message}
                             {...register('password', {
@@ -114,10 +133,9 @@ const SignUp: React.FC = () => {
                             })}
                         // ref={passwordRef}
                         />
-                        <InputField
+                        <InputPassword
                             id="repeatPassword"
                             label="Repeat Password"
-                            type="password"
                             placeholder="Repeat password"
                             error={errors.repeatPassword?.message}
                             {...register('repeatPassword', {
@@ -158,13 +176,26 @@ const SignUp: React.FC = () => {
                                 }
                             </button>
                         </div>
+                        <div className='col-span-2 flex flex-row items-center justify-center'>
+                            <p className='text-sm text-gray-500'>
+                                Already have an account?{" "}
+                                <span onClick={() => navigate("/login")} className='text-green-600 cursor-pointer'>
+                                    Login
+                                </span>
+                            </p>
+                        </div>
                     </form>
                 </div>
 
                 {/* Right side - Images */}
-                <div className="w-1/2 flex justify-end items-center">
-                    <img src={windowImage} alt="Nature" className="object-cover h-[640px] w-[680px]" />
+                <div className="hidden md:block w-1/2 relative">
+                    <img
+                        src={windowImage}
+                        alt="Nature"
+                        className="absolute right-0 bottom-[10%] object-cover h-[640px] w-[680px]"
+                    />
                 </div>
+
             </div>
         </div>
     );

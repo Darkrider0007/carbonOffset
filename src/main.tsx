@@ -21,7 +21,9 @@ import Success from "./pages/Success";
 import FailurePage from "./pages/Failour";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import VerifyEmail from "./pages/VerifyEmail";
 import UserContextProvider from "./context/UserContextProvider";
+import { Toaster } from "./components/ui/toaster";
 
 const router = createBrowserRouter([
   {
@@ -104,12 +106,17 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUp />,
   },
+  {
+    path: '/verify-email/:id',
+    element: <VerifyEmail />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <UserContextProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </UserContextProvider>
   </React.StrictMode>
 );
