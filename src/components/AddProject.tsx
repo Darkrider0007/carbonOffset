@@ -7,6 +7,7 @@ import { addNewProject } from "../api/addProject";
 import { useState } from "react";
 import { RiLoader2Line } from "react-icons/ri";
 import { ScrollArea } from "./ui/scroll-area";
+import { countries } from "../constants/countries";
 
 interface AddProjectProps {
     isOpen: boolean;
@@ -23,7 +24,7 @@ interface FormData {
     image: FileList;
 }
 
-const countries = ["USA", "Canada", "India", "Australia", "Germany"];
+// const countries = ["USA", "Canada", "India", "Australia", "Germany"];
 
 function AddProject({ isOpen, toggleModal, onAddProject }: AddProjectProps) {
     const [onSubmitButtonClick, setOnSubmitButtonClick] = useState(false);
