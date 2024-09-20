@@ -65,3 +65,33 @@ export async function logout(): Promise<any> {
     console.log(error);
   }
 }
+
+export async function adminLogin(loginData: {
+  email: string;
+  password: string;
+}): Promise<any> {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/admin/admin-login`, {
+      email: loginData.email,
+      password: loginData.password,
+    });
+
+    return { data: response.data, status: response.status };
+  } catch (error: any) {
+    console.error("Error during login:", error);
+
+    if (error.response) {
+      throw {
+        message: error.response.data.message || "Error during login",
+        status: error.response.status,
+      };
+    } else if (error.request) {
+      throw {
+        message: "Network error: No response received from server",
+        status: 500,
+      };
+    } else {
+      throw { message: error.message || "Unknown error occurred", status: 500 };
+    }
+  }
+}

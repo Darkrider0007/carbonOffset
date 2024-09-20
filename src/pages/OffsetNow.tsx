@@ -5,14 +5,15 @@ import certificate from "../assets/offset/certificate.png";
 import Footer from "../components/Footer";
 import { FaArrowRight, FaLock } from "react-icons/fa6";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
+import { AddToWallet } from "../api/stripe/checkout";
+import { Loader2 } from "lucide-react";
 
 const OffsetNow = () => {
   const [amount, setAmount] = useState<number>(0);
   const [tokens, setTokens] = useState<number>(0);
   const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -24,6 +25,17 @@ const OffsetNow = () => {
     setSelectedFrequency(frequency);
   };
 
+
+  const handleAddToWallet = async () => {
+    setSubmitting(true);
+    try {
+      const res = await AddToWallet({ amount, tokens });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     if (selectedFrequency === "One-Time") setTokens(amount / 10);
     if (selectedFrequency === "Monthly") setTokens(amount / (10 * 12));
@@ -31,42 +43,7 @@ const OffsetNow = () => {
     if (selectedFrequency === "Yearly") setTokens(amount / 10);
   }, [amount, selectedFrequency]);
 
-  const handleAddToWallet = async () => {
-    console.log(`Added ${amount} to wallet`);
-    const stripe = await loadStripe('pk_test_51NI9oZSDxZ4Y853IEjEc8LwTXw7YKpRX8im6bpIlLkHO0FGXmjeJ4KE8FlIzfZosg1Bh1aoX5LUm2o3ekJvBr7vq00FL7YPT91');
 
-    if (!stripe) {
-      console.error("Stripe failed to load.");
-      return;
-    }
-
-    const costDetails = {
-      totalCost: amount,
-      totalCredit: tokens
-    };
-
-    try {
-      const response = await axios.post('api/create-checkout-session/token-purchase', costDetails, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const session = response.data;
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id
-      });
-
-      console.log(result);
-
-      if (result.error) {
-        console.error(result.error.message);
-      }
-    } catch (error) {
-      console.error("Payment failed:", error);
-    }
-  };
 
   return (
     <div>
@@ -125,8 +102,15 @@ const OffsetNow = () => {
                 onClick={handleAddToWallet}
                 className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[80%] rounded-full"
               >
-                <h1 className="font-bold">Add to Wallet</h1>
-                <FaLock />
+                {!submitting ? <>
+                  <h1 className="font-bold">Add to Wallet</h1>
+                  <FaLock />
+                </> :
+                  <>
+                    <h1 className="font-bold">Adding to Wallet</h1>
+                    <Loader2 />
+                  </>
+                }
               </button>
             </div>
           </div>

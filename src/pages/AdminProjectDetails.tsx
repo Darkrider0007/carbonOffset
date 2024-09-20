@@ -1,4 +1,3 @@
-import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {
   CardTitle,
@@ -7,13 +6,25 @@ import {
   Card,
 } from "../components/ui/card";
 
-import { Link, useNavigate } from "react-router-dom";
-
 import { FaArrowUp } from "react-icons/fa6";
 import AdminSidebar from "../components/AdminSidebar";
+import { useEffect, useState } from "react";
+import { getAdminData } from "../api/admin";
+import { Link } from "react-router-dom";
 
 export default function AdminProjectDetails() {
-  const navigate = useNavigate();
+  const [dashBoardData, setDashBoardData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchAdminData = async () => {
+      const res = await getAdminData();
+      setDashBoardData(res.data);
+      console.log("res", res.data);
+    }
+
+    fetchAdminData();
+  }, []);
+
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -37,16 +48,7 @@ export default function AdminProjectDetails() {
                 />
               </div>
             </form>
-          </div>
-          <Button
-            onClick={() => {
-              // dispatch(logout());
-              navigate("/");
-            }}
-          >
-            Logout
-          </Button>
-        </header>
+          </div>                 </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card className="shadow-xl ">
@@ -56,13 +58,13 @@ export default function AdminProjectDetails() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">2,420</div>
+                <div className="text-2xl font-bold text-black">{dashBoardData?.totalUsers}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">40</span> % vs last month
+                    <span className="text-green-600">{Math.abs(dashBoardData?.percentageUserIncrease)}</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
@@ -74,13 +76,14 @@ export default function AdminProjectDetails() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">50</div>
+                <div className="text-2xl font-bold text-black"> {dashBoardData?.totalProjects}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">10</span> % vs last month
+                    <span className="text-green-600">{Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))
+                    }</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
@@ -92,13 +95,14 @@ export default function AdminProjectDetails() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">100</div>
+                <div className="text-2xl font-bold text-black"> {dashBoardData?.totalProjects}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">5</span> % vs last month
+                    <span className="text-green-600">{Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))
+                    }</span> % vs last month
                   </h1>
                 </div>
               </CardContent>

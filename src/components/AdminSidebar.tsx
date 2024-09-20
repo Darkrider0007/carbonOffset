@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { GiMoneyStack } from "react-icons/gi";
 import { FaTree } from "react-icons/fa";
+import { Coins } from "lucide-react";
 
 const AdminSidebar = () => {
   return (
@@ -15,24 +16,31 @@ const AdminSidebar = () => {
         <nav className="grid items-start px-4 text-md font-medium">
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/adminDashboard"
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`}
           >
             <PackageIcon className="h-5 w-5" />
             Dashboard
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/allTransactions"
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminProjectDetails`}
           >
             <GiMoneyStack className="h-5 w-5" />
             Transactions
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            to="/farmOnboarding"
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/farmOnboarding`}
           >
             <FaTree className="h-5 w-5" />
             Farm Onboarding
+          </Link>
+          <Link
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/token`}
+          >
+            <Coins className="h-5 w-5" />
+            Tokens
           </Link>
         </nav>
       </div>

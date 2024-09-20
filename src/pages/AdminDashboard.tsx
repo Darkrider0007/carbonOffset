@@ -6,7 +6,7 @@ import {
   CardContent,
   Card,
 } from "../components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import {
   TableHead,
@@ -22,39 +22,6 @@ import { useEffect, useState } from "react";
 import { deleteProject } from "../api/addProject";
 import { getAdminData } from "../api/admin";
 
-// const dummyprojectData = [
-//   {
-//     name: "Project Alpha",
-//     location: "USA",
-//     status: "Active",
-//     userCount: 150,
-//   },
-//   {
-//     name: "Project Beta",
-//     location: "Canada",
-//     status: "Inactive",
-//     userCount: 80,
-//   },
-//   {
-//     name: "Project Gamma",
-//     location: "Germany",
-//     status: "Active",
-//     userCount: 120,
-//   },
-//   {
-//     name: "Project Delta",
-//     location: "India",
-//     status: "Inactive",
-//     userCount: 90,
-//   },
-//   {
-//     name: "Project Epsilon",
-//     location: "Australia",
-//     status: "Active",
-//     userCount: 200,
-//   },
-// ];
-
 interface ProjectData {
   name: string;
   location: string;
@@ -66,8 +33,6 @@ interface ProjectData {
 export default function AdminDashboard() {
   const [projectData, setProjectData] = useState<ProjectData[]>([]);
   const [dashBoardData, setDashBoardData] = useState<any>([]);
-
-  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -100,7 +65,6 @@ export default function AdminDashboard() {
     }
 
     fetchAdminData();
-    // fetchProjects();
   }, []);
 
   return (
@@ -126,14 +90,6 @@ export default function AdminDashboard() {
               </div>
             </form>
           </div>
-          <Button
-            onClick={() => {
-              // dispatch(logout());
-              navigate("/");
-            }}
-          >
-            Logout
-          </Button>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

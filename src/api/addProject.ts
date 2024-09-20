@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://carbonoffset-backend-c733.onrender.com";
-// const BASE_URL = "http://localhost:5000/api"; // No trailing slash
+const BASE_URL = "https://carbonoffset-backend-c733.onrender.com/api";
+// const BASE_URL = "http://localhost:8080/api"; // No trailing slash
 
 export async function addNewProject(
   project: any
@@ -23,10 +23,9 @@ export async function addNewProject(
 
 export async function getProjects(): Promise<any> {
   try {
-    // const res = await axios.get(`${BASE_URL}/add-project`);
-    const res = await axios.get(`${BASE_URL}/api/add-project`);
-    console.log("res", res);
-    return res;
+    const res = await axios.get(`${BASE_URL}/add-project`);
+    // console.log("res", res);
+    return res.data;
   } catch (error) {
     console.error(
       "Error fetching projects:",
@@ -40,7 +39,7 @@ export async function getProjects(): Promise<any> {
 
 export async function deleteProject({ id }: any): Promise<any> {
   try {
-    const res = await axios.delete(`/api/add-project/${id}`);
+    const res = await axios.delete(`${BASE_URL}/add-project/${id}`);
     console.log(res);
     return res.data;
   } catch (error) {

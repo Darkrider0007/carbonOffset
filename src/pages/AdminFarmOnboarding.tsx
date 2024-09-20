@@ -1,4 +1,3 @@
-import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {
   CardTitle,
@@ -7,54 +6,27 @@ import {
   Card,
 } from "../components/ui/card";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FaArrowUp } from "react-icons/fa6";
 import AdminSidebar from "../components/AdminSidebar";
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableCell,
-  TableBody,
-} from "../components/ui/table";
 
-const farmData = [
-  {
-    farmName: "Green Acres",
-    location: "California, USA",
-    area: "100 acres",
-    status: "Onboarded",
-  },
-  {
-    farmName: "Sunny Fields",
-    location: "Texas, USA",
-    area: "150 acres",
-    status: "Pending",
-  },
-  {
-    farmName: "Happy Harvest",
-    location: "Florida, USA",
-    area: "200 acres",
-    status: "Onboarded",
-  },
-  {
-    farmName: "Blue Sky Farm",
-    location: "Oregon, USA",
-    area: "120 acres",
-    status: "Pending",
-  },
-  {
-    farmName: "Golden Pastures",
-    location: "Kansas, USA",
-    area: "300 acres",
-    status: "Onboarded",
-  },
-];
+import { useEffect, useState } from "react";
+import { getAdminData } from "../api/admin";
+
 
 export default function AdminFarmOnboarding() {
-  const navigate = useNavigate();
+  const [dashBoardData, setDashBoardData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchAdminData = async () => {
+      const res = await getAdminData();
+      setDashBoardData(res.data);
+      console.log("res", res.data);
+    }
+
+    fetchAdminData();
+  }, []);
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -79,14 +51,6 @@ export default function AdminFarmOnboarding() {
               </div>
             </form>
           </div>
-          <Button
-            onClick={() => {
-              // dispatch(logout());
-              navigate("/");
-            }}
-          >
-            Logout
-          </Button>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -97,13 +61,13 @@ export default function AdminFarmOnboarding() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">2,420</div>
+                <div className="text-2xl font-bold text-black">{dashBoardData?.totalUsers}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">40</span> % vs last month
+                    <span className="text-green-600">{Math.abs(dashBoardData?.percentageUserIncrease)}</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
@@ -115,13 +79,14 @@ export default function AdminFarmOnboarding() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">50</div>
+                <div className="text-2xl font-bold text-black"> {dashBoardData?.totalProjects}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">10</span> % vs last month
+                    <span className="text-green-600">{Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))
+                    }</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
@@ -133,48 +98,18 @@ export default function AdminFarmOnboarding() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">100</div>
+                <div className="text-2xl font-bold text-black"> {dashBoardData?.totalProjects}</div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">5</span> % vs last month
+                    <span className="text-green-600">{Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))
+                    }</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
-            <h2 className="font-bold mb-4">Farm Onboarding</h2>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Farm Name</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Area</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {farmData.map((farm, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{farm.farmName}</TableCell>
-                    <TableCell>{farm.location}</TableCell>
-                    <TableCell>{farm.area}</TableCell>
-                    <TableCell>{farm.status}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button variant="outline">View Document</Button>
-                        <Button variant="outline">Delete</Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
           </div>
         </main>
       </div>

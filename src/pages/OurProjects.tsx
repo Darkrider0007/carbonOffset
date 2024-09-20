@@ -3,88 +3,29 @@ import curve from "../assets/home/curve.png";
 import mainbg from "../assets/services/mainbg.png";
 import newsletterbg from "../assets/home/newsletterbg.png";
 import logo from "../assets/home/logo.png";
-import one from "../assets/projects/1.png";
-import two from "../assets/projects/2.png";
-import three from "../assets/projects/3.png";
-import four from "../assets/projects/4.png";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getProjects } from "../api/addProject";
-
-const projectDataDummy = [
-  {
-    id: 1,
-    image: one,
-    title: "CLEAN KAILASH",
-    desc: "Cleanliness and Environmental Awareness Campaign The Essence of Cleanliness Our initiative underscores the importance of cleanliness, particularly in…",
-    url: "#",
-  },
-  {
-    id: 2,
-    image: two,
-    title: "Net Negative Footprint",
-    desc: "Revolutionizing Environmental Responsibility The concept of a net negative footprint represents a transformative approach to sustainability. Unlike traditional…",
-    url: "#",
-  },
-  {
-    id: 3,
-    image: three,
-    title: "Universal Identification Number(UIN)",
-    desc: "Universal Identification Number (UIN):Enhancing Global Security Introduction to UIN Technology The Universal Identification Number (UIN)",
-    url: "#",
-  },
-  {
-    id: 4,
-    image: four,
-    title: "ENVIRONMENTAL POWER GENERATION",
-    desc: "Pedal-Powered Generator: k-12 ProjectIEEE ENCS and Society for Universal Oneness (www.sfuo.org), a non-profit organization stepped forward to…",
-    url: "#",
-  },
-];
+import parse from 'html-react-parser';
 
 const OurProjects = () => {
-  const [projectData, setProjectData] = useState(projectDataDummy);
-
-  const image = [one, two, three, four];
+  const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
-    let isMounted = true;
+
 
     const fetchdata = async () => {
       try {
         const res = await getProjects();
+        console.log("Response:", res);
+        setProjectData(res);
 
-        // Check if res is an array
-        if (Array.isArray(res)) {
-          if (isMounted) {
-            setProjectData((prev) => {
-              const transformedData = res.map((project: any, index: any): any => ({
-                id: prev.length + index + 1, // Unique and incremental IDs
-                image: image[index % image.length], // Cycles through the images
-                title: project.name,
-                desc: project.details.replace(/<[^>]+>/g, ""), // Strips HTML tags if needed
-                url: "#",
-              }));
-
-              console.log("Transformed Data:", transformedData);
-              return [...prev, ...transformedData];
-            });
-          }
-        } else {
-          console.error("Unexpected response format. Expected an array.");
-          console.log("Response:", res);
-        }
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
     };
-
     fetchdata();
-
-    return () => {
-      isMounted = false; // Cleanup function to avoid setting state if the component is unmounted
-    };
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []);
 
   return (
     <div>
@@ -106,10 +47,10 @@ const OurProjects = () => {
 
       {/* projects section */}
       <div className="p-5 md:p-24 flex flex-col gap-10 md:gap-20">
-        {projectData.map((project: any) => (
+        {projectData.map((project: any, index: number) => (
           <div
             key={project.id}
-            className={`flex flex-col-reverse md:flex-row ${project.id % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-5 md:gap-10 h-auto md:h-[60vh] shadow-xl`}
+            className={`flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-5 md:gap-10 h-auto md:h-[70vh] shadow-xl`}
           >
             <img
               src={project.image}
@@ -118,9 +59,12 @@ const OurProjects = () => {
             />
             <div className="flex flex-col px-5 md:px-12 gap-6 justify-center w-full md:w-1/2">
               <h1 className="text-2xl md:text-4xl text-gray-600 font-bold">
-                {project.title}
+                {project.name}
               </h1>
-              <h1 className="text-lg md:text-xl">{project.desc}</h1>
+              <h1 className="text-lg md:text-xl">
+                {parse(project.details.split(' ').slice(0, 20).join(' ') + '...')}
+              </h1>
+
               <button className="border-2 border-green-600 w-32 md:w-40 py-2 md:py-3 text-lg rounded-xl text-green-600 font-bold">
                 Read More
               </button>

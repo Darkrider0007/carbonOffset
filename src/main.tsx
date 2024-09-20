@@ -25,6 +25,8 @@ import VerifyEmail from "./pages/VerifyEmail";
 import UserContextProvider from "./context/UserContextProvider";
 import { Toaster } from "./components/ui/toaster";
 import ForgetPassword from "./pages/ForgetPassword";
+import AdminLogin from "./pages/AdminLogin";
+import Token from "./pages/Token";
 
 const router = createBrowserRouter([
   {
@@ -76,16 +78,20 @@ const router = createBrowserRouter([
     element: <AdminAllTransaction />,
   },
   {
-    path: "/adminDashboard",
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`,
     element: <AdminDashboard />,
   },
   {
-    path: "/farmOnboarding",
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/farmOnboarding`,
     element: <AdminFarmOnboarding />,
   },
   {
-    path: "/adminProjectDetails",
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminProjectDetails`,
     element: <AdminProjectDetails />,
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/token`,
+    element: <Token />,
   },
   {
     path: "/success",
@@ -114,6 +120,10 @@ const router = createBrowserRouter([
   {
     path: '/forget-password',
     element: <ForgetPassword />
+  },
+  {
+    path: `admin/${import.meta.env.VITE_ADMIN_ROUTE}`,
+    element: <AdminLogin />,
   }
 
 ]);
