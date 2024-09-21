@@ -19,7 +19,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaLeaf } from "react-icons/fa";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FutureData = [
   {
@@ -128,10 +128,12 @@ const Home = () => {
               carbon footprint!
             </h1>
             <div className="relative">
-              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
-                <h1>Learn More</h1>
-                <FaArrowRight />
-              </button>
+              <Link to="/farm-onboarding">
+                <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
+                  <h1>Learn More</h1>
+                  <FaArrowRight />
+                </button>
+              </Link>
               <img src={farm} alt="farm" className="mt-5 md:mt-0" />
             </div>
           </div>

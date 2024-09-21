@@ -1,8 +1,9 @@
 import { Loader2 } from 'lucide-react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { adminLogin } from '../api/auth/loginAndLogout';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 type LoginFormInputs = {
     email: string;
@@ -13,6 +14,15 @@ const AdminLogin: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(false);
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
 
+    const context = useContext(UserContext);
+
+    // Ensure context is defined before accessing properties
+    if (!context) {
+        throw new Error('UserProfile must be used within a UserContextProvider');
+    }
+
+    const { setUser } = context;
+
     const navigate = useNavigate();
 
     // Function to handle form submission
@@ -21,6 +31,12 @@ const AdminLogin: React.FC = () => {
         try {
             const res = await adminLogin(data);
             if (res.status === 200) {
+                setUser(
+                    {
+                        email: data.email,
+                        isAdmin: true
+                    }
+                )
                 navigate(`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`)
             }
         } catch (error) {

@@ -6,9 +6,10 @@ interface UserContextProviderProps {
 }
 
 interface User {
-    id: string;
-    name: string;
+    id?: string;
+    name?: string;
     email: string;
+    isAdmin?: boolean;
     // Add more fields as needed
 }
 

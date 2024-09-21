@@ -27,6 +27,8 @@ import { Toaster } from "./components/ui/toaster";
 import ForgetPassword from "./pages/ForgetPassword";
 import AdminLogin from "./pages/AdminLogin";
 import Token from "./pages/Token";
+import FarmOnboarding from "./pages/FarmOnboarding";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -63,39 +65,66 @@ const router = createBrowserRouter([
   },
   {
     path: "/userDashboard",
-    element: <UserDashboard />,
+    element: (
+
+      <UserDashboard />
+    ),
   },
   {
     path: "/userTransactions",
-    element: <UserTransactions />,
+    element: (
+
+      <UserTransactions />
+
+    ),
   },
   {
     path: "/userOffsetDetails",
-    element: <UserOffsetDetails />,
+    element: (
+
+      <UserOffsetDetails />
+
+    ),
   },
   {
     path: "/allTransactions",
-    element: <AdminAllTransaction />,
+    element: (
+
+      <AdminAllTransaction />
+
+    ),
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`,
-    element: <AdminDashboard />,
+    element: (
+      <PrivateRoute>
+        <AdminDashboard />
+      </PrivateRoute>
+    ),
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/farmOnboarding`,
-    element: <AdminFarmOnboarding />,
+    element: (
+      <PrivateRoute>
+        <AdminFarmOnboarding />
+      </PrivateRoute>
+    ),
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminProjectDetails`,
-    element: <AdminProjectDetails />,
+    element: (
+      <PrivateRoute>
+        <AdminProjectDetails />
+      </PrivateRoute>
+    ),
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/token`,
-    element: <Token />,
-  },
-  {
-    path: "/success",
-    element: <Success />,
+    element: (
+      <PrivateRoute>
+        <Token />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/success",
@@ -110,22 +139,29 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "/farm-onboarding",
+    element: (
+
+      <FarmOnboarding />
+
+    ),
+  },
+  {
     path: "/signup",
     element: <SignUp />,
   },
   {
-    path: '/verify-email/:id',
+    path: "/verify-email/:id",
     element: <VerifyEmail />,
   },
   {
-    path: '/forget-password',
-    element: <ForgetPassword />
+    path: "/forget-password",
+    element: <ForgetPassword />,
   },
   {
     path: `admin/${import.meta.env.VITE_ADMIN_ROUTE}`,
     element: <AdminLogin />,
-  }
-
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

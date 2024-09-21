@@ -1,12 +1,14 @@
 import React from "react";
 
 interface CustomModalProps {
+    heading?: string;
     isOpen: boolean;
     toggleModal: () => void;
     children: React.ReactNode;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
+    heading,
     isOpen,
     toggleModal,
     children,
@@ -17,7 +19,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-scroll">
             <div className="bg-white rounded-lg p-6 w-full max-w-lg">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-semibold">Add Project</h2>
+                    <h2 className="text-xl font-semibold">{heading || "Add Project"}</h2>
                     <button
                         onClick={toggleModal}
                         className="text-gray-600 hover:text-gray-900"

@@ -1,10 +1,11 @@
 import React from "react";
 
 interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
+  isAdmin?: boolean;
   // Add more fields as needed
 }
 

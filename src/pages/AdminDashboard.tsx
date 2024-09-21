@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+
 import {
   CardTitle,
   CardHeader,
@@ -21,6 +21,8 @@ import AddProject from "../components/AddProject";
 import { useEffect, useState } from "react";
 import { deleteProject } from "../api/addProject";
 import { getAdminData } from "../api/admin";
+import { Plus } from "lucide-react";
+import { getFarmOnboard } from "../api/farmOnboard";
 
 interface ProjectData {
   name: string;
@@ -28,12 +30,13 @@ interface ProjectData {
   status: string;
   userCount: number;
   _id: string;
+  image: string;
 }
 
 export default function AdminDashboard() {
   const [projectData, setProjectData] = useState<ProjectData[]>([]);
   const [dashBoardData, setDashBoardData] = useState<any>([]);
-
+  const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddProject = () => {
@@ -64,6 +67,22 @@ export default function AdminDashboard() {
       console.log("res", res.data);
     }
 
+    const fetchFarmData = async () => {
+      try {
+        const res = await getFarmOnboard();
+        const approvedFarms = res.data.filter(
+          (farm: any) => farm.approvedByAdmin
+        );
+
+        setApprovedFarmData(approvedFarms.length);
+      } catch (error) {
+        console.error("Failed to fetch farm data", error);
+      }
+    };
+
+    fetchAdminData();
+    fetchFarmData();
+
     fetchAdminData();
   }, []);
 
@@ -78,7 +97,7 @@ export default function AdminDashboard() {
             <Package2Icon className="h-6 w-6" />
             <span className="sr-only">Home</span>
           </Link>
-          <div className="w-full flex-1">
+          {/* <div className="w-full flex-1">
             <form>
               <div className="relative">
                 <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -89,11 +108,11 @@ export default function AdminDashboard() {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card className="shadow-xl">
+            <Card className="shadow-xl bg-green-300">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-black">
                   Total User
@@ -101,14 +120,14 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-black">
-                  {dashBoardData?.totalUsers}
+                  {dashBoardData?.totalUsers || 0}
                 </div>
               </CardContent>
               <CardContent>
                 <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
-                    <span className="text-green-600">{Math.abs(dashBoardData?.percentageUserIncrease)}</span> % vs last month
+                    <span className="text-green-600">{Math.abs(dashBoardData?.percentageUserIncrease) || 0}</span> % vs last month
                   </h1>
                 </div>
               </CardContent>
@@ -120,18 +139,18 @@ export default function AdminDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black">50</div>
+                <div className="text-2xl font-bold text-black">{approvedFarmData || 0}</div>
               </CardContent>
               <CardContent>
-                <div className="flex gap-2 items-center">
+                {/* <div className="flex gap-2 items-center">
                   <FaArrowUp color="green" />
                   <h1>
                     <span className="text-green-600">10</span> % vs last month
                   </h1>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
-            <Card className="shadow-xl">
+            <Card className="shadow-xl bg-green-300">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-black">
                   Active Projects
@@ -139,7 +158,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-black">
-                  {dashBoardData?.totalProjects}
+                  {dashBoardData?.totalProjects || 0}
                 </div>
               </CardContent>
               <CardContent>
@@ -155,42 +174,52 @@ export default function AdminDashboard() {
           </div>
           <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
             <div className="flex flex-row justify-between">
-              <h2 className="font-bold mb-4">Active Projects</h2>
+              <h2 className="font-bold text-2xl mb-4">Active Projects</h2>
               <Button
                 onClick={handleAddProject}
-                variant="outline" className="">
-                Add Project
+                variant="outline" className="bg-green-500 hover:bg-green-600 text-white ">
+                <Plus className="mx-2" /> Add Project
               </Button>
             </div>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Project Name</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>User Count</TableHead>
-                  <TableHead>Details</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead className="text-lg text-black font-semibold">Project Name</TableHead>
+                  <TableHead className="text-lg text-black font-semibold">Location</TableHead>
+                  <TableHead className="text-lg text-black font-semibold">Status</TableHead>
+                  <TableHead className="text-lg  text-black font-semibold">User Count</TableHead>
+                  {/* <TableHead className="text-lg  text-black font-semibold">Details</TableHead> */}
+                  <TableHead className="text-lg text-black font-semibold">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {projectData && projectData.map((project, index) => (
                   <TableRow key={index}>
-                    <TableCell>{project.name}</TableCell>
+                    <TableCell className="flex flex-row items-center justify-start gap-2 w-72">
+                      <img className="h-10 w-10 border-2 p-1 rounded-full" src={project.image} alt="" />
+                      {project.name}
+                    </TableCell>
                     <TableCell>{project.location}</TableCell>
-                    <TableCell>{project.status}</TableCell>
-                    <TableCell>{project.userCount}</TableCell>
                     <TableCell>
+                      <div
+                        className={`p-1 ${project.status ? "bg-green-500 text-white" : "bg-red-500 text-white"} flex justify-center items-center rounded-2xl`}
+                      >
+                        {project.status}
+                      </div>
+                    </TableCell>
+
+                    <TableCell>{project.userCount}</TableCell>
+                    {/* <TableCell>
                       <Button variant="outline" className=" ">
                         View
                       </Button>
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <div className="flex gap-2">
-                        <Button variant="outline" className=" ">
+                        {/* <Button variant="outline" className=" ">
                           Edit
-                        </Button>
-                        <Button variant="outline" className=""
+                        </Button> */}
+                        <Button variant="outline" className="hover:text-white hover:bg-red-600"
                           onClick={() => {
                             handleDeleteProject(project._id);
                           }}
@@ -232,22 +261,22 @@ function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
+// function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
+//   return (
+//     <svg
+//       {...props}
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="24"
+//       height="24"
+//       viewBox="0 0 24 24"
+//       fill="none"
+//       stroke="currentColor"
+//       strokeWidth="2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     >
+//       <circle cx="11" cy="11" r="8" />
+//       <path d="m21 21-4.3-4.3" />
+//     </svg>
+//   );
+// }
