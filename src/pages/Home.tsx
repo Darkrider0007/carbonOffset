@@ -16,10 +16,12 @@ import logo from "../assets/home/logo.png";
 import { FaTree } from "react-icons/fa6";
 import "../index.css"; // Ensure you import the CSS file
 import { FaArrowRight } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
+// import { FaLock } from "react-icons/fa";
 import { FaLeaf } from "react-icons/fa";
 import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
 
 const FutureData = [
   {
@@ -56,6 +58,16 @@ const ProjectData = [
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const context = useContext(UserContext);
+
+  // Ensure context is defined before accessing properties
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserContextProvider');
+  }
+
+  const { user } = context;
+
   return (
     <div>
       <Navbar />
@@ -82,12 +94,12 @@ const Home = () => {
         </h1>
 
         {/* Button */}
-        <button
+        {user && <button
           onClick={() => navigate("/offsetNow")}
           className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
         >
           <FaTree /> Offset Now
-        </button>
+        </button>}
 
         {/* Curve Image */}
         <img src={curve} alt="curve" className="absolute bottom-20 w-full" />
@@ -110,7 +122,11 @@ const Home = () => {
               your carbon footprint and support our industry-leading projects!
             </h1>
             <div className="relative">
-              <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
+              <button
+                onClick={
+                  () => navigate("/about")
+                }
+                className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
                 <h1>Learn More</h1>
                 <FaArrowRight />
               </button>
@@ -163,12 +179,16 @@ const Home = () => {
           <h1 className="text-lg mt-4">
             Need help? Use our calculators find out how much carbon to offset.
           </h1>
-          <button className="bg-green-600 px-3 py-2 rounded-full">
+          <button
+            onClick={() => {
+              navigate("/calculator")
+            }}
+            className="bg-green-600 px-3 py-2 rounded-full">
             Individual Carbon Footprint Calculator
           </button>
         </div>
 
-        <div className="w-full hidden md:w-1/2 md:flex flex-col gap-5 items-center p-5  text-white">
+        {/* <div className="w-full hidden md:w-1/2 md:flex flex-col gap-5 items-center p-5  text-white">
           <h1 className="uppercase text-xs font-bold">I want to offset by</h1>
           <div className="flex gap-2">
             <button className="bg-white text-green-600 font-bold px-7 py-2 rounded-md">
@@ -207,7 +227,7 @@ const Home = () => {
               <FaLock />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* how we work  */}
@@ -266,11 +286,13 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-center">
+        <Link to="/projects" className="flex justify-center"
+
+        >
           <button className="bg-green-600 py-2 px-8 rounded-md text-white item-center text-md font-bold my-5">
             View More Projects
           </button>
-        </div>
+        </Link>
       </div>
 
       {/* newsletter */}

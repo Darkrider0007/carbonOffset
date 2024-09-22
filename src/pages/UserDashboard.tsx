@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+// import { Input } from "../components/ui/input";
 import {
   CardTitle,
   CardHeader,
@@ -83,7 +83,7 @@ export default function UserUpdates() {
             {/* <Package2Icon className="h-6 w-6" /> */}
             <span className="sr-only">Home</span>
           </Link>
-          <div className="w-full flex-1">
+          {/* <div className="w-full flex-1">
             <form>
               <div className="relative">
                 <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -94,8 +94,9 @@ export default function UserUpdates() {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           <Button
+            className="ml-auto"
             onClick={() => {
               handelLogout();
             }}
@@ -140,7 +141,7 @@ export default function UserUpdates() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">0 Tokens</div>
+                <div className="text-2xl font-bold text-white">{user ? user.tokenCount : 0} Tokens</div>
               </CardContent>
             </Card>
           </div>
@@ -188,22 +189,22 @@ export default function UserUpdates() {
 //   );
 // }
 
-function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
+// function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
+//   return (
+//     <svg
+//       {...props}
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="24"
+//       height="24"
+//       viewBox="0 0 24 24"
+//       fill="none"
+//       stroke="currentColor"
+//       strokeWidth="2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     >
+//       <circle cx="11" cy="11" r="8" />
+//       <path d="m21 21-4.3-4.3" />
+//     </svg>
+//   );
+// }

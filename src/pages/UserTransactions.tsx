@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+// import { Input } from "../components/ui/input";
 import {
   CardTitle,
   CardHeader,
@@ -17,172 +17,66 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { format } from "date-fns";
+import { useContext, useEffect, useState } from "react";
+import UserContext from "../context/UserContext";
+import { getUser } from "../api/auth/getUser";
+import { toast } from "../hooks/use-toast";
+import { logout } from "../api/auth/loginAndLogout";
 
-const dummyData = [
-  {
-    description: "Plant Offset",
-    transactionId: "TXN001",
-    type: "Debit",
-    date: "2024-01-15T10:30:00Z",
-    amount: "$50.00",
-    receipt: "Receipt_001.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN002",
-    type: "Credit",
-    date: "2024-01-20T12:00:00Z",
-    amount: "$2000.00",
-    receipt: "Receipt_002.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN003",
-    type: "Debit",
-    date: "2024-02-01T14:45:00Z",
-    amount: "$75.00",
-    receipt: "Receipt_003.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN004",
-    type: "Debit",
-    date: "2024-02-05T09:15:00Z",
-    amount: "$150.00",
-    receipt: "Receipt_004.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN005",
-    type: "Credit",
-    date: "2024-02-10T16:30:00Z",
-    amount: "$25.00",
-    receipt: "Receipt_005.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN006",
-    type: "Debit",
-    date: "2024-02-15T17:00:00Z",
-    amount: "$100.00",
-    receipt: "Receipt_006.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN007",
-    type: "Debit",
-    date: "2024-02-18T19:30:00Z",
-    amount: "$120.00",
-    receipt: "Receipt_007.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN008",
-    type: "Credit",
-    date: "2024-02-25T21:00:00Z",
-    amount: "$500.00",
-    receipt: "Receipt_008.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN009",
-    type: "Debit",
-    date: "2024-03-01T06:45:00Z",
-    amount: "$60.00",
-    receipt: "Receipt_009.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN010",
-    type: "Debit",
-    date: "2024-03-05T08:00:00Z",
-    amount: "$200.00",
-    receipt: "Receipt_010.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN011",
-    type: "Debit",
-    date: "2024-03-10T11:30:00Z",
-    amount: "$85.00",
-    receipt: "Receipt_011.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN012",
-    type: "Debit",
-    date: "2024-03-15T13:15:00Z",
-    amount: "$300.00",
-    receipt: "Receipt_012.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN013",
-    type: "Credit",
-    date: "2024-03-20T15:45:00Z",
-    amount: "$1000.00",
-    receipt: "Receipt_013.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN014",
-    type: "Debit",
-    date: "2024-03-25T18:00:00Z",
-    amount: "$45.00",
-    receipt: "Receipt_014.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN015",
-    type: "Debit",
-    date: "2024-04-01T20:30:00Z",
-    amount: "$95.00",
-    receipt: "Receipt_015.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN016",
-    type: "Credit",
-    date: "2024-04-05T22:15:00Z",
-    amount: "$2000.00",
-    receipt: "Receipt_016.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN017",
-    type: "Debit",
-    date: "2024-04-10T00:00:00Z",
-    amount: "$30.00",
-    receipt: "Receipt_017.pdf",
-  },
-  {
-    description: "Plant Offset",
-    transactionId: "TXN018",
-    type: "Debit",
-    date: "2024-04-15T01:30:00Z",
-    amount: "$250.00",
-    receipt: "Receipt_018.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN019",
-    type: "Debit",
-    date: "2024-04-20T03:15:00Z",
-    amount: "$70.00",
-    receipt: "Receipt_019.pdf",
-  },
-  {
-    description: "Vehicle Offset",
-    transactionId: "TXN020",
-    type: "Credit",
-    date: "2024-04-25T05:00:00Z",
-    amount: "$150.00",
-    receipt: "Receipt_020.pdf",
-  },
-];
 
 export default function UserUpdates() {
   const navigate = useNavigate();
+  const [user, setUser1] = useState<any>(null);
+  const context = useContext(UserContext);
+
+  // Ensure context is defined before accessing properties
+
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserContextProvider');
+  }
+
+  const { setUser } = context;
+
+  const handelLogout = async () => {
+    try {
+      const res = await logout();
+      console.log(res);
+      if (res.status === 200) {
+        setUser({
+          id: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+        })
+        toast({
+          title: "Logged out successfully"
+        })
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000)
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast({
+        title: "Error",
+        description: "Error during logout",
+        variant: "destructive"
+      })
+    }
+  }
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      const res = await getUser();
+      setUser1(res.data.data);
+      // console.log(res.data.data);
+    };
+    getUserDetails();
+
+  }, []);
+
+
+
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -199,7 +93,7 @@ export default function UserUpdates() {
             {/* <Package2Icon className="h-6 w-6" /> */}
             <span className="sr-only">Home</span>
           </Link>
-          <div className="w-full flex-1">
+          {/* <div className="w-full flex-1">
             <form>
               <div className="relative">
                 <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -210,11 +104,10 @@ export default function UserUpdates() {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           <Button
-            onClick={() => {
-              navigate("/");
-            }}
+            onClick={handelLogout}
+            className="ml-auto"
           >
             Logout
           </Button>
@@ -222,7 +115,7 @@ export default function UserUpdates() {
 
         {/* Main Section */}
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-          <h1 className="font-bold">John's Cards</h1>
+          <h1 className="font-bold">{user ? user.firstName : ""}'s Cards</h1>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -233,7 +126,7 @@ export default function UserUpdates() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">$ 1000</div>
+                <div className="text-2xl font-bold text-white">$ {user ? user.tokenCount * 10 : 0}</div>
               </CardContent>
             </Card>
 
@@ -244,7 +137,7 @@ export default function UserUpdates() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">450 Tokens</div>
+                <div className="text-2xl font-bold text-white">{user ? user.tokenCount : 0} Tokens</div>
               </CardContent>
             </Card>
 
@@ -255,7 +148,7 @@ export default function UserUpdates() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">100 Tokens</div>
+                <div className="text-2xl font-bold text-white">{user ? user.tokenCount : 0} Tokens</div>
               </CardContent>
             </Card>
           </div>
@@ -270,24 +163,25 @@ export default function UserUpdates() {
                   <TableHead>Type</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Amount</TableHead>
-                  <TableHead>Receipt</TableHead>
+                  {/* <TableHead>Receipt</TableHead> */}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {dummyData.map((transaction: any) => (
-                  <TableRow key={transaction?.transactionId}>
+                {user && user?.tokenHistory && user?.tokenHistory.map((transaction: any) => (
+                  <TableRow key={transaction?._id}>
                     <TableCell>{transaction?.description}</TableCell>
-                    <TableCell>{transaction?.transactionId}</TableCell>
+                    <TableCell>{transaction?._id}</TableCell>
                     <TableCell>{transaction?.type}</TableCell>
                     <TableCell>
-                      {format(new Date(transaction?.date), "PPpp")}
+                      {format(new Date(transaction?.createdAt
+                      ), "PP")}
                     </TableCell>
-                    <TableCell>{transaction?.amount}</TableCell>
-                    <TableCell>
+                    <TableCell>${transaction?.amaount}</TableCell>
+                    {/* <TableCell>
                       <Button className="bg-green-600 hover:bg-green-400">
                         Receipt
                       </Button>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>
@@ -321,22 +215,22 @@ export default function UserUpdates() {
 //   );
 // }
 
-function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
+// function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
+//   return (
+//     <svg
+//       {...props}
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="24"
+//       height="24"
+//       viewBox="0 0 24 24"
+//       fill="none"
+//       stroke="currentColor"
+//       strokeWidth="2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     >
+//       <circle cx="11" cy="11" r="8" />
+//       <path d="m21 21-4.3-4.3" />
+//     </svg>
+//   );
+// }

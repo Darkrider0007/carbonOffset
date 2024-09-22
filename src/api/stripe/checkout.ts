@@ -2,8 +2,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// const BASE_URL = "https://carbonoffset-backend-c733.onrender.com";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://carbonoffset-backend-c733.onrender.com";
+// const BASE_URL = "http://localhost:8080";
 
 export const AddToWallet = async ({ amount, tokens }: any) => {
   console.log(`Added ${amount} to wallet`);

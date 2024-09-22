@@ -68,6 +68,12 @@ function Login() {
                     duration: 5000,
                 })
             }
+            toast({
+                title: 'Error logging in',
+                description: error.message || 'Please try again',
+                variant: 'destructive',
+                duration: 5000,
+            });
         } finally {
             setSubmit(false);
         }

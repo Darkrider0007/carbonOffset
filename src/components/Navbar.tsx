@@ -104,12 +104,12 @@ const Navbar = () => {
           >
             Our Services
           </Link>
-          <Link
+          {user && <Link
             to="/offsetNow"
             className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
           >
             <FaTree /> Offset Now
-          </Link>
+          </Link>}
           {user ? (
             <Link
               to="/userDashboard"
