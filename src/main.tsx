@@ -29,6 +29,7 @@ import AdminLogin from "./pages/AdminLogin";
 import Token from "./pages/Token";
 import FarmOnboarding from "./pages/FarmOnboarding";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminUsers from "./pages/AdminUsers";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <AdminDashboard />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminUsers`,
+    element: (
+      <PrivateRoute>
+        <AdminUsers />
       </PrivateRoute>
     ),
   },
