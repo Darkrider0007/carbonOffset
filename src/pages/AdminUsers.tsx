@@ -16,44 +16,23 @@ import {
     Table,
 } from "../components/ui/table";
 import { FaArrowUp } from "react-icons/fa6";
-import AddProject from "../components/AddProject";
 import { useEffect, useState } from "react";
 import { getAdminData } from "../api/admin";
-import { Coins, MoveLeftIcon, MoveRight, Plus, Search } from "lucide-react";
+import { Coins, MoveLeftIcon, MoveRight, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 import { getAllUsers } from "../api/auth/getUser";
 
-interface ProjectData {
-    name: string;
-    location: string;
-    status: string;
-    userCount: number;
-    _id: string;
-    image: string;
-}
-
 export default function AdminUsers() {
-    const [projectData, setProjectData] = useState<ProjectData[]>([]);
     const [dashBoardData, setDashBoardData] = useState<any>([]);
     const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [allUsers, setAllUsers] = useState<any>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage] = useState(20); // Number of users per page
     const [searchTerm, setSearchTerm] = useState(""); // Search term state
 
-    const handleAddProject = () => {
-        setIsModalOpen(true);
-    };
-
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen);
-    };
-
     useEffect(() => {
         const fetchAdminData = async () => {
             const res = await getAdminData();
-            setProjectData(res.data.allProjects);
             setDashBoardData(res.data);
         };
 
@@ -233,7 +212,6 @@ export default function AdminUsers() {
                             </Button>
                         </div>
                     </div>
-                    <AddProject isOpen={isModalOpen} toggleModal={toggleModal} onAddProject={setProjectData} />
                 </main>
             </div>
         </div>
