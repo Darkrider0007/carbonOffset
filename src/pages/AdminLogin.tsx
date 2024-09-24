@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { adminLogin } from '../api/auth/loginAndLogout';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import { toast } from '../hooks/use-toast';
 
 type LoginFormInputs = {
     email: string;
@@ -37,10 +38,18 @@ const AdminLogin: React.FC = () => {
                         isAdmin: true
                     }
                 )
+                toast({
+                    title: 'Logged in successfully',
+                })
                 navigate(`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`)
             }
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
+            toast({
+                title: 'Error logging in',
+                description: error.message,
+                variant: "destructive"
+            });
         } finally {
             setLoading(false);
         }
