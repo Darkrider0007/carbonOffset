@@ -10,14 +10,19 @@ import {
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
-import { getTokenData, updateTokenPrice } from "../api/token"; // Assuming there's an updateTokenPrice function in the API
+import { getTokenData, updateTokenPerTon, updateTokenPrice } from "../api/token"; // Assuming there's an updateTokenAmountPerTon function in the API
 import { Loader2 } from "lucide-react";
+import { toast } from "../hooks/use-toast";
 
 export default function Token() {
     const [dashBoardData, setDashBoardData] = useState<any>([]);
     const [tokenData, setTokenData] = useState<any>([]);
-    const [updating, setUpdating] = useState(false);
+    const [updatingPrice, setUpdatingPrice] = useState(false);
+    const [updatingAmount, setUpdatingAmount] = useState(false);
+
     const { register, handleSubmit, reset } = useForm();
+    const { register: registerAmount, handleSubmit: handleSubmitAmount, reset: resetAmount } = useForm();
+
     useEffect(() => {
         const fetchAdminData = async () => {
             const res = await getAdminData();
@@ -39,7 +44,7 @@ export default function Token() {
 
     // Function to handle token price update
     const onUpdateTokenPrice = async (data: any) => {
-        setUpdating(true);
+        setUpdatingPrice(true);
         try {
             console.log(data.tokenPrice);
             await updateTokenPrice(data.tokenPrice, tokenData._id);
@@ -49,7 +54,27 @@ export default function Token() {
         } catch (error) {
             console.error("Error updating token price:", error);
         } finally {
-            setUpdating(false);
+            setUpdatingPrice(false);
+        }
+    };
+
+    // Function to handle token amount per ton update
+    const onUpdateTokenAmountPerTon = async (data: any) => {
+        setUpdatingAmount(true);
+        try {
+            console.log(data.tokenAmountPerTon);
+            await updateTokenPerTon(data.tokenAmountPerTon, tokenData._id);
+            const updatedTokenData = await getTokenData();
+            setTokenData(updatedTokenData.data);
+            toast({
+                title: "Token Amount per Ton updated successfully",
+
+            })
+            resetAmount();
+        } catch (error) {
+            console.error("Error updating token amount per ton:", error);
+        } finally {
+            setUpdatingAmount(false);
         }
     };
 
@@ -64,18 +89,6 @@ export default function Token() {
                         <Package2Icon className="h-6 w-6" />
                         <span className="sr-only">Home</span>
                     </Link>
-                    {/* <div className="w-full flex-1">
-                        <form>
-                            <div className="relative">
-                                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                <Input
-                                    className="w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-950"
-                                    placeholder="Search..."
-                                    type="search"
-                                />
-                            </div>
-                        </form>
-                    </div> */}
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
                     <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -130,7 +143,7 @@ export default function Token() {
                                             type="number"
                                             step="0.01"
                                             placeholder="Enter new token price"
-                                            {...register("tokenPrice", { required: true })} // Register the input with React Hook Form
+                                            {...register("tokenPrice", { required: true })}
                                             className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950"
                                         />
                                         <button
@@ -138,7 +151,42 @@ export default function Token() {
                                             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
                                         >
                                             {
-                                                updating ? <div className="flex flex-row">
+                                                updatingPrice ? <div className="flex flex-row">
+                                                    <Loader2 className="animate-spin mr-2" /> Updating ...
+                                                </div> :
+                                                    <>
+                                                        <h1 className="text-white">Update</h1>
+                                                    </>
+                                            }
+                                        </button>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+
+                        {/* Update Token Amount per Ton Card */}
+                        <Card className="shadow-xl">
+                            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                <CardTitle className="text-md font-bold text-black">
+                                    Update Token Amount per Ton
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <form onSubmit={handleSubmitAmount(onUpdateTokenAmountPerTon)}>
+                                    <div className="flex gap-4 items-center">
+                                        <Input
+                                            type="number"
+                                            step="0.0001"
+                                            placeholder="Enter new token amount per ton"
+                                            {...registerAmount("tokenAmountPerTon", { required: true })}
+                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        >
+                                            {
+                                                updatingAmount ? <div className="flex flex-row">
                                                     <Loader2 className="animate-spin mr-2" /> Updating ...
                                                 </div> :
                                                     <>
@@ -177,23 +225,3 @@ function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
         </svg>
     );
 }
-
-// function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-//     return (
-//         <svg
-//             {...props}
-//             xmlns="http://www.w3.org/2000/svg"
-//             width="24"
-//             height="24"
-//             viewBox="0 0 24 24"
-//             fill="none"
-//             stroke="currentColor"
-//             strokeWidth="2"
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//         >
-//             <circle cx="11" cy="11" r="8" />
-//             <path d="m21 21-4.3-4.3" />
-//         </svg>
-//     );
-// }
