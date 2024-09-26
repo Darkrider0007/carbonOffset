@@ -15,6 +15,8 @@ import UserContext from "../context/UserContext";
 import { AlertDialogDemo } from "../components/AleartBox";
 import { useNavigate } from "react-router-dom";
 import { GrPowerReset } from "react-icons/gr";
+import CarbonOffsetCalculator from "../components/Calculator/Calculator";
+import { getTokenData } from "../api/token";
 
 const factors = ["Vehicle", "Natural Gas", "Electricity", "Fuel Oil", "Waste"];
 
@@ -25,7 +27,6 @@ const emissionFactorFuelOil = 22.61;
 const emissionFactorWaste = 692;
 
 const naturalGasConversion = 10.23;
-const tokenConversion = 0.1;
 
 interface CalculateTotalCO2Props {
   vehicleCO2: number;
@@ -51,9 +52,17 @@ const calculateTotalCO2 = ({
   return parseFloat(totalEmissions.toFixed(2));
 };
 
-const calculateTotalCost = (co2: number): number => {
-  return parseFloat((co2 * tokenConversion).toFixed(2));
+const calculateTotalCost = async (co2: number): Promise<number> => {
+  try {
+    const res = await getTokenData();
+    const tokenConversion = res.data.tokenPerTon;
+    return parseFloat((co2 * tokenConversion).toFixed(2));
+  } catch (error) {
+    console.error("Error getting token data:", error);
+    throw error;
+  }
 };
+
 
 const CarbonCalculator = () => {
   const [totalCO2, setTotalCO2] = useState(0.0);
@@ -82,15 +91,19 @@ const CarbonCalculator = () => {
   }, [user]);
 
   useEffect(() => {
-    const co2 = calculateTotalCO2({
-      vehicleCO2,
-      naturalGasCO2,
-      electricityCO2,
-      fuelOilCO2,
-      wasteCO2,
-    });
-    setTotalCO2(co2);
-    setTotalCost(calculateTotalCost(co2));
+    const func = async () => {
+      const co2 = calculateTotalCO2({
+        vehicleCO2,
+        naturalGasCO2,
+        electricityCO2,
+        fuelOilCO2,
+        wasteCO2,
+      });
+      setTotalCO2(co2);
+      const cost = await calculateTotalCost(co2);
+      setTotalCost(cost);
+    }
+    func();
   }, [vehicleCO2, naturalGasCO2, electricityCO2, fuelOilCO2, wasteCO2]);
 
   const handleCalculate = () => {
@@ -111,7 +124,16 @@ const CarbonCalculator = () => {
     setTotalCost(0);
     setIsSubmitted(false);
     setIndex(0);
+    localStorage.removeItem("fuelOilMonthlyConsumption");
+    localStorage.removeItem("milesPerYear");
+    localStorage.removeItem("fuelEfficiency");
+    localStorage.removeItem("monthlyConsumption");
+    localStorage.removeItem("electricityMonthlyConsumption");
+    localStorage.removeItem("wasteNumberOfPeople");
   };
+
+  // State to manage which calculator is being displayed
+  const [selectedCalculator, setSelectedCalculator] = useState("carbonOffset");
 
   return (
     <div>
@@ -132,128 +154,136 @@ const CarbonCalculator = () => {
         <img src={curve} className="absolute bottom-0 w-full" alt="curve" />
       </div>
 
-      {/* Calculator section */}
-      <div className="p-5 md:p-10 flex flex-col gap-10 md:gap-20 items-center">
-        <h1 className="text-lg md:text-2xl w-full md:w-[80%] text-center">
-          Please complete each step of the emissions calculator that is relevant
-          to your lifestyle, using actual (or estimated) annual operational
-          data.
-        </h1>
+      {/* Dropdown for Selecting Calculator */}
+      <div className="w-full md:w-[80%] mx-auto my-10">
+        <select
+          value={selectedCalculator}
+          onChange={(e) => setSelectedCalculator(e.target.value)}
+          className="px-4 py-2 border rounded-lg w-full md:w-1/2 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          <option value="carbonOffset">Carbon Offset Calculator</option>
+          <option value="existing">Emissions Calculator</option>
+        </select>
+      </div>
 
-        <div className="w-full md:w-[80%] bg-[#EBFFEA] rounded-xl">
-          <div className="flex flex-wrap justify-center p-5 md:px-20 border-b border-black">
-            {!isSubmitted &&
-              factors.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setIndex(idx);
-                  }}
-                  className={`px-3 py-2 text-xs md:px-5 md:py-2 my-1 ${factors[index] === item
-                    ? "bg-[#16A34A] border-white text-white"
-                    : "bg-white border-black"
-                    } rounded-full border uppercase shadow-xl mx-1`}
-                >
-                  {item}
-                </button>
-              ))}
-            <AlertDialogDemo
-              triggerText={<GrPowerReset className="cursor-pointer" />}
-              triggerTextStyle="bg-grey-600 hover:bg-grey-500 p-2 rounded-full text-black font-bold rounded-md"
-              headingText="Are you sure you want to reset the calculator?"
-              contentText="You will lose all the data you have entered"
-              submitBtn="Yes"
-              submitBtnNavigation={handleReset}
-            />
-          </div>
+      {/* Conditionally Render Based on Selected Calculator */}
+      {selectedCalculator === "carbonOffset" ? (
+        <div className="w-full md:w-[80%] my-10 p-5 mx-auto">
+          <CarbonOffsetCalculator />
+        </div>
+      ) : (
+        <div className="p-5 md:p-10 flex flex-col gap-12 md:gap-16 items-center bg-gray-50">
+          <h1 className="text-xl md:text-3xl w-full md:w-[80%] text-center font-semibold text-gray-700">
+            Complete Each Step of the Emissions Calculator
+          </h1>
 
-          <div className="w-full flex flex-col md:flex-row p-5 md:p-16">
-            {!isSubmitted && (
-              <div className="w-full md:w-1/2">
-                {index === 0 && <Vehicle addInput={setVehicleCO2} />}
-                {index === 1 && <NaturalGas addInput={setNaturalGasCO2} />}
-                {index === 2 && <Electricity addInput={setElectricityCO2} />}
-                {index === 3 && <FuelOil addInput={setFuelOilCO2} />}
-                {index === 4 && <Waste addInput={setWasteCO2} />}
-              </div>
-            )}
+          <div className="w-full md:w-[80%] bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="flex flex-wrap justify-center p-6 md:px-20 border-b border-gray-300 bg-green-100">
+              {!isSubmitted &&
+                factors.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setIndex(idx)}
+                    className={`px-4 py-2 text-sm md:text-base my-1 mx-2 md:mx-3 rounded-full border-2 shadow-sm transition-transform transform hover:scale-105 ${factors[index] === item
+                      ? "bg-green-600 border-green-600 text-white"
+                      : "bg-white border-gray-400 text-gray-700 hover:bg-green-50"
+                      }`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              <AlertDialogDemo
+                triggerText={<GrPowerReset className="cursor-pointer text-gray-500" />}
+                triggerTextStyle="p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+                headingText="Are you sure you want to reset the calculator?"
+                contentText="You will lose all the data you have entered."
+                submitBtn="Yes"
+                submitBtnNavigation={handleReset}
+              />
+            </div>
 
-            <div className="w-full md:w-1/2 flex flex-col gap-3 md:pl-20 items-center md:items-end">
-              {isSubmitted && (
-                <div>
-                  <h1 className="text-xl md:text-2xl font-bold text-green-600">
-                    Your Emissions
-                  </h1>
-                  <div className="flex flex-col gap-3">
-                    <h1 className="my-3 text-center">
-                      Tonnes CO2:{" "}
-                      <span className="font-bold">{totalCO2}</span>{" "}
-                    </h1>
-                    <h1 className="uppercase text-xs font-semibold tracking-widest text-center">
-                      Emission total tokens
-                    </h1>
-                    <div className="bg-white px-2 w-48 py-3 rounded-md border border-black text-center">
-                      <h1 className="font-semibold">{totalCost}</h1>
-                    </div>
-                  </div>
+            <div className={`w-full flex flex-col bg-gray-100 md:flex-row p-6 md:p-10 gap-10 md:gap-16 ${isSubmitted && "items-center justify-center"}`}>
+              {!isSubmitted && (
+                <div className="w-full md:w-1/2 flex flex-col  items-start gap-8">
+                  {index === 0 && <Vehicle addInput={setVehicleCO2} />}
+                  {index === 1 && <NaturalGas addInput={setNaturalGasCO2} />}
+                  {index === 2 && <Electricity addInput={setElectricityCO2} />}
+                  {index === 3 && <FuelOil addInput={setFuelOilCO2} />}
+                  {index === 4 && <Waste addInput={setWasteCO2} />}
                 </div>
               )}
 
-              <div className="flex flex-col gap-5 w-full">
-                {!isSubmitted && index === 4 && (
-                  !isLoggedin ? (
-                    <AlertDialogDemo
-                      triggerText="Login to calculate"
-                      triggerTextStyle="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
-                      headingText="Login to calculate"
-                      contentText="You need to login to calculate your emissions"
-                      submitBtn="Yes"
-                      submitBtnNavigation={() => {
-                        navigate("/login");
-                      }}
-                    />
-                  ) : (
+              <div className="w-full md:w-1/2 flex flex-col items-center md:items-end gap-6">
+                {isSubmitted ? (
+                  <div className="w-full bg-green-50 p-6 rounded-lg  shadow-md text-center">
+                    <h1 className="text-xl md:text-2xl font-bold text-green-700">
+                      Your Emissions
+                    </h1>
+                    <p className="text-lg md:text-xl font-medium text-gray-700">
+                      Tonnes CO2: <span className="font-bold">{totalCO2}</span>
+                    </p>
+                    <p className="uppercase text-xs font-semibold tracking-widest text-gray-500">
+                      Emission total tokens
+                    </p>
+                    <div className="bg-white px-4 py-3 rounded-md border border-gray-300 text-center shadow-sm mt-3">
+                      <p className="font-semibold text-lg">{totalCost}</p>
+                    </div>
                     <Button
-                      onClick={handleCalculate}
-                      className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
+                      onClick={() => navigate("/offsetNow")}
+                      className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 text-white font-bold rounded-md shadow-md my-5"
                     >
-                      Calculate
+                      Offset Now
                     </Button>
+                  </div>
+                ) : (
+                  index === 4 && (
+                    !isLoggedin ? (
+                      <AlertDialogDemo
+                        triggerText="Login to calculate"
+                        triggerTextStyle="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 text-white font-bold rounded-md shadow-md"
+                        headingText="Login to calculate"
+                        contentText="You need to login to calculate your emissions"
+                        submitBtn="Yes"
+                        submitBtnNavigation={() => {
+                          navigate("/login");
+                        }}
+                      />
+                    ) : (
+                      <Button
+                        onClick={handleCalculate}
+                        className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 text-white font-bold rounded-md shadow-md"
+                      >
+                        Calculate
+                      </Button>
+                    )
                   )
                 )}
 
-                {isSubmitted && (
-                  <Button className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 md:py-8 text-white font-bold rounded-md"
+                {/* {isSubmitted && (
+                  <Button
                     onClick={() => navigate("/offsetNow")}
+                    className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 text-white font-bold rounded-md shadow-md"
                   >
                     Offset Now
                   </Button>
-                )}
+                )} */}
 
                 {!isSubmitted && (
-                  <div className="flex justify-between gap-5 w-full">
+                  <div className="flex justify-between w-full">
                     <Button
-                      onClick={() => {
-                        if (index > 0) {
-                          setIndex(index - 1);
-                        }
-                      }}
+                      onClick={() => setIndex(index - 1)}
                       disabled={index === 0}
-                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 md:py-8 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center"
+                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center shadow-md"
                     >
-                      <FaLeftLong style={{ marginRight: "8px" }} /> Prev
+                      <FaLeftLong className="mr-2" /> Prev
                     </Button>
 
                     <Button
-                      onClick={() => {
-                        if (index < 4) {
-                          setIndex(index + 1);
-                        }
-                      }}
+                      onClick={() => setIndex(index + 1)}
                       disabled={index === 4}
-                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 md:py-8 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center"
+                      className="bg-gray-500 hover:bg-gray-600 px-4 py-2 w-full md:w-auto text-white font-bold rounded-md flex items-center justify-center shadow-md"
                     >
-                      Next <FaRightLong style={{ marginLeft: "8px" }} />
+                      Next <FaRightLong className="ml-2" />
                     </Button>
                   </div>
                 )}
@@ -261,7 +291,8 @@ const CarbonCalculator = () => {
             </div>
           </div>
         </div>
-      </div>
+
+      )}
 
       {/* Calculation methods */}
       <div

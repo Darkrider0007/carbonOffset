@@ -1,17 +1,11 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   CardTitle,
   CardHeader,
   CardContent,
   Card,
 } from "../components/ui/card";
-
-import { Link } from "react-router-dom";
-
-import { FaArrowUp } from "react-icons/fa6";
-import AdminSidebar from "../components/AdminSidebar";
-
-import { useEffect, useState } from "react";
-import { getAdminData } from "../api/admin";
 import {
   Table,
   TableBody,
@@ -21,17 +15,47 @@ import {
   TableRow,
 } from "../components/ui/table";
 import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import { deleteFarmOnboard, getFarmOnboard } from "../api/farmOnboard";
 import ViewFarmBoarding from "../components/ViewFarmBoarding";
 import { toast } from "../hooks/use-toast";
 import { AlertDialogDemo } from "../components/AlertDialogDemo";
+import AdminSidebar from "../components/AdminSidebar";
+import { getAdminData } from "../api/admin";
+import { FaArrowUp } from "react-icons/fa6";
+import { Search } from "lucide-react";
+
+// Icon components
+function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
+      <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
+      <path d="M12 3v6" />
+    </svg>
+  );
+}
 
 export default function AdminFarmOnboarding() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [farmData, setFarmData] = useState<any[]>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<number>();
+  const [filteredData, setFilteredData] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -47,11 +71,11 @@ export default function AdminFarmOnboarding() {
       try {
         const res = await getFarmOnboard();
         setFarmData(res.data);
+        setFilteredData(res.data);
         console.log("Farm Data:", res.data);
         const approvedFarms = res.data.filter(
           (farm: any) => farm.approvedByAdmin
         );
-
         setApprovedFarmData(approvedFarms.length);
       } catch (error) {
         console.error("Failed to fetch farm data", error);
@@ -62,27 +86,40 @@ export default function AdminFarmOnboarding() {
     fetchFarmData();
   }, []);
 
+  useEffect(() => {
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filteredResults = farmData.filter((farm) => {
+      const matchesQuery =
+        farm.organization?.toLowerCase().includes(lowercasedQuery) ||
+        farm.address?.toLowerCase().includes(lowercasedQuery);
+      const matchesStatus =
+        statusFilter === "All" ||
+        (statusFilter === "Approved" && farm.approvedByAdmin) ||
+        (statusFilter === "Pending" && !farm.approvedByAdmin && !farm.isRejected) ||
+        (statusFilter === "Rejected" && farm.isRejected);
+      return matchesQuery && matchesStatus;
+    });
+    setFilteredData(filteredResults);
+  }, [searchQuery, statusFilter, farmData]);
+
   const handleViewDocument = (farm: any) => {
     setSelectedFarm(farm);
     setIsModalOpen(true);
   };
 
-  // Function to handle delete action (you need to implement this function)
   const handleDelete = async (id: string) => {
-    // Implement the delete functionality here.
-    console.log(`Delete farm with id: ${id}`);
     try {
       const res = await deleteFarmOnboard(id);
-
       if (res.status === 200) {
         toast({
           title: "Farm deleted successfully",
-        })
+        });
         const updatedFarmData = farmData.filter((farm) => farm._id !== id);
         setFarmData(updatedFarmData);
+        setFilteredData(updatedFarmData); // Update filtered data as well
       }
     } catch (error) {
-      console.log(error)
+      console.error("Failed to delete farm onboarding data", error);
     }
   };
 
@@ -97,18 +134,6 @@ export default function AdminFarmOnboarding() {
             <Package2Icon className="h-6 w-6" />
             <span className="sr-only">Home</span>
           </Link>
-          <div className="w-full flex-1">
-            <form>
-              {/* <div className="relative">
-                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                <Input
-                  className="w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-950"
-                  placeholder="Search..."
-                  type="search"
-                />
-              </div> */}
-            </form>
-          </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -174,7 +199,42 @@ export default function AdminFarmOnboarding() {
             </Card>
           </div>
           <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
-            <h2 className="font-bold text-2xl mb-4">Farm Onboarding</h2>
+            <div className=" p-4  bg-white ">
+              <div className="flex flex-wrap lg:flex-nowrap justify-between items-center mb-4 w-full">
+                {/* Heading */}
+                <h2 className="font-bold text-2xl mb-4 lg:mb-0 w-full lg:w-2/5 ">
+                  Farm Onboarding
+                </h2>
+
+                {/* Filter and Search */}
+                <div className="flex items-center gap-4">
+                  {/* Filter Dropdown */}
+                  <select
+                    className="p-2 border border-black rounded-md"
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                  >
+                    <option value="All">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+
+                  {/* Search Input */}
+                  <form className="flex-1 relative border border-black rounded-md w-72 ">
+                    <Search className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-500" />
+                    <Input
+                      className="w-full bg-white shadow-none appearance-none pl-8 dark:bg-gray-950"
+                      placeholder="Search by Organization or Location..."
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <Table>
               <TableHeader>
                 <TableRow>
@@ -186,26 +246,43 @@ export default function AdminFarmOnboarding() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {farmData.length > 0 ? (
-                  farmData.map((farm, index) => (
+                {filteredData.length > 0 ? (
+                  filteredData.map((farm, index) => (
                     <TableRow key={index}>
                       <TableCell>{farm.organization || "N/A"}</TableCell>
                       <TableCell>{farm.address || "N/A"}</TableCell>
                       <TableCell>{farm.area || "N/A"}</TableCell>
                       <TableCell>
-                        {farm.approvedByAdmin ? "Approved" : "Pending"}
+                        {!farm.isRejected && (
+                          farm.approvedByAdmin ? (
+                            <div className="bg-green-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                              Approved
+                            </div>
+                          ) : (
+                            <div className="bg-yellow-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                              Pending
+                            </div>
+                          )
+                        )}
+                        {farm.isRejected && (
+                          <div className="bg-red-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                            Rejected
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-2">
-                          <Button variant="outline"
+                          <Button
+                            variant="outline"
                             className="hover:text-white hover:bg-green-600"
-                            onClick={() => handleViewDocument(farm)}>
+                            onClick={() => handleViewDocument(farm)}
+                          >
                             View Document
                           </Button>
                           <AlertDialogDemo
                             triggerText="Delete"
                             title="Are you absolutely sure?"
-                            description="This action cannot be undone. This will permanently delete users Farm onboarding data from our servers."
+                            description="This action cannot be undone. This will permanently delete the farm onboarding data from our servers."
                             actionText="Continue"
                             onAction={() => handleDelete(farm._id)}
                           />
@@ -235,47 +312,3 @@ export default function AdminFarmOnboarding() {
     </div>
   );
 }
-
-
-
-// Icon components
-function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-      <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
-      <path d="M12 3v6" />
-    </svg>
-  );
-}
-
-// function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-//   return (
-//     <svg
-//       {...props}
-//       xmlns="http://www.w3.org/2000/svg"
-//       width="24"
-//       height="24"
-//       viewBox="0 0 24 24"
-//       fill="none"
-//       stroke="currentColor"
-//       strokeWidth="2"
-//       strokeLinecap="round"
-//       strokeLinejoin="round"
-//     >
-//       <circle cx="11" cy="11" r="8" />
-//       <path d="m21 21-4.3-4.3" />
-//     </svg>
-//   );
-// }
