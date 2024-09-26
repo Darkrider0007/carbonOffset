@@ -103,13 +103,13 @@ function FarmOnboarding() {
                 </p>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full md:w-1/2">
                     {/* Email */}
-                    <div>
+                    <div >
                         <label className="block text-black text-xl font-semibold mb-2">Email <span className='text-red-600'>*</span></label>
                         <input
                             type="email"
                             placeholder="Your email"
                             {...register('email', { required: 'Email is required' })}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                     </div>
@@ -121,7 +121,7 @@ function FarmOnboarding() {
                             type="text"
                             placeholder="Your answer"
                             {...register('name', { required: 'Name is required' })}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                     </div>
@@ -133,7 +133,7 @@ function FarmOnboarding() {
                             type="text"
                             placeholder="Your answer"
                             {...register('phone', { required: 'Phone number is required' })}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
                     </div>
@@ -145,18 +145,18 @@ function FarmOnboarding() {
                             type="text"
                             placeholder="Your answer"
                             {...register('organization')}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                     </div>
 
                     {/* Address */}
                     <div>
-                        <label className="block text-black text-xl font-semibold mb-2">Address <span className='text-red-600'>*</span></label>
+                        <label className="block text-black text-xl font-semibold mb-2">Farm Address <span className='text-red-600'>*</span></label>
                         <input
                             type="text"
                             placeholder="Your answer"
                             {...register('address', { required: 'Address is required' })}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
                     </div>
@@ -171,7 +171,7 @@ function FarmOnboarding() {
                                 required: 'Area is required',
                                 validate: value => parseFloat(value) > 0 || 'Area must be greater than 0'
                             })}
-                            className="p-4 rounded-md border border-gray-300 w-full"
+                            className="p-4 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                         {errors.area && <p className="text-red-500 text-sm mt-1">{errors.area.message}</p>}
                     </div>
@@ -184,28 +184,48 @@ function FarmOnboarding() {
                                 type="number"
                                 placeholder="Degree"
                                 {...register('latitudeDegree', { required: 'Latitude degree is required', min: 0, max: 90 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
                             <input
                                 type="number"
                                 placeholder="Minute"
                                 {...register('latitudeMinute', { required: 'Latitude minute is required', min: 0, max: 60 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
                             <input
                                 type="number"
                                 placeholder="Second"
                                 {...register('latitudeSecond', { required: 'Latitude second is required', min: 0, max: 60 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
-                            <select
-                                {...register('latitudeDirection', { required: 'Direction is required' })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
-                            >
-                                <option value="">Direction</option>
-                                <option value="N">N</option>
-                                <option value="S">S</option>
-                            </select>
+                            <div className="relative w-1/4">
+                                <select
+                                    {...register("latitudeDirection", { required: "Direction is required" })}
+                                    className="p-4 rounded-lg border border-gray-300 w-full appearance-none shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                                >
+                                    <option value="">Direction</option>
+                                    <option value="N">N</option>
+                                    <option value="S">S</option>
+                                </select>
+                                {/* Chevron Icon */}
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+
                         </div>
                         {errors.latitudeDegree && <p className="text-red-500 text-sm mt-1">{errors.latitudeDegree.message}</p>}
                         {errors.latitudeMinute && <p className="text-red-500 text-sm mt-1">{errors.latitudeMinute.message}</p>}
@@ -221,28 +241,48 @@ function FarmOnboarding() {
                                 type="number"
                                 placeholder="Degree"
                                 {...register('longitudeDegree', { required: 'Longitude degree is required', min: 0, max: 180 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
                             <input
                                 type="number"
                                 placeholder="Minute"
                                 {...register('longitudeMinute', { required: 'Longitude minute is required', min: 0, max: 59 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
                             <input
                                 type="number"
                                 placeholder="Second"
                                 {...register('longitudeSecond', { required: 'Longitude second is required', min: 0, max: 59 })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                             />
-                            <select
-                                {...register('longitudeDirection', { required: 'Direction is required' })}
-                                className="p-4 rounded-md border border-gray-300 w-1/4"
-                            >
-                                <option value="">Direction</option>
-                                <option value="E">E</option>
-                                <option value="W">W</option>
-                            </select>
+                            <div className="relative w-1/4">
+                                <select
+                                    {...register("longitudeDirection", { required: "Direction is required" })}
+                                    className="p-4 rounded-lg border border-gray-300 w-full appearance-none shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                                >
+                                    <option value="">Direction</option>
+                                    <option value="E">E</option>
+                                    <option value="W">W</option>
+                                </select>
+                                {/* Chevron Icon */}
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+
                         </div>
                         {errors.longitudeDegree && <p className="text-red-500 text-sm mt-1">{errors.longitudeDegree.message}</p>}
                         {errors.longitudeMinute && <p className="text-red-500 text-sm mt-1">{errors.longitudeMinute.message}</p>}
@@ -252,25 +292,51 @@ function FarmOnboarding() {
 
                     {/* Type of Vegetation */}
                     <div>
-                        <label className="block text-black text-xl font-semibold mb-2">Type of Vegetation <span className='text-red-600'>*</span></label>
-                        <select
-                            {...register('vegetationType', { required: 'Type of Vegetation is required' })}
-                            className="p-4 rounded-md border border-gray-300 w-full bg-white"
-                        >
-                            <option value="">Select Vegetation Type</option>
-                            <option value="Pasture">Pasture</option>
-                            <option value="Forest">Forest</option>
-                            <option value="Wetland">Wetland</option>
-                            <option value="Cropland">Cropland</option>
-                            <option value="Grassland">Grassland</option>
-                            <option value="Orchard">Orchard</option>
-                        </select>
-                        {errors.vegetationType && <p className="text-red-500 text-sm mt-1">{errors.vegetationType.message}</p>}
+                        <label className="block text-black text-xl font-semibold mb-2">
+                            Type of Vegetation <span className="text-red-600">*</span>
+                        </label>
+                        <div className="relative">
+                            <select
+                                {...register("vegetationType", { required: "Type of Vegetation is required" })}
+                                className="p-4 rounded-lg border border-gray-300 w-full bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                            >
+                                <option value="" disabled>
+                                    Select Vegetation Type
+                                </option>
+                                <option value="Pasture">Pasture</option>
+                                <option value="Forest">Forest</option>
+                                <option value="Wetland">Wetland</option>
+                                <option value="Cropland">Cropland</option>
+                                <option value="Grassland">Grassland</option>
+                                <option value="Orchard">Orchard</option>
+                            </select>
+                            {/* Chevron Icon */}
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M19 9l-7 7-7-7"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                        {errors.vegetationType && (
+                            <p className="text-red-500 text-sm mt-1">{errors.vegetationType.message}</p>
+                        )}
                     </div>
+
 
                     {/* Document Upload (PDF only) */}
                     <div>
-                        <label className="block text-black text-xl font-semibold mb-2">Upload Document (PDF Only) <span className='text-red-600'>*</span></label>
+                        <label className="block text-black text-xl font-semibold mb-2">Upload Document (Proof of Ownership PDF Only) <span className='text-red-600'>*</span></label>
                         <input
                             type="file"
                             accept=".pdf"
