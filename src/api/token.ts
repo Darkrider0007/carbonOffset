@@ -15,8 +15,6 @@ export async function getTokenData() {
 
 export async function updateTokenPrice(tokenPrice: number, tokenId: string) {
   try {
-    console.log("tokenPrice", tokenPrice);
-    console.log("tokenId", tokenId);
     const res = await axios.put(
       `${BASE_URL}/api/token/update-token-value/${tokenId}`,
       { tokenPrice }
@@ -31,11 +29,28 @@ export async function updateTokenPrice(tokenPrice: number, tokenId: string) {
 
 export async function updateTokenPerTon(tokenPerTon: number, tokenId: string) {
   try {
-    console.log("tokenPrice", tokenPerTon);
-    console.log("tokenId", tokenId);
     const res = await axios.put(
       `${BASE_URL}/api/token/update-token-per-ton/${tokenId}`,
       { tokenPerTon }
+    );
+
+    return { data: res.data.data, status: res.status };
+  } catch (error) {
+    console.error("Error updating token price:", error);
+    throw error;
+  }
+}
+
+export async function updateTokenLimit(
+  tokenAmountLimit: number,
+  tokenId: string
+) {
+  try {
+    console.log("tokenPrice", tokenAmountLimit);
+    console.log("tokenId", tokenId);
+    const res = await axios.put(
+      `${BASE_URL}/api/token/update-token-limit/${tokenId}`,
+      { tokenAmountLimit }
     );
 
     return { data: res.data.data, status: res.status };

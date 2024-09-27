@@ -258,7 +258,7 @@ const Home = () => {
           >
             <img src={item.image} alt={item.title} />
             <h1 className="text-lg">{item.title}</h1>
-            <FaArrowRight color="green" />
+            {/* <FaArrowRight color="green" /> */}
           </div>
         ))}
       </div>

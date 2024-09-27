@@ -16,10 +16,12 @@ import { getUser } from "../api/auth/getUser";
 import { logout } from "../api/auth/loginAndLogout";
 import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
+// import { getTokenData } from "../api/token";
 
 export default function UserUpdates() {
   const navigate = useNavigate();
   const [user, setUser1] = useState<any>(null);
+  // const [tokenConversionRate, setTokenConversionRate] = useState(10);
 
   const location = useLocation();
 
@@ -70,6 +72,12 @@ export default function UserUpdates() {
       };
       getUserDetails();
     }
+
+    // const tokenConversion = async () => {
+    //   const tokenData = await getTokenData();
+    //   setTokenConversionRate(tokenData.data.tokenPrice);
+    // }
+    // tokenConversion();
   }, [location.state]);
 
   return (
@@ -110,16 +118,16 @@ export default function UserUpdates() {
 
           {/* Card Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card className="bg-green-600">
+            {/* <Card className="bg-green-600">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-white">
                   User Account Balance
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">$ {user ? user.tokenCount * 10 : 0}</div>
+                <div className="text-2xl font-bold text-white">$ {user ? user.tokenCount * tokenConversionRate : 0}</div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card className="bg-green-600">
               <CardHeader className="flex flex-row items-center justify-between pb-2">

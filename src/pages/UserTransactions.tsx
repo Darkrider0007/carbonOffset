@@ -22,12 +22,14 @@ import UserContext from "../context/UserContext";
 import { getUser } from "../api/auth/getUser";
 import { toast } from "../hooks/use-toast";
 import { logout } from "../api/auth/loginAndLogout";
+// import { getTokenData } from "../api/token";
 
 
 export default function UserUpdates() {
   const navigate = useNavigate();
   const [user, setUser1] = useState<any>(null);
   const context = useContext(UserContext);
+  // const [tokenConversionRate, setTokenConversionRate] = useState(10);
 
   // Ensure context is defined before accessing properties
 
@@ -69,7 +71,9 @@ export default function UserUpdates() {
     const getUserDetails = async () => {
       const res = await getUser();
       setUser1(res.data.data);
-      // console.log(res.data.data);
+
+      // const tokenData = await getTokenData();
+      // setTokenConversionRate(tokenData.data.tokenPrice);
     };
     getUserDetails();
 
@@ -119,16 +123,16 @@ export default function UserUpdates() {
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card className="bg-green-600">
+            {/* <Card className="bg-green-600">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-white">
                   User Account Balance
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">$ {user ? user.tokenCount * 10 : 0}</div>
+                <div className="text-2xl font-bold text-white">$ {user ? user.tokenCount * tokenConversionRate : 0}</div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card className="bg-green-600">
               <CardHeader className="flex flex-row items-center justify-between pb-2">

@@ -8,11 +8,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddToWallet } from "../api/stripe/checkout";
 import { Loader2 } from "lucide-react";
+import { getTokenData } from "../api/token";
 
 const OffsetNow = () => {
   const [amount, setAmount] = useState<number>(0);
   const [tokens, setTokens] = useState<number>(0);
-  const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
+  // const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
   const [submitting, setSubmitting] = useState(false);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +22,9 @@ const OffsetNow = () => {
   };
 
   const navigate = useNavigate();
-  const handleFrequencyClick = (frequency: string) => {
-    setSelectedFrequency(frequency);
-  };
+  // const handleFrequencyClick = (frequency: string) => {
+  //   setSelectedFrequency(frequency);
+  // };
 
 
   const handleAddToWallet = async () => {
@@ -36,13 +37,28 @@ const OffsetNow = () => {
     }
   }
 
-  useEffect(() => {
-    if (selectedFrequency === "One-Time") setTokens(amount / 10);
-    if (selectedFrequency === "Monthly") setTokens(amount / (10 * 12));
-    if (selectedFrequency === "Quarterly") setTokens(amount / (10 * 4));
-    if (selectedFrequency === "Yearly") setTokens(amount / 10);
-  }, [amount, selectedFrequency]);
+  // useEffect(() => {
+  //   if (selectedFrequency === "One-Time") setTokens(amount / 10);
+  //   if (selectedFrequency === "Monthly") setTokens(amount / (10 * 12));
+  //   if (selectedFrequency === "Quarterly") setTokens(amount / (10 * 4));
+  //   if (selectedFrequency === "Yearly") setTokens(amount / 10);
+  // }, [amount, selectedFrequency]);
 
+
+  useEffect(() => {
+    const amountChange = async () => {
+      try {
+        const res = await getTokenData();
+        const tokenPrice = res.data.tokenPrice;
+        setTokens(amount / tokenPrice);
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+
+    amountChange();
+
+  }, [amount]);
 
 
   return (
@@ -72,7 +88,7 @@ const OffsetNow = () => {
                 Credit Amount
               </button>
             </div>
-            <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 rounded-md flex flex-col items-center">
+            <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 py-10 rounded-md flex flex-col items-center">
               <h1 className="font-semibold">Enter Dollar Amount</h1>
               <input
                 placeholder="100 $"
@@ -80,7 +96,7 @@ const OffsetNow = () => {
                 onChange={handleAmountChange}
                 className="w-full h-14 text-2xl md:text-4xl font-bold text-center border-b-2 border-black focus:outline-none focus:border-b-2"
               />
-              <h1 className="font-semibold">Select Frequency</h1>
+              {/* <h1 className="font-semibold">Select Frequency</h1>
               <div className="flex flex-wrap gap-3 w-full items-center justify-center">
                 {["One-Time", "Monthly", "Quarterly", "Yearly"].map((frequency) => (
                   <div
@@ -94,7 +110,7 @@ const OffsetNow = () => {
                     {frequency}
                   </div>
                 ))}
-              </div>
+              </div> */}
               <h1 className="text-xs tracking-[4px] uppercase font-bold">
                 total <span className="text-green-600">{tokens.toFixed(2)} tokens</span>
               </h1>

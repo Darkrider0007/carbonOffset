@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
-import { getTokenData, updateTokenPerTon, updateTokenPrice } from "../api/token"; // Assuming there's an updateTokenAmountPerTon function in the API
+import { getTokenData, updateTokenPerTon, updateTokenPrice, updateTokenLimit } from "../api/token"; // Assuming there's an updateTokenLimit function in the API
 import { Loader2 } from "lucide-react";
 import { toast } from "../hooks/use-toast";
 
@@ -19,9 +19,11 @@ export default function Token() {
     const [tokenData, setTokenData] = useState<any>([]);
     const [updatingPrice, setUpdatingPrice] = useState(false);
     const [updatingAmount, setUpdatingAmount] = useState(false);
+    const [updatingLimit, setUpdatingLimit] = useState(false);
 
-    const { register, handleSubmit, reset } = useForm();
-    const { register: registerAmount, handleSubmit: handleSubmitAmount, reset: resetAmount } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register: registerAmount, handleSubmit: handleSubmitAmount, reset: resetAmount, formState: { errors: errorsAmount } } = useForm();
+    const { register: registerLimit, handleSubmit: handleSubmitLimit, reset: resetLimit, formState: { errors: errorsLimit } } = useForm();
 
     useEffect(() => {
         const fetchAdminData = async () => {
@@ -46,11 +48,13 @@ export default function Token() {
     const onUpdateTokenPrice = async (data: any) => {
         setUpdatingPrice(true);
         try {
-            console.log(data.tokenPrice);
             await updateTokenPrice(data.tokenPrice, tokenData._id);
             const updatedTokenData = await getTokenData();
             setTokenData(updatedTokenData.data);
             reset();
+            toast({
+                title: "Token Price updated successfully",
+            });
         } catch (error) {
             console.error("Error updating token price:", error);
         } finally {
@@ -62,19 +66,35 @@ export default function Token() {
     const onUpdateTokenAmountPerTon = async (data: any) => {
         setUpdatingAmount(true);
         try {
-            console.log(data.tokenAmountPerTon);
             await updateTokenPerTon(data.tokenAmountPerTon, tokenData._id);
             const updatedTokenData = await getTokenData();
             setTokenData(updatedTokenData.data);
             toast({
                 title: "Token Amount per Ton updated successfully",
-
-            })
+            });
             resetAmount();
         } catch (error) {
             console.error("Error updating token amount per ton:", error);
         } finally {
             setUpdatingAmount(false);
+        }
+    };
+
+    // Function to handle token limit update
+    const onUpdateTokenLimit = async (data: any) => {
+        setUpdatingLimit(true);
+        try {
+            await updateTokenLimit(data.tokenAmountLimit, tokenData._id);
+            const updatedTokenData = await getTokenData();
+            setTokenData(updatedTokenData.data);
+            toast({
+                title: "Token Limit updated successfully",
+            });
+            resetLimit();
+        } catch (error) {
+            console.error("Error updating token limit:", error);
+        } finally {
+            setUpdatingLimit(false);
         }
     };
 
@@ -91,7 +111,7 @@ export default function Token() {
                     </Link>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-                    <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <Card className="shadow-xl bg-green-300">
                             <CardHeader className="flex flex-row items-center justify-between pb-2">
                                 <CardTitle className="text-md font-bold text-black">
@@ -111,7 +131,8 @@ export default function Token() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-black">{tokenData.tokenVolume}</div>
+                                <div className="text-2xl font-bold text-black">{tokenData.tokenVolume.toFixed(4)}</div>
+
                             </CardContent>
                         </Card>
                         <Card className="shadow-xl bg-green-300">
@@ -123,6 +144,30 @@ export default function Token() {
                             <CardContent>
                                 <div className="text-2xl font-bold text-black">
                                     ${tokenData?.tokenPrice}
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="shadow-xl bg-white">
+                            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                <CardTitle className="text-md font-bold text-black">
+                                    Token Limit
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-2xl font-bold text-black">
+                                    ${tokenData?.tokenLimit}
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="shadow-xl bg-green-300">
+                            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                <CardTitle className="text-md font-bold text-black">
+                                    Token Amount per Ton
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-2xl font-bold text-black">
+                                    ${tokenData?.tokenPerTon}
                                 </div>
                             </CardContent>
                         </Card>
@@ -143,9 +188,16 @@ export default function Token() {
                                             type="number"
                                             step="0.01"
                                             placeholder="Enter new token price"
-                                            {...register("tokenPrice", { required: true })}
-                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950"
+                                            {...register("tokenPrice", {
+                                                required: "Token price is required",
+                                                min: { value: 0.01, message: "Minimum price is 0.01" },
+                                                max: { value: 1000, message: "Maximum price is 1000" }
+                                            })}
+                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
                                         />
+                                        {errors.tokenPrice && (
+                                            <p className="text-red-500">{String(errors.tokenPrice?.message)}</p>
+                                        )}
                                         <button
                                             type="submit"
                                             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
@@ -154,9 +206,7 @@ export default function Token() {
                                                 updatingPrice ? <div className="flex flex-row">
                                                     <Loader2 className="animate-spin mr-2" /> Updating ...
                                                 </div> :
-                                                    <>
-                                                        <h1 className="text-white">Update</h1>
-                                                    </>
+                                                    <h1 className="text-white">Update</h1>
                                             }
                                         </button>
                                     </div>
@@ -178,9 +228,16 @@ export default function Token() {
                                             type="number"
                                             step="0.0001"
                                             placeholder="Enter new token amount per ton"
-                                            {...registerAmount("tokenAmountPerTon", { required: true })}
-                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950"
+                                            {...registerAmount("tokenAmountPerTon", {
+                                                required: "Token amount per ton is required",
+                                                min: { value: 0.0001, message: "Minimum amount is 0.0001" },
+                                                max: { value: 100000, message: "Maximum amount is 100000" }
+                                            })}
+                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
                                         />
+                                        {errorsAmount.tokenAmountPerTon && (
+                                            <p className="text-red-500">{errorsAmount.tokenAmountPerTon?.message as string}</p>
+                                        )}
                                         <button
                                             type="submit"
                                             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
@@ -189,9 +246,49 @@ export default function Token() {
                                                 updatingAmount ? <div className="flex flex-row">
                                                     <Loader2 className="animate-spin mr-2" /> Updating ...
                                                 </div> :
-                                                    <>
-                                                        <h1 className="text-white">Update</h1>
-                                                    </>
+                                                    <h1 className="text-white">Update</h1>
+                                            }
+                                        </button>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+
+                        {/* Update Token Limit */}
+                        <Card className="shadow-xl">
+                            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                <CardTitle className="text-md font-bold text-black">
+                                    Update Token Limit
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <form onSubmit={handleSubmitLimit(onUpdateTokenLimit)}>
+                                    <div className="flex gap-4 items-center">
+                                        <Input
+                                            type="number"
+                                            placeholder="Enter new token limit"
+                                            {...registerLimit("tokenAmountLimit",
+                                                {
+                                                    required: "Token limit is required",
+                                                    valueAsNumber: true,
+                                                    min: { value: 1, message: "Minimum limit is 1" },
+                                                    max: { value: 1000000, message: "Maximum limit is 1000000" },
+                                                }
+                                            )}
+                                            className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        />
+                                        {errorsLimit.tokenAmountLimit && (
+                                            <p className="text-red-500">{errorsLimit.tokenAmountLimit?.message as string}</p>
+                                        )}
+                                        <button
+                                            type="submit"
+                                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        >
+                                            {
+                                                updatingLimit ? <div className="flex flex-row">
+                                                    <Loader2 className="animate-spin mr-2" /> Updating ...
+                                                </div> :
+                                                    <h1 className="text-white">Update</h1>
                                             }
                                         </button>
                                     </div>
