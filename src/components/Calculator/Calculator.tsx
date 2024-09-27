@@ -187,6 +187,13 @@ const CarbonOffsetCalculator: React.FC = () => {
                     <p className="text-lg">
                         <span className="font-semibold">Net Negative in 5 Years:</span> {totalOffset.netNegative5Years.toFixed(2)}
                     </p>
+
+                    <p className="mt-4 text-lg font-bold">We offer three options:</p>
+                    <ul className="list-disc list-inside">
+                        <li><span className='font-semibold'>Option 1:</span> A one-time, all-inclusive investment of 250 UNY / offset unit that covers you and your business for the life of your operations</li>
+                        <li><span className='font-semibold'>Option :</span> A yearly recurring cost of 30 UNY / offset unit that covers you and your business for the year of your operations</li>
+                        <li><span className='font-semibold'>Option 3:</span> A monthly recurring cost of 3 UNY / offset unit that covers you and your business for each month of your operations</li>
+                    </ul>
                 </div>
             )}
         </div>
