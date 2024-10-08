@@ -131,7 +131,7 @@ export default function Token() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-black">{tokenData.tokenVolume.toFixed(4)}</div>
+                                <div className="text-2xl font-bold text-black">{tokenData?.tokenVolume && tokenData?.tokenVolume.toFixed(2)}</div>
 
                             </CardContent>
                         </Card>

@@ -70,6 +70,19 @@ function FarmOnboarding() {
         }
     };
 
+    // Generating options for degrees, minutes, and seconds dropdown
+    const generateOptions = (start: number, end: number) => {
+        const options = [];
+        for (let i = start; i <= end; i++) {
+            options.push(
+                <option key={i} value={i}>
+                    {i}
+                </option>
+            );
+        }
+        return options;
+    };
+
     return (
         <div>
             <Navbar />
@@ -103,7 +116,7 @@ function FarmOnboarding() {
                 </p>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full md:w-1/2">
                     {/* Email */}
-                    <div >
+                    <div>
                         <label className="block text-black text-xl font-semibold mb-2">Email <span className='text-red-600'>*</span></label>
                         <input
                             type="email"
@@ -166,6 +179,7 @@ function FarmOnboarding() {
                         <label className="block text-black text-xl font-semibold mb-2">Area (Acres) <span className='text-red-600'>*</span></label>
                         <input
                             type="number"
+                            step="0.01" // Allows decimals up to two places for partial acres
                             placeholder="Your answer"
                             {...register('area', {
                                 required: 'Area is required',
@@ -180,52 +194,35 @@ function FarmOnboarding() {
                     <div>
                         <label className="block text-black text-xl font-semibold mb-2">Latitude <span className='text-red-600'>*</span></label>
                         <div className="flex gap-2">
-                            <input
-                                type="number"
-                                placeholder="Degree"
-                                {...register('latitudeDegree', { required: 'Latitude degree is required', min: 0, max: 90 })}
+                            <select
+                                {...register('latitudeDegree', { required: 'Latitude degree is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Minute"
-                                {...register('latitudeMinute', { required: 'Latitude minute is required', min: 0, max: 60 })}
+                            >
+                                <option value="">Degree</option>
+                                {generateOptions(0, 90)}
+                            </select>
+                            <select
+                                {...register('latitudeMinute', { required: 'Latitude minute is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Second"
-                                {...register('latitudeSecond', { required: 'Latitude second is required', min: 0, max: 60 })}
+                            >
+                                <option value="">Minute</option>
+                                {generateOptions(0, 59)}
+                            </select>
+                            <select
+                                {...register('latitudeSecond', { required: 'Latitude second is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <div className="relative w-1/4">
-                                <select
-                                    {...register("latitudeDirection", { required: "Direction is required" })}
-                                    className="p-4 rounded-lg border border-gray-300 w-full appearance-none shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                                >
-                                    <option value="">Direction</option>
-                                    <option value="N">N</option>
-                                    <option value="S">S</option>
-                                </select>
-                                {/* Chevron Icon */}
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M19 9l-7 7-7-7"
-                                        ></path>
-                                    </svg>
-                                </div>
-                            </div>
-
+                            >
+                                <option value="">Second</option>
+                                {generateOptions(0, 59)}
+                            </select>
+                            <select
+                                {...register("latitudeDirection", { required: "Direction is required" })}
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                            >
+                                <option value="">Direction</option>
+                                <option value="N">N</option>
+                                <option value="S">S</option>
+                            </select>
                         </div>
                         {errors.latitudeDegree && <p className="text-red-500 text-sm mt-1">{errors.latitudeDegree.message}</p>}
                         {errors.latitudeMinute && <p className="text-red-500 text-sm mt-1">{errors.latitudeMinute.message}</p>}
@@ -237,52 +234,35 @@ function FarmOnboarding() {
                     <div>
                         <label className="block text-black text-xl font-semibold mb-2">Longitude <span className='text-red-600'>*</span></label>
                         <div className="flex gap-2">
-                            <input
-                                type="number"
-                                placeholder="Degree"
-                                {...register('longitudeDegree', { required: 'Longitude degree is required', min: 0, max: 180 })}
+                            <select
+                                {...register('longitudeDegree', { required: 'Longitude degree is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Minute"
-                                {...register('longitudeMinute', { required: 'Longitude minute is required', min: 0, max: 59 })}
+                            >
+                                <option value="">Degree</option>
+                                {generateOptions(0, 180)}
+                            </select>
+                            <select
+                                {...register('longitudeMinute', { required: 'Longitude minute is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Second"
-                                {...register('longitudeSecond', { required: 'Longitude second is required', min: 0, max: 59 })}
+                            >
+                                <option value="">Minute</option>
+                                {generateOptions(0, 59)}
+                            </select>
+                            <select
+                                {...register('longitudeSecond', { required: 'Longitude second is required' })}
                                 className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <div className="relative w-1/4">
-                                <select
-                                    {...register("longitudeDirection", { required: "Direction is required" })}
-                                    className="p-4 rounded-lg border border-gray-300 w-full appearance-none shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                                >
-                                    <option value="">Direction</option>
-                                    <option value="E">E</option>
-                                    <option value="W">W</option>
-                                </select>
-                                {/* Chevron Icon */}
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M19 9l-7 7-7-7"
-                                        ></path>
-                                    </svg>
-                                </div>
-                            </div>
-
+                            >
+                                <option value="">Second</option>
+                                {generateOptions(0, 59)}
+                            </select>
+                            <select
+                                {...register("longitudeDirection", { required: "Direction is required" })}
+                                className="p-4 rounded-md border border-gray-300 w-1/4 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                            >
+                                <option value="">Direction</option>
+                                <option value="E">E</option>
+                                <option value="W">W</option>
+                            </select>
                         </div>
                         {errors.longitudeDegree && <p className="text-red-500 text-sm mt-1">{errors.longitudeDegree.message}</p>}
                         {errors.longitudeMinute && <p className="text-red-500 text-sm mt-1">{errors.longitudeMinute.message}</p>}
@@ -310,29 +290,11 @@ function FarmOnboarding() {
                                 <option value="Grassland">Grassland</option>
                                 <option value="Orchard">Orchard</option>
                             </select>
-                            {/* Chevron Icon */}
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
-                                <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M19 9l-7 7-7-7"
-                                    ></path>
-                                </svg>
-                            </div>
                         </div>
                         {errors.vegetationType && (
                             <p className="text-red-500 text-sm mt-1">{errors.vegetationType.message}</p>
                         )}
                     </div>
-
 
                     {/* Document Upload (PDF only) */}
                     <div>
@@ -345,7 +307,6 @@ function FarmOnboarding() {
                             className='bg-gray-100 p-4 rounded-md border border-gray-300 w-full'
                         />
                         {errors.document && <p className="text-red-500 text-sm mt-1">{errors.document.message}</p>}
-
                     </div>
 
                     {/* Submit Button */}

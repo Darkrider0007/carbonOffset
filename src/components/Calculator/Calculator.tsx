@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
-    remoteWorkers: string;
-    onsiteWorkers: string;
-    travelingWorkers: string;
-    additionalEmissions: string;
+    remoteWorkers?: string;
+    onsiteWorkers?: string;
+    travelingWorkers?: string;
+    additionalEmissions?: string;
 };
 
 // Define types for offsets
@@ -22,6 +23,9 @@ const CarbonOffsetCalculator: React.FC = () => {
     });
 
     const [showResults, setShowResults] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const [selectedOffset, setSelectedOffset] = useState<string>(''); // For offset radio selection
+    const [selectedPaymentOption, setSelectedPaymentOption] = useState<string>(''); // For payment option selection
 
     // Watch all fields for disabling the submit button
     const allFields = watch();
@@ -54,8 +58,11 @@ const CarbonOffsetCalculator: React.FC = () => {
         },
     };
 
+    const navigate = useNavigate();
+
     // Calculation Functions for each offset category
     const calculateOffset = (type: string, multiplier: number): OffsetValues => {
+
         return {
             netNegativeImmediate: multiplier * OFFSET_VALUES[type].netNegativeImmediate,
             neutral5Years: multiplier * OFFSET_VALUES[type].neutral5Years,
@@ -103,56 +110,115 @@ const CarbonOffsetCalculator: React.FC = () => {
     const handleReset = () => {
         reset();
         setShowResults(false);
+        setSelectedOptions([]);
+        setSelectedOffset('');
+        setSelectedPaymentOption('');
     };
+
+    // Handle selecting options
+    const handleSelectOption = (option: string) => {
+        if (selectedOptions.includes(option)) {
+            setSelectedOptions(selectedOptions.filter((o) => o !== option));
+        } else {
+            setSelectedOptions([...selectedOptions, option]);
+        }
+    };
+
+    // Options for the dropdown
+    const options = [
+        { label: 'Remote Workers', value: 'remoteWorkers' },
+        { label: 'Onsite Workers', value: 'onsiteWorkers' },
+        { label: 'Traveling Workers', value: 'travelingWorkers' },
+        { label: 'Additional Emissions (per CO2 MT / year)', value: 'additionalEmissions' },
+    ];
 
     return (
         <div className="max-w-4xl mx-auto p-8 bg-gray-100 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold text-center text-green-600 mb-6">Carbon Offset Calculator</h2>
+
+            {/* Explanation section */}
+            <div className="mb-6">
+                <p className="text-lg text-gray-700 mb-4">
+                    If you are an individual, select "Additional Emissions (per CO2 MT / year)" and the type of worker you are. For example, if you are a remote worker, select that option and input "1".
+                    If you run a business, select the relevant worker categories and add their quantities.To calculate the additional emission you can refer the <span onClick={() =>
+                        navigate('/calculator/calculationMethods')} className="text-green-600 hover:text-green-700 cursor-pointer">Calculation Methods</span>
+                </p>
+            </div>
+
+            {/* Dropdown for selecting options */}
+            <div className="mb-6">
+                <label className="text-lg font-semibold mb-2">Select Options:</label>
+                <div className="flex flex-wrap gap-4">
+                    {options.map((option) => (
+                        <button
+                            key={option.value}
+                            type="button"
+                            className={`px-4 py-2 rounded-md border ${selectedOptions.includes(option.value) ? 'bg-green-500 text-white' : 'bg-white text-green-600 border-green-500'} focus:outline-none`}
+                            onClick={() => handleSelectOption(option.value)}
+                        >
+                            {option.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="flex flex-col">
-                    <label className="text-lg font-semibold mb-2">Number of Remote Workers:</label>
-                    <input
-                        type="number"
-                        min="0"
-                        {...register("remoteWorkers", { required: true })}
-                        className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.remoteWorkers ? 'border-red-500' : ''}`}
-                        disabled={showResults}
-                    />
-                    {errors.remoteWorkers && <p className="text-red-500 text-sm">This field is required</p>}
-                </div>
-                <div className="flex flex-col">
-                    <label className="text-lg font-semibold mb-2">Number of Onsite Workers:</label>
-                    <input
-                        type="number"
-                        min="0"
-                        {...register("onsiteWorkers", { required: true })}
-                        className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.onsiteWorkers ? 'border-red-500' : ''}`}
-                        disabled={showResults}
-                    />
-                    {errors.onsiteWorkers && <p className="text-red-500 text-sm">This field is required</p>}
-                </div>
-                <div className="flex flex-col">
-                    <label className="text-lg font-semibold mb-2">Number of Traveling Workers:</label>
-                    <input
-                        type="number"
-                        min="0"
-                        {...register("travelingWorkers", { required: true })}
-                        className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.travelingWorkers ? 'border-red-500' : ''}`}
-                        disabled={showResults}
-                    />
-                    {errors.travelingWorkers && <p className="text-red-500 text-sm">This field is required</p>}
-                </div>
-                <div className="flex flex-col">
-                    <label className="text-lg font-semibold mb-2">Additional Emissions (per CO2 MT / year):</label>
-                    <input
-                        type="number"
-                        min="0"
-                        {...register("additionalEmissions", { required: true })}
-                        className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.additionalEmissions ? 'border-red-500' : ''}`}
-                        disabled={showResults}
-                    />
-                    {errors.additionalEmissions && <p className="text-red-500 text-sm">This field is required</p>}
-                </div>
+                {selectedOptions.includes('remoteWorkers') && (
+                    <div className="flex flex-col">
+                        <label className="text-lg font-semibold mb-2">Number of Remote Workers:</label>
+                        <input
+                            type="number"
+                            min="0"
+                            {...register("remoteWorkers", { required: true })}
+                            className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.remoteWorkers ? 'border-red-500' : ''}`}
+                            disabled={showResults}
+                        />
+                        {errors.remoteWorkers && <p className="text-red-500 text-sm">This field is required</p>}
+                    </div>
+                )}
+
+                {selectedOptions.includes('onsiteWorkers') && (
+                    <div className="flex flex-col">
+                        <label className="text-lg font-semibold mb-2">Number of Onsite Workers:</label>
+                        <input
+                            type="number"
+                            min="0"
+                            {...register("onsiteWorkers", { required: true })}
+                            className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.onsiteWorkers ? 'border-red-500' : ''}`}
+                            disabled={showResults}
+                        />
+                        {errors.onsiteWorkers && <p className="text-red-500 text-sm">This field is required</p>}
+                    </div>
+                )}
+
+                {selectedOptions.includes('travelingWorkers') && (
+                    <div className="flex flex-col">
+                        <label className="text-lg font-semibold mb-2">Number of Traveling Workers:</label>
+                        <input
+                            type="number"
+                            min="0"
+                            {...register("travelingWorkers", { required: true })}
+                            className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.travelingWorkers ? 'border-red-500' : ''}`}
+                            disabled={showResults}
+                        />
+                        {errors.travelingWorkers && <p className="text-red-500 text-sm">This field is required</p>}
+                    </div>
+                )}
+
+                {selectedOptions.includes('additionalEmissions') && (
+                    <div className="flex flex-col">
+                        <label className="text-lg font-semibold mb-2">Additional Emissions (per CO2 MT / year):</label>
+                        <input
+                            type="number"
+                            min="0"
+                            {...register("additionalEmissions", { required: true })}
+                            className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.additionalEmissions ? 'border-red-500' : ''}`}
+                            disabled={showResults}
+                        />
+                        {errors.additionalEmissions && <p className="text-red-500 text-sm">This field is required</p>}
+                    </div>
+                )}
+
                 <div className="flex justify-center col-span-1 md:col-span-2">
                     <button
                         type="submit"
@@ -172,28 +238,94 @@ const CarbonOffsetCalculator: React.FC = () => {
                     )}
                 </div>
             </form>
+
             {showResults && (
                 <div className="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h3 className="text-xl font-semibold mb-4">Total Offset Token</h3>
-                    <p className="text-lg">
-                        <span className="font-semibold">Immediate Net Negative:</span> {totalOffset.netNegativeImmediate.toFixed(2)}
-                    </p>
-                    <p className="text-lg">
-                        <span className="font-semibold">Neutral in 5 Years:</span> {totalOffset.neutral5Years.toFixed(2)}
-                    </p>
-                    <p className="text-lg">
-                        <span className="font-semibold">Neutral in 1 Year:</span> {totalOffset.neutral1Year.toFixed(2)}
-                    </p>
-                    <p className="text-lg">
-                        <span className="font-semibold">Net Negative in 5 Years:</span> {totalOffset.netNegative5Years.toFixed(2)}
-                    </p>
 
-                    <p className="mt-4 text-lg font-bold">We offer three options:</p>
-                    <ul className="list-disc list-inside">
-                        <li><span className='font-semibold'>Option 1:</span> A one-time, all-inclusive investment of 250 UNY / offset unit that covers you and your business for the life of your operations</li>
-                        <li><span className='font-semibold'>Option :</span> A yearly recurring cost of 30 UNY / offset unit that covers you and your business for the year of your operations</li>
-                        <li><span className='font-semibold'>Option 3:</span> A monthly recurring cost of 3 UNY / offset unit that covers you and your business for each month of your operations</li>
-                    </ul>
+                    {/* Radio buttons for offset selection */}
+                    <div className="mb-4">
+                        <label className="text-lg font-semibold mb-2">Select Offset:</label>
+                        <div className="flex flex-col space-y-2">
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="ImmediateNetNegative"
+                                    checked={selectedOffset === 'ImmediateNetNegative'}
+                                    onChange={() => setSelectedOffset('ImmediateNetNegative')}
+                                    className='m-2'
+                                />
+                                Immediate Net Negative: {totalOffset.netNegativeImmediate.toFixed(2)}
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="Neutral5Years"
+                                    checked={selectedOffset === 'Neutral5Years'}
+                                    onChange={() => setSelectedOffset('Neutral5Years')}
+                                    className='m-2'
+                                />
+                                Neutral in 5 Years: {totalOffset.neutral5Years.toFixed(2)}
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="Neutral1Year"
+                                    checked={selectedOffset === 'Neutral1Year'}
+                                    onChange={() => setSelectedOffset('Neutral1Year')}
+                                    className='m-2'
+                                />
+                                Neutral in 1 Year: {totalOffset.neutral1Year.toFixed(2)}
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="NetNegative5Years"
+                                    checked={selectedOffset === 'NetNegative5Years'}
+                                    onChange={() => setSelectedOffset('NetNegative5Years')}
+                                    className='m-2'
+                                />
+                                Net Negative in 5 Years: {totalOffset.netNegative5Years.toFixed(2)}
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* Radio buttons for payment options */}
+                    <div className="mb-4">
+                        <label className="text-lg font-semibold mb-2">Select Payment Option:</label>
+                        <div className="flex flex-col space-y-2">
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="Option1"
+                                    checked={selectedPaymentOption === 'Option1'}
+                                    onChange={() => setSelectedPaymentOption('Option1')}
+                                    className='m-2'
+                                />
+                                Option 1: A one-time, all-inclusive investment of 250 UNY / offset unit that covers you and your business for the life of your operations
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="Option2"
+                                    checked={selectedPaymentOption === 'Option2'}
+                                    onChange={() => setSelectedPaymentOption('Option2')}
+                                    className='m-2'
+                                />
+                                Option 2: A yearly recurring cost of 30 UNY / offset unit that covers you and your business for the year of your operations
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="Option3"
+                                    checked={selectedPaymentOption === 'Option3'}
+                                    onChange={() => setSelectedPaymentOption('Option3')}
+                                    className='m-2'
+                                />
+                                Option 3: A monthly recurring cost of 3 UNY / offset unit that covers you and your business for each month of your operations
+                            </label>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

@@ -94,12 +94,19 @@ const Home = () => {
         </h1>
 
         {/* Button */}
-        {user && <button
+        {user ? <button
           onClick={() => navigate("/offsetNow")}
           className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
         >
           <FaTree /> Offset Now
-        </button>}
+        </button> :
+          <button
+            onClick={() => navigate("/login")}
+            className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+          >
+            <FaTree /> Login to Offset Now
+          </button>
+        }
 
         {/* Curve Image */}
         <img src={curve} alt="curve" className="absolute bottom-20 w-full" />

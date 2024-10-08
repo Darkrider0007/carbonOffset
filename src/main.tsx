@@ -30,6 +30,8 @@ import Token from "./pages/Token";
 import FarmOnboarding from "./pages/FarmOnboarding";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminUsers from "./pages/AdminUsers";
+import CalculationMethods from "./pages/CalculationMethods";
+import PageNotFound from "./pages/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "/calculator",
     element: <CarbonCalculator />,
+  },
+  {
+    path: "/calculator/calculationMethods",
+    element: <CalculationMethods />,
   },
   {
     path: "/services",
@@ -171,6 +177,10 @@ const router = createBrowserRouter([
     path: `admin/${import.meta.env.VITE_ADMIN_ROUTE}`,
     element: <AdminLogin />,
   },
+  {
+    path: "*",
+    element: <PageNotFound />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

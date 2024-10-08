@@ -5,6 +5,7 @@ import { adminLogin } from '../api/auth/loginAndLogout';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { toast } from '../hooks/use-toast';
+import bg from "../assets/home/bg.png";
 
 type LoginFormInputs = {
     email: string;
@@ -56,21 +57,29 @@ const AdminLogin: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-semibold text-gray-700 text-center">Admin Login</h2>
+        <div
+            style={{
+                backgroundImage: `url(${bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "100vh",
+                width: "100%",
+            }}
+            className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="w-full max-w-md bg-white/70 rounded-lg shadow-md p-8">
+                <h2 className="text-2xl font-semibold text-gray-900 text-center">Admin Login</h2>
 
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     {/* Email Field */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                             Email
                         </label>
                         <input
                             type="email"
                             id="email"
                             className={`mt-1 block w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'
-                                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500`}
                             placeholder="admin@example.com"
                             {...register('email', {
                                 required: 'Email is required', pattern: {
@@ -86,14 +95,14 @@ const AdminLogin: React.FC = () => {
 
                     {/* Password Field */}
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                             Password
                         </label>
                         <input
                             type="password"
                             id="password"
                             className={`mt-1 block w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'
-                                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500`}
                             placeholder="********"
                             {...register('password', {
                                 required: 'Password is required', minLength: {
@@ -110,7 +119,7 @@ const AdminLogin: React.FC = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     >
                         {
                             loading ?

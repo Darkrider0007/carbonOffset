@@ -13,7 +13,7 @@ import { Button } from "../components/ui/button";
 import { FaLeftLong, FaRightLong } from "react-icons/fa6";
 import UserContext from "../context/UserContext";
 import { AlertDialogDemo } from "../components/AleartBox";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GrPowerReset } from "react-icons/gr";
 import CarbonOffsetCalculator from "../components/Calculator/Calculator";
 import { getTokenData } from "../api/token";
@@ -397,9 +397,9 @@ const CarbonCalculator = () => {
             The data for this calculator comes from the EPA and U.S. Department
             of Energy. See our Calculation Methods page for more information.
           </h1>
-          <button className="bg-green-600 w-40 py-2 rounded-full font-semibold text-white">
+          <Link to={'/calculator/calculationMethods'} className="bg-green-600 hover:bg-green-700 w-40 py-2 flex justify-center items-center rounded-full font-semibold text-white">
             Learn More
-          </button>
+          </Link>
         </div>
       </div>
       <Footer />
