@@ -1,20 +1,22 @@
 import { Button } from "../components/ui/button";
-import {
-    CardTitle,
-    CardHeader,
-    CardContent,
-    Card,
-} from "../components/ui/card";
+import
+    {
+        CardTitle,
+        CardHeader,
+        CardContent,
+        Card,
+    } from "../components/ui/card";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
-import {
-    TableHead,
-    TableRow,
-    TableHeader,
-    TableCell,
-    TableBody,
-    Table,
-} from "../components/ui/table";
+import
+    {
+        TableHead,
+        TableRow,
+        TableHeader,
+        TableCell,
+        TableBody,
+        Table,
+    } from "../components/ui/table";
 import { FaArrowUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { getAdminData } from "../api/admin";
@@ -22,7 +24,8 @@ import { Coins, MoveLeftIcon, MoveRight, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 import { getAllUsers } from "../api/auth/getUser";
 
-export default function AdminUsers() {
+export default function AdminUsers()
+{
     const [dashBoardData, setDashBoardData] = useState<any>([]);
     const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
     const [allUsers, setAllUsers] = useState<any>([]);
@@ -30,30 +33,38 @@ export default function AdminUsers() {
     const [usersPerPage] = useState(20); // Number of users per page
     const [searchTerm, setSearchTerm] = useState(""); // Search term state
 
-    useEffect(() => {
-        const fetchAdminData = async () => {
+    useEffect(() =>
+    {
+        const fetchAdminData = async () =>
+        {
             const res = await getAdminData();
             setDashBoardData(res.data);
         };
 
-        const fetchFarmData = async () => {
-            try {
+        const fetchFarmData = async () =>
+        {
+            try
+            {
                 const res = await getFarmOnboard();
                 const approvedFarms = res.data.filter(
                     (farm: any) => farm.approvedByAdmin
                 );
 
                 setApprovedFarmData(approvedFarms.length);
-            } catch (error) {
+            } catch (error)
+            {
                 console.error("Failed to fetch farm data", error);
             }
         };
 
-        const fetchUsers = async () => {
-            try {
+        const fetchUsers = async () =>
+        {
+            try
+            {
                 const res = await getAllUsers();
                 setAllUsers(res.data);
-            } catch (error) {
+            } catch (error)
+            {
                 console.error("Failed to fetch all users", error);
             }
         };
@@ -102,7 +113,7 @@ export default function AdminUsers() {
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold text-black">
-                                    {dashBoardData?.totalUsers || 0}
+                                    {dashBoardData && dashBoardData?.totalUsers || 0}
                                 </div>
                             </CardContent>
                             <CardContent>
@@ -218,7 +229,8 @@ export default function AdminUsers() {
     );
 }
 
-function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
+function Package2Icon(props: React.SVGProps<SVGSVGElement>)
+{
     return (
         <svg
             {...props}

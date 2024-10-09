@@ -16,7 +16,7 @@ export async function login(loginData: {
 
     // Store the access token in a cookie
     Cookies.set("accessToken", response.data.accessToken, {
-      expires: 3,
+      expires: 10,
       secure: true,
       sameSite: "Strict",
       path: "/",
@@ -74,6 +74,14 @@ export async function adminLogin(loginData: {
     const response = await axios.post(`${BASE_URL}/api/admin/admin-login`, {
       email: loginData.email,
       password: loginData.password,
+    });
+
+    // Store the access token in a cookie
+    Cookies.set("adminToken", response.data.token, {
+      expires: 1,
+      secure: true,
+      sameSite: "Strict",
+      path: "/",
     });
 
     return { data: response.data, status: response.status };

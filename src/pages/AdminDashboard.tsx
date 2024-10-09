@@ -1,20 +1,22 @@
 import { Button } from "../components/ui/button";
-import {
-  CardTitle,
-  CardHeader,
-  CardContent,
-  Card,
-} from "../components/ui/card";
+import
+  {
+    CardTitle,
+    CardHeader,
+    CardContent,
+    Card,
+  } from "../components/ui/card";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
-import {
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableCell,
-  TableBody,
-  Table,
-} from "../components/ui/table";
+import
+  {
+    TableHead,
+    TableRow,
+    TableHeader,
+    TableCell,
+    TableBody,
+    Table,
+  } from "../components/ui/table";
 import { FaArrowUp } from "react-icons/fa6";
 import AddProject from "../components/AddProject";
 import { useEffect, useState } from "react";
@@ -23,7 +25,8 @@ import { getAdminData } from "../api/admin";
 import { Plus, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 
-interface ProjectData {
+interface ProjectData
+{
   name: string;
   location: string;
   status: string;
@@ -32,50 +35,59 @@ interface ProjectData {
   image: string;
 }
 
-export default function AdminDashboard() {
+export default function AdminDashboard()
+{
   const [projectData, setProjectData] = useState<ProjectData[]>([]);
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Added state for search term
 
-  const handleAddProject = () => {
+  const handleAddProject = () =>
+  {
     setIsModalOpen(true);
   };
 
-  const toggleModal = () => {
+  const toggleModal = () =>
+  {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleDeleteProject = async (id: string) => {
-    try {
-      const res = await deleteProject({ id });
-      console.log(res);
+  const handleDeleteProject = async (id: string) =>
+  {
+    try
+    {
+      await deleteProject({ id });
       setProjectData((prev) =>
         prev.filter((project: any) => project._id !== id)
       );
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Failed to delete project", error);
     }
   };
 
-  useEffect(() => {
-    const fetchAdminData = async () => {
+  useEffect(() =>
+  {
+    const fetchAdminData = async () =>
+    {
       const res = await getAdminData();
       setProjectData(res.data.allProjects);
       setDashBoardData(res.data);
-      console.log("res", res.data);
     };
 
-    const fetchFarmData = async () => {
-      try {
+    const fetchFarmData = async () =>
+    {
+      try
+      {
         const res = await getFarmOnboard();
         const approvedFarms = res.data.filter(
           (farm: any) => farm.approvedByAdmin
         );
 
         setApprovedFarmData(approvedFarms.length);
-      } catch (error) {
+      } catch (error)
+      {
         console.error("Failed to fetch farm data", error);
       }
     };
@@ -241,7 +253,8 @@ export default function AdminDashboard() {
                           <Button
                             variant="outline"
                             className="hover:text-white hover:bg-red-600"
-                            onClick={() => {
+                            onClick={() =>
+                            {
                               handleDeleteProject(project._id);
                             }}
                           >
@@ -275,7 +288,8 @@ export default function AdminDashboard() {
   );
 }
 
-function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
+function Package2Icon(props: React.SVGProps<SVGSVGElement>)
+{
   return (
     <svg
       {...props}
