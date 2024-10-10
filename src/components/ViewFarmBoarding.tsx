@@ -4,8 +4,10 @@ import { useState } from "react";
 import { RiLoader2Line } from "react-icons/ri";
 import { ScrollArea } from "./ui/scroll-area";
 import { updateFarmOnboardApproval } from "../api/farmOnboard";
+import { toast } from "../hooks/use-toast";
 
-interface ViewFarmBoardingProps {
+interface ViewFarmBoardingProps
+{
     isOpen: boolean;
     toggleModal: () => void;
     selectedProject?: any;
@@ -13,54 +15,82 @@ interface ViewFarmBoardingProps {
     farmData?: any[];
 }
 
-function ViewFarmBoarding({ isOpen, toggleModal, selectedProject, onUpdateProject, farmData }: ViewFarmBoardingProps) {
+function ViewFarmBoarding({ isOpen, toggleModal, selectedProject, onUpdateProject, farmData }: ViewFarmBoardingProps)
+{
     const [loading1, setLoading1] = useState(false);
     const [loading2, setLoading2] = useState(false);
+    console.log(selectedProject);
 
     // Handle approval of farm onboarding
-    const handleApproval = async (approved: boolean) => {
+    const handleApproval = async (approved: boolean) =>
+    {
         if (!selectedProject || !selectedProject._id) return;
         setLoading2(true);
-        try {
+        try
+        {
             const res = await updateFarmOnboardApproval(selectedProject._id, approved);
-            console.log("Project approval updated successfully");
-            if (res.status === 200) {
-                farmData = (farmData ?? []).map((project) => {
-                    if (project._id === selectedProject._id) {
+            if (res.status === 200)
+            {
+                farmData = (farmData ?? []).map((project) =>
+                {
+                    if (project._id === selectedProject._id)
+                    {
                         project.approvedByAdmin = approved;
                     }
                     return project;
                 });
                 onUpdateProject(() => [...(farmData ?? [])]);
                 toggleModal();
+                toast({
+                    title: approved ? "Farm Onboarding Approved" : "Farm Onboarding Rejected",
+                    description: approved
+                        ? "Your farm onboarding request has been approved."
+                        : "Your farm onboarding request has been rejected.",
+                    duration: 3000,
+                })
             }
-        } catch (error) {
+        } catch (error)
+        {
             console.error("Failed to update project approval", error);
-        } finally {
+        } finally
+        {
             setLoading2(false);
         }
     };
 
     // Handle rejection of farm onboarding
-    const handleRejection = async (approved: boolean) => {
+    const handleRejection = async (approved: boolean) =>
+    {
         if (!selectedProject || !selectedProject._id) return;
         setLoading1(true);
-        try {
+        try
+        {
             const res = await updateFarmOnboardApproval(selectedProject._id, approved);
-            console.log("Project rejection updated successfully");
-            if (res.status === 200) {
-                farmData = (farmData ?? []).map((project) => {
-                    if (project._id === selectedProject._id) {
+            if (res.status === 200)
+            {
+                farmData = (farmData ?? []).map((project) =>
+                {
+                    if (project._id === selectedProject._id)
+                    {
                         project.approvedByAdmin = false;
                     }
                     return project;
                 });
                 onUpdateProject(() => [...(farmData ?? [])]);
                 toggleModal();
+                toast({
+                    title: approved ? "Farm Onboarding Approved" : "Farm Onboarding Rejected",
+                    description: approved
+                        ? "Your farm onboarding request has been approved."
+                        : "Your farm onboarding request has been rejected.",
+                    duration: 3000,
+                })
             }
-        } catch (error) {
+        } catch (error)
+        {
             console.error("Failed to update project rejection", error);
-        } finally {
+        } finally
+        {
             setLoading1(false);
         }
     };
@@ -107,38 +137,39 @@ function ViewFarmBoarding({ isOpen, toggleModal, selectedProject, onUpdateProjec
                         )}
 
                         {/* Approve/Reject Buttons */}
-                        {!selectedProject.approvedByAdmin && (
-                            <div className="flex justify-end gap-4 mt-6">
-                                <Button
-                                    variant="outline"
-                                    onClick={() => handleRejection(false)}
-                                    disabled={loading1}
-                                    className="bg-red-500 text-white hover:bg-red-600"
-                                >
-                                    {loading1 ? (
-                                        <>
-                                            <RiLoader2Line className="animate-spin mr-2" /> Rejecting...
-                                        </>
-                                    ) : (
-                                        "Reject"
-                                    )}
-                                </Button>
-                                <Button
-                                    variant="default"
-                                    onClick={() => handleApproval(true)}
-                                    disabled={loading2}
-                                    className="bg-green-500 text-white hover:bg-green-600"
-                                >
-                                    {loading2 ? (
-                                        <>
-                                            <RiLoader2Line className="animate-spin mr-2" /> Approving...
-                                        </>
-                                    ) : (
-                                        "Approve"
-                                    )}
-                                </Button>
-                            </div>
-                        )}
+                        {!selectedProject.approvedByAdmin && !selectedProject.isRejected
+                            && (
+                                <div className="flex justify-end gap-4 mt-6">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => handleRejection(false)}
+                                        disabled={loading1}
+                                        className="bg-red-500 text-white hover:bg-red-600"
+                                    >
+                                        {loading1 ? (
+                                            <>
+                                                <RiLoader2Line className="animate-spin mr-2" /> Rejecting...
+                                            </>
+                                        ) : (
+                                            "Reject"
+                                        )}
+                                    </Button>
+                                    <Button
+                                        variant="default"
+                                        onClick={() => handleApproval(true)}
+                                        disabled={loading2}
+                                        className="bg-green-500 text-white hover:bg-green-600"
+                                    >
+                                        {loading2 ? (
+                                            <>
+                                                <RiLoader2Line className="animate-spin mr-2" /> Approving...
+                                            </>
+                                        ) : (
+                                            "Approve"
+                                        )}
+                                    </Button>
+                                </div>
+                            )}
                     </div>
                 ) : (
                     <div className="p-6">

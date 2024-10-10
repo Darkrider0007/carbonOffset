@@ -1,22 +1,22 @@
 import { Button } from "../components/ui/button";
 import
-    {
-        CardTitle,
-        CardHeader,
-        CardContent,
-        Card,
-    } from "../components/ui/card";
+{
+    CardTitle,
+    CardHeader,
+    CardContent,
+    Card,
+} from "../components/ui/card";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import
-    {
-        TableHead,
-        TableRow,
-        TableHeader,
-        TableCell,
-        TableBody,
-        Table,
-    } from "../components/ui/table";
+{
+    TableHead,
+    TableRow,
+    TableHeader,
+    TableCell,
+    TableBody,
+    Table,
+} from "../components/ui/table";
 import { FaArrowUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { getAdminData } from "../api/admin";
@@ -87,8 +87,8 @@ export default function AdminUsers()
     const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
     // Change page
-    const nextPage = () => setCurrentPage(prevPage => prevPage + 1);
-    const prevPage = () => setCurrentPage(prevPage => prevPage - 1);
+    const nextPage = () => setCurrentPage((prevPage) => prevPage + 1);
+    const prevPage = () => setCurrentPage((prevPage) => prevPage - 1);
 
     return (
         <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -103,7 +103,7 @@ export default function AdminUsers()
                     </Link>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-                    <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {/* Cards for Dashboard */}
                         <Card className="shadow-xl bg-green-300">
                             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -120,7 +120,10 @@ export default function AdminUsers()
                                 <div className="flex gap-2 items-center">
                                     <FaArrowUp color="green" />
                                     <h1>
-                                        <span className="text-green-600">{Math.abs(dashBoardData?.percentageUserIncrease) || 0}</span> % vs last month
+                                        <span className="text-green-600">
+                                            {Math.abs(dashBoardData?.percentageUserIncrease) || 0}
+                                        </span>{" "}
+                                        % vs last month
                                     </h1>
                                 </div>
                             </CardContent>
@@ -132,7 +135,9 @@ export default function AdminUsers()
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-black">{approvedFarmData || 0}</div>
+                                <div className="text-2xl font-bold text-black">
+                                    {approvedFarmData || 0}
+                                </div>
                             </CardContent>
                         </Card>
                         <Card className="shadow-xl bg-green-300">
@@ -150,7 +155,10 @@ export default function AdminUsers()
                                 <div className="flex gap-2 items-center">
                                     <FaArrowUp color="green" />
                                     <h1>
-                                        <span className="text-green-600">{Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))}</span> % vs last month
+                                        <span className="text-green-600">
+                                            {Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))}
+                                        </span>{" "}
+                                        % vs last month
                                     </h1>
                                 </div>
                             </CardContent>
@@ -170,39 +178,59 @@ export default function AdminUsers()
                                 />
                             </div>
                         </div>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="text-lg text-black font-semibold">Sl No.</TableHead>
-                                    <TableHead className="text-lg text-black font-semibold">Name</TableHead>
-                                    <TableHead className="text-lg text-black font-semibold">Email</TableHead>
-                                    <TableHead className="text-lg text-black font-semibold">Token Count</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {currentUsers.length > 0 ? (
-                                    currentUsers.map((user: any, index: number) => (
-                                        <TableRow key={user._id}>
-                                            <TableCell className="text-black">{indexOfFirstUser + index + 1}</TableCell>
-                                            <TableCell className="text-black">{user.firstName} {user.lastName}</TableCell>
-                                            <TableCell className="text-black">{user.email}</TableCell>
-                                            <TableCell className="text-black">
-                                                <div className="flex flex-row items-center justify-center gap-2">
-                                                    <Coins className="w-4 h-4" />
-                                                    {user.tokenCount}
-                                                </div>
+                        {/* Table with scrollable content */}
+                        <div className="overflow-y-auto h-96">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="text-lg text-black font-semibold">
+                                            Sl No.
+                                        </TableHead>
+                                        <TableHead className="text-lg text-black font-semibold">
+                                            Name
+                                        </TableHead>
+                                        <TableHead className="text-lg text-black font-semibold">
+                                            Email
+                                        </TableHead>
+                                        <TableHead className="text-lg text-black font-semibold">
+                                            Token Count
+                                        </TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {currentUsers.length > 0 ? (
+                                        currentUsers.map((user: any, index: number) => (
+                                            <TableRow key={user._id}>
+                                                <TableCell className="text-black">
+                                                    {indexOfFirstUser + index + 1}
+                                                </TableCell>
+                                                <TableCell className="text-black">
+                                                    {user.firstName} {user.lastName}
+                                                </TableCell>
+                                                <TableCell className="text-black">
+                                                    {user.email}
+                                                </TableCell>
+                                                <TableCell className="text-black">
+                                                    <div className="flex flex-row items-center justify-center gap-2">
+                                                        <Coins className="w-4 h-4" />
+                                                        {user?.tokenCount && user.tokenCount.toFixed(2)}
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell
+                                                colSpan={4}
+                                                className="text-center text-black"
+                                            >
+                                                No users found.
                                             </TableCell>
                                         </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={4} className="text-center text-black">
-                                            No users found.
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
                         {/* Pagination Buttons */}
                         <div className="flex justify-end gap-2 mt-4">
                             <Button

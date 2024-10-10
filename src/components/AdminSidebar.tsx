@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 import { FaTree } from "react-icons/fa";
 import { Coins, Users } from "lucide-react";
 import logo from "../assets/home/logo.png";
+import { GiMoneyStack } from "react-icons/gi";
 
-const AdminSidebar = () => {
+const AdminSidebar = () =>
+{
   const activeClassName =
     "flex items-center text-xl text-white gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 bg-green-500";
 
@@ -36,15 +38,15 @@ const AdminSidebar = () => {
             <Users className="h-5 w-5" />
             Users
           </NavLink>
-          {/* <NavLink
-            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminProjectDetails`}
+          <NavLink
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminAllTransactions`}
             className={({ isActive }) =>
               isActive ? activeClassName : "flex items-center text-xl text-black gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 hover:bg-green-300"
             }
           >
             <GiMoneyStack className="h-5 w-5" />
             Transactions
-          </NavLink> */}
+          </NavLink>
           <NavLink
             to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/farmOnboarding`}
             className={({ isActive }) =>
@@ -69,7 +71,8 @@ const AdminSidebar = () => {
   );
 };
 
-function PackageIcon(props: any) {
+function PackageIcon(props: any)
+{
   return (
     <svg
       {...props}

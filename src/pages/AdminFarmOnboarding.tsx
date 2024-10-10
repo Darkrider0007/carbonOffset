@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
+import
+{
   CardTitle,
   CardHeader,
   CardContent,
   Card,
 } from "../components/ui/card";
-import {
+import
+{
   Table,
   TableBody,
   TableCell,
@@ -26,7 +28,8 @@ import { FaArrowUp } from "react-icons/fa6";
 import { Search } from "lucide-react";
 
 // Icon components
-function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
+function Package2Icon(props: React.SVGProps<SVGSVGElement>)
+{
   return (
     <svg
       {...props}
@@ -47,7 +50,8 @@ function Package2Icon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function AdminFarmOnboarding() {
+export default function AdminFarmOnboarding()
+{
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [farmData, setFarmData] = useState<any[]>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<number>();
@@ -57,27 +61,33 @@ export default function AdminFarmOnboarding() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
-  useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
+  useEffect(() =>
+  {
+    const fetchAdminData = async () =>
+    {
+      try
+      {
         const res = await getAdminData();
         setDashBoardData(res.data);
-      } catch (error) {
+      } catch (error)
+      {
         console.error("Failed to fetch admin data", error);
       }
     };
 
-    const fetchFarmData = async () => {
-      try {
+    const fetchFarmData = async () =>
+    {
+      try
+      {
         const res = await getFarmOnboard();
         setFarmData(res.data);
         setFilteredData(res.data);
-        console.log("Farm Data:", res.data);
         const approvedFarms = res.data.filter(
           (farm: any) => farm.approvedByAdmin
         );
         setApprovedFarmData(approvedFarms.length);
-      } catch (error) {
+      } catch (error)
+      {
         console.error("Failed to fetch farm data", error);
       }
     };
@@ -86,9 +96,11 @@ export default function AdminFarmOnboarding() {
     fetchFarmData();
   }, []);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filteredResults = farmData.filter((farm) => {
+    const filteredResults = farmData.filter((farm) =>
+    {
       const matchesQuery =
         farm.organization?.toLowerCase().includes(lowercasedQuery) ||
         farm.address?.toLowerCase().includes(lowercasedQuery);
@@ -102,15 +114,19 @@ export default function AdminFarmOnboarding() {
     setFilteredData(filteredResults);
   }, [searchQuery, statusFilter, farmData]);
 
-  const handleViewDocument = (farm: any) => {
+  const handleViewDocument = (farm: any) =>
+  {
     setSelectedFarm(farm);
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
-    try {
+  const handleDelete = async (id: string) =>
+  {
+    try
+    {
       const res = await deleteFarmOnboard(id);
-      if (res.status === 200) {
+      if (res.status === 200)
+      {
         toast({
           title: "Farm deleted successfully",
         });
@@ -118,7 +134,8 @@ export default function AdminFarmOnboarding() {
         setFarmData(updatedFarmData);
         setFilteredData(updatedFarmData); // Update filtered data as well
       }
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Failed to delete farm onboarding data", error);
     }
   };
@@ -136,7 +153,7 @@ export default function AdminFarmOnboarding() {
           </Link>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-          <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card className="shadow-xl bg-green-300">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-black">
@@ -235,70 +252,72 @@ export default function AdminFarmOnboarding() {
               </div>
             </div>
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="font-bold text-black text-xl">Organization</TableHead>
-                  <TableHead className="font-bold text-black text-xl">Location</TableHead>
-                  <TableHead className="font-bold text-black text-xl">Area</TableHead>
-                  <TableHead className="font-bold text-black text-xl">Status</TableHead>
-                  <TableHead className="font-bold text-black text-xl">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData.map((farm, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{farm.organization || "N/A"}</TableCell>
-                      <TableCell>{farm.address || "N/A"}</TableCell>
-                      <TableCell>{farm.area || "N/A"}</TableCell>
-                      <TableCell>
-                        {!farm.isRejected && (
-                          farm.approvedByAdmin ? (
-                            <div className="bg-green-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                              Approved
+            <div className="overflow-y-auto h-96">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="font-bold text-black text-xl">Organization</TableHead>
+                    <TableHead className="font-bold text-black text-xl">Location</TableHead>
+                    <TableHead className="font-bold text-black text-xl">Area</TableHead>
+                    <TableHead className="font-bold text-black text-xl">Status</TableHead>
+                    <TableHead className="font-bold text-black text-xl">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredData.length > 0 ? (
+                    filteredData.map((farm, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{farm.organization || "N/A"}</TableCell>
+                        <TableCell>{farm.address || "N/A"}</TableCell>
+                        <TableCell>{farm.area || "N/A"}</TableCell>
+                        <TableCell>
+                          {!farm.isRejected && (
+                            farm.approvedByAdmin ? (
+                              <div className="bg-green-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                                Approved
+                              </div>
+                            ) : (
+                              <div className="bg-yellow-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                                Pending
+                              </div>
+                            )
+                          )}
+                          {farm.isRejected && (
+                            <div className="bg-red-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                              Rejected
                             </div>
-                          ) : (
-                            <div className="bg-yellow-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                              Pending
-                            </div>
-                          )
-                        )}
-                        {farm.isRejected && (
-                          <div className="bg-red-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                            Rejected
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              className="hover:text-white hover:bg-green-600"
+                              onClick={() => handleViewDocument(farm)}
+                            >
+                              View Document
+                            </Button>
+                            <AlertDialogDemo
+                              triggerText="Delete"
+                              title="Are you absolutely sure?"
+                              description="This action cannot be undone. This will permanently delete the farm onboarding data from our servers."
+                              actionText="Continue"
+                              onAction={() => handleDelete(farm._id)}
+                            />
                           </div>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            className="hover:text-white hover:bg-green-600"
-                            onClick={() => handleViewDocument(farm)}
-                          >
-                            View Document
-                          </Button>
-                          <AlertDialogDemo
-                            triggerText="Delete"
-                            title="Are you absolutely sure?"
-                            description="This action cannot be undone. This will permanently delete the farm onboarding data from our servers."
-                            actionText="Continue"
-                            onAction={() => handleDelete(farm._id)}
-                          />
-                        </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center">
+                        No farm data available.
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center">
-                      No farm data available.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </div>
           <ViewFarmBoarding
             isOpen={isModalOpen}

@@ -16,7 +16,6 @@ import Contact from "./pages/Contact";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAllTransaction from "./pages/AdminAllTransaction";
 import AdminFarmOnboarding from "./pages/AdminFarmOnboarding";
-import AdminProjectDetails from "./pages/AdminProjectDetails";
 import Success from "./pages/Success";
 import FailurePage from "./pages/Failour";
 import Login from "./pages/Login";
@@ -32,6 +31,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminUsers from "./pages/AdminUsers";
 import CalculationMethods from "./pages/CalculationMethods";
 import PageNotFound from "./pages/PageNotFound";
+import AdminAllTransactions from "./pages/AdminAllTransactions";
 
 const router = createBrowserRouter([
   {
@@ -126,10 +126,10 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminProjectDetails`,
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminAllTransactions`,
     element: (
       <PrivateRoute>
-        <AdminProjectDetails />
+        <AdminAllTransactions />
       </PrivateRoute>
     ),
   },
@@ -156,9 +156,7 @@ const router = createBrowserRouter([
   {
     path: "/farm-onboarding",
     element: (
-
       <FarmOnboarding />
-
     ),
   },
   {

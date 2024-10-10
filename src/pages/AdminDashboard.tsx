@@ -1,22 +1,22 @@
 import { Button } from "../components/ui/button";
 import
-  {
-    CardTitle,
-    CardHeader,
-    CardContent,
-    Card,
-  } from "../components/ui/card";
+{
+  CardTitle,
+  CardHeader,
+  CardContent,
+  Card,
+} from "../components/ui/card";
 import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import
-  {
-    TableHead,
-    TableRow,
-    TableHeader,
-    TableCell,
-    TableBody,
-    Table,
-  } from "../components/ui/table";
+{
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from "../components/ui/table";
 import { FaArrowUp } from "react-icons/fa6";
 import AddProject from "../components/AddProject";
 import { useEffect, useState } from "react";
@@ -105,7 +105,7 @@ export default function AdminDashboard()
   );
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+    <div className="grid w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
         <AdminSidebar />
       </div>
@@ -117,7 +117,7 @@ export default function AdminDashboard()
           </Link>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-          <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card className="shadow-xl bg-green-300">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-md font-bold text-black">
@@ -203,79 +203,82 @@ export default function AdminDashboard()
               </div>
             </div>
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-lg text-black font-semibold">
-                    Project Name
-                  </TableHead>
-                  <TableHead className="text-lg text-black font-semibold">
-                    Location
-                  </TableHead>
-                  <TableHead className="text-lg text-black font-semibold">
-                    Status
-                  </TableHead>
-                  <TableHead className="text-lg  text-black font-semibold">
-                    User Count
-                  </TableHead>
-                  <TableHead className="text-lg text-black font-semibold">
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredProjects.length > 0 ? (
-                  filteredProjects.map((project, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="flex flex-row items-center justify-start gap-2 w-72">
-                        <img
-                          className="h-10 w-10 border-2 p-1 rounded-full"
-                          src={project.image}
-                          alt=""
-                        />
-                        {project.name}
-                      </TableCell>
-                      <TableCell>{project.location}</TableCell>
-                      <TableCell>
-                        <div
-                          className={`p-1 ${project.status
-                            ? "bg-green-500 text-white"
-                            : "bg-red-500 text-white"
-                            } flex justify-center items-center rounded-2xl`}
-                        >
-                          {project.status}
-                        </div>
-                      </TableCell>
-
-                      <TableCell>{project.userCount}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            className="hover:text-white hover:bg-red-600"
-                            onClick={() =>
-                            {
-                              handleDeleteProject(project._id);
-                            }}
+            {/* Set a fixed height for the table and enable scrolling */}
+            <div className="overflow-y-auto h-96">
+              <Table className="w-full">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-lg text-black font-semibold">
+                      Project Name
+                    </TableHead>
+                    <TableHead className="text-lg text-black font-semibold">
+                      Location
+                    </TableHead>
+                    <TableHead className="text-lg text-black font-semibold">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-lg  text-black font-semibold">
+                      User Count
+                    </TableHead>
+                    <TableHead className="text-lg text-black font-semibold">
+                      Actions
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredProjects.length > 0 ? (
+                    filteredProjects.map((project, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="flex flex-row items-center justify-start gap-2 w-72">
+                          <img
+                            className="h-10 w-10 border-2 p-1 rounded-full"
+                            src={project.image}
+                            alt=""
+                          />
+                          {project.name}
+                        </TableCell>
+                        <TableCell>{project.location}</TableCell>
+                        <TableCell>
+                          <div
+                            className={`p-1 ${project.status
+                              ? "bg-green-500 text-white"
+                              : "bg-red-500 text-white"
+                              } flex justify-center items-center rounded-2xl`}
                           >
-                            Delete
-                          </Button>
-                        </div>
+                            {project.status}
+                          </div>
+                        </TableCell>
+
+                        <TableCell>{project.userCount}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              className="hover:text-white hover:bg-red-600"
+                              onClick={() =>
+                              {
+                                handleDeleteProject(project._id);
+                              }}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={5}
+                        className="text-center text-black py-4"
+                      >
+                        No projects found.
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={5}
-                      className="text-center text-black py-4"
-                    >
-                      No projects found.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </div>
           <AddProject
             isOpen={isModalOpen}

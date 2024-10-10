@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { verifyAdmin } from "../api/auth/verifyAdmin";
+import LoadingSkeleton from "../pages/Loading";
 
 interface PrivateRouteProps
 {
@@ -51,7 +52,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) =>
 
     if (loading)
     {
-        return <div>Loading...</div>;
+        return <LoadingSkeleton />;
     }
 
     if (!isAuthenticated)
