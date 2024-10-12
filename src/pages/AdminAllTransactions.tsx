@@ -19,7 +19,7 @@ export default function AdminAllTransactions()
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [paymentsDetails, setPaymentsDetails] = useState<any>([]);
   const [limit, setLimit] = useState<number>(10); // State for dropdown selection
-  const [statusFilter, setStatusFilter] = useState<string>('all'); // State for filtering paid/unpaid
+  // const [statusFilter, setStatusFilter] = useState<string>('all'); // State for filtering paid/unpaid
   const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
 
   useEffect(() =>
@@ -51,10 +51,10 @@ export default function AdminAllTransactions()
     setLimit(Number(value));
   };
 
-  const handleStatusChange = (value: string) =>
-  {
-    setStatusFilter(value);
-  };
+  // const handleStatusChange = (value: string) =>
+  // {
+  //   setStatusFilter(value);
+  // };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
   {
@@ -64,13 +64,13 @@ export default function AdminAllTransactions()
   // Filter payments based on both selected status and search query
   const filteredPayments = paymentsDetails.filter((payment: any) =>
   {
-    const matchesStatus =
-      statusFilter === 'all' || payment.status === statusFilter;
+    // const matchesStatus =
+    //   statusFilter === 'all' || payment.status === statusFilter;
     const matchesSearch =
       payment.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       payment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       payment.paymentId.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatus && matchesSearch;
+    return matchesSearch;
   });
 
   return (
@@ -147,7 +147,7 @@ export default function AdminAllTransactions()
               </Select>
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="status" className="text-lg text-black font-medium mr-2">Filter by Status:</label>
               <Select onValueChange={handleStatusChange} defaultValue="all">
                 <SelectTrigger className="w-48 bg-white border border-gray-300 rounded">
@@ -159,7 +159,7 @@ export default function AdminAllTransactions()
                   <SelectItem value="unpaid">Unpaid</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             {/* Search Input */}
             <div className="flex flex-col ">
@@ -186,7 +186,7 @@ export default function AdminAllTransactions()
                   <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Total Amount</TableHead>
                   <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Currency</TableHead>
                   <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Time</TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</TableHead>
+                  {/* <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</TableHead> */}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -200,11 +200,11 @@ export default function AdminAllTransactions()
                       <TableCell className="px-4 py-2 text-sm text-gray-700">{(payment.totalAmount / 100).toFixed(2)}</TableCell>
                       <TableCell className="px-4 py-2 text-sm text-gray-700">{payment.currency.toUpperCase()}</TableCell>
                       <TableCell className="px-4 py-2 text-sm text-gray-700">{payment.paymentTime}</TableCell>
-                      <TableCell className="px-4 py-2">
+                      {/* <TableCell className="px-4 py-2">
                         <div className={`${payment.status === 'paid' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'} text-center px-2 py-1 rounded-lg`}>
                           {payment.status}
                         </div>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   ))
                 ) : (
