@@ -1,11 +1,12 @@
 import { Button } from "../components/ui/button";
 // import { Input } from "../components/ui/input";
-import {
-  CardTitle,
-  CardHeader,
-  CardContent,
-  Card,
-} from "../components/ui/card";
+import
+  {
+    CardTitle,
+    CardHeader,
+    CardContent,
+    Card,
+  } from "../components/ui/card";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -18,7 +19,8 @@ import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
 // import { getTokenData } from "../api/token";
 
-export default function UserUpdates() {
+export default function UserUpdates()
+{
   const navigate = useNavigate();
   const [user, setUser1] = useState<any>(null);
   // const [tokenConversionRate, setTokenConversionRate] = useState(10);
@@ -28,17 +30,21 @@ export default function UserUpdates() {
   const context = useContext(UserContext);
 
   // Ensure context is defined before accessing properties
-  if (!context) {
+  if (!context)
+  {
     throw new Error('UserProfile must be used within a UserContextProvider');
   }
 
   const { setUser } = context;
 
-  const handelLogout = async () => {
-    try {
+  const handelLogout = async () =>
+  {
+    try
+    {
       const res = await logout();
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 200)
+      {
         setUser({
           id: "",
           firstName: "",
@@ -48,11 +54,13 @@ export default function UserUpdates() {
         toast({
           title: "Logged out successfully"
         })
-        setTimeout(() => {
+        setTimeout(() =>
+        {
           navigate('/login');
         }, 1000)
       }
-    } catch (error) {
+    } catch (error)
+    {
       console.log("error", error);
       toast({
         title: "Error",
@@ -62,11 +70,15 @@ export default function UserUpdates() {
     }
   }
 
-  useEffect(() => {
-    if (location.state && location.state.user) {
+  useEffect(() =>
+  {
+    if (location.state && location.state.user)
+    {
       setUser1(location.state.user);
-    } else {
-      const getUserDetails = async () => {
+    } else
+    {
+      const getUserDetails = async () =>
+      {
         const res = await getUser();
         setUser1(res.data.data);
       };
@@ -105,7 +117,8 @@ export default function UserUpdates() {
           </div> */}
           <Button
             className="ml-auto"
-            onClick={() => {
+            onClick={() =>
+            {
               handelLogout();
             }}
           >
@@ -149,7 +162,8 @@ export default function UserUpdates() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">{user ? user.tokenCount : 0} Tokens</div>
+                {/* <div className="text-2xl font-bold text-white">{user ? user.tokenCount : 0} Tokens</div> */}
+                <div className="text-2xl font-bold text-white">0 Tokens</div>
               </CardContent>
             </Card>
           </div>
