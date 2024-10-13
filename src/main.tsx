@@ -32,6 +32,7 @@ import AdminUsers from "./pages/AdminUsers";
 import CalculationMethods from "./pages/CalculationMethods";
 import PageNotFound from "./pages/PageNotFound";
 import AdminAllTransactions from "./pages/AdminAllTransactions";
+import AdminNewsletter from "./pages/AdminNewsletter";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <AdminUsers />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/admin-newsletters`,
+    element: (
+      <PrivateRoute>
+        <AdminNewsletter />
       </PrivateRoute>
     ),
   },

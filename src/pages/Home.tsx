@@ -11,8 +11,6 @@ import future3 from "../assets/home/future3.png";
 import projectbg1 from "../assets/home/projectbg1.png";
 import projectbg2 from "../assets/home/projectbg2.png";
 import projectbg3 from "../assets/home/projectbg3.png";
-import newsletterbg from "../assets/home/newsletterbg.png";
-import logo from "../assets/home/logo.png";
 import { FaTree } from "react-icons/fa6";
 import "../index.css"; // Ensure you import the CSS file
 import { FaArrowRight } from "react-icons/fa";
@@ -22,6 +20,7 @@ import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
+import Newsletter from "../components/Newsletter";
 
 const FutureData = [
   {
@@ -303,29 +302,7 @@ const Home = () => {
       </div>
 
       {/* newsletter */}
-      <div
-        style={{
-          backgroundImage: `url(${newsletterbg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "150px",
-        }}
-        className="flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-5 md:py-0"
-      >
-        <div className="flex gap-5 md:gap-16 items-center">
-          <img src={logo} alt="logo" />
-          <h1 className="text-xl text-white">Join Our Newsletter</h1>
-        </div>
-        <div className="flex gap-3 mt-5 md:mt-0">
-          <input
-            className="w-60 h-10 rounded-md p-2 bg-white"
-            placeholder="Enter your email"
-          />
-          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md">
-            Submit
-          </button>
-        </div>
-      </div>
+      <Newsletter />
 
       <Footer />
     </div>

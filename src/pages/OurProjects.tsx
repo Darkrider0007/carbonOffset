@@ -1,12 +1,11 @@
 import Navbar from "../components/Navbar";
 import curve from "../assets/home/curve.png";
 import mainbg from "../assets/services/mainbg.png";
-import newsletterbg from "../assets/home/newsletterbg.png";
-import logo from "../assets/home/logo.png";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getProjects } from "../api/addProject";
 import parse from 'html-react-parser';
+import Newsletter from "../components/Newsletter";
 
 const OurProjects = () => {
   const [projectData, setProjectData] = useState([]);
@@ -74,29 +73,7 @@ const OurProjects = () => {
       </div>
 
       {/* newsletter */}
-      <div
-        style={{
-          backgroundImage: `url(${newsletterbg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "150px",
-        }}
-        className="flex flex-col md:flex-row items-center justify-between px-5 md:px-16 py-5"
-      >
-        <div className="flex gap-5 md:gap-16 items-center">
-          <img src={logo} alt="logo" />
-          <h1 className="text-lg md:text-xl text-white">Join Our Newsletter</h1>
-        </div>
-        <div className="flex gap-3 mt-5 md:mt-0">
-          <input
-            className="w-full md:w-60 h-10 rounded-md p-2 bg-white"
-            placeholder="Enter your email"
-          />
-          <button className="bg-violet-600 text-white font-bold px-5 py-2 rounded-md">
-            Submit
-          </button>
-        </div>
-      </div>
+      <Newsletter />
 
       <Footer />
     </div>

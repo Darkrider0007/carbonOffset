@@ -8,8 +8,20 @@ import road from "../assets/offset/road.png";
 import certificate from "../assets/offset/certificate.png";
 import { FaArrowRight, FaTree } from "react-icons/fa6";
 import { FaCarRear } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
 
 const OurServices = () => {
+  const navigate = useNavigate();
+
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserContextProvider');
+  }
+
+  const { user } = context;
   return (
     <div>
       <Navbar />
@@ -82,7 +94,11 @@ const OurServices = () => {
           <h1 className="text-2xl md:text-3xl w-full md:w-[70%] text-center">
             Use Our Calculator To See How Much Carbon To Offset
           </h1>
-          <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[40%] rounded-full">
+          <button
+            onClick={() => {
+              navigate('/calculator')
+            }}
+            className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[40%] rounded-full">
             <h1 className="font-bold">Calculate Carbon Footprint</h1>
             <FaArrowRight />
           </button>
@@ -94,10 +110,21 @@ const OurServices = () => {
           <h1 className="text-2xl md:text-3xl w-full md:w-[70%] text-center">
             Instantly Offset Your Carbon With Our Custom Purchase Tool
           </h1>
-          <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[40%] rounded-full">
+          {user ? <button
+            onClick={() => {
+              navigate('/offsetNow')
+            }}
+            className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[40%] rounded-full">
             <h1 className="font-bold">Buy Carbon Credits Now</h1>
             <FaArrowRight />
-          </button>
+          </button> : <button
+            onClick={() => {
+              navigate('/login')
+            }}
+            className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[40%] rounded-full">
+            <h1 className="font-bold">Login to Buy Carbon Credits Now</h1>
+            <FaArrowRight />
+          </button>}
         </div>
       </div>
 

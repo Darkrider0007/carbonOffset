@@ -3,10 +3,8 @@ import { NavLink } from "react-router-dom";
 import { FaTree } from "react-icons/fa";
 import { Coins, Users } from "lucide-react";
 import logo from "../assets/home/logo.png";
-import { GiMoneyStack } from "react-icons/gi";
-
-const AdminSidebar = () =>
-{
+import { GiLoveLetter, GiMoneyStack } from "react-icons/gi";
+const AdminSidebar = () => {
   const activeClassName =
     "flex items-center text-xl text-white gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 bg-green-500";
 
@@ -65,14 +63,22 @@ const AdminSidebar = () =>
             <Coins className="h-5 w-5" />
             Tokens
           </NavLink>
+          <NavLink
+            to={`/admin/${import.meta.env.VITE_ADMIN_ROUTE}/admin-newsletters`}
+            className={({ isActive }) =>
+              isActive ? activeClassName : "flex items-center text-xl text-black gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 hover:bg-green-300"
+            }
+          >
+            <GiLoveLetter className="h-5 w-5" />
+            Newsletter
+          </NavLink>
         </nav>
       </div>
     </div>
   );
 };
 
-function PackageIcon(props: any)
-{
+function PackageIcon(props: any) {
   return (
     <svg
       {...props}

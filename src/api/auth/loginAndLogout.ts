@@ -16,7 +16,7 @@ export async function login(loginData: {
 
     // Store the access token in a cookie
     Cookies.set("accessToken", response.data.accessToken, {
-      expires: 10,
+      expires: 15,
       secure: true,
       sameSite: "Strict",
       path: "/",

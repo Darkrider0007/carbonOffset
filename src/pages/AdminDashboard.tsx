@@ -1,15 +1,12 @@
 import { Button } from "../components/ui/button";
-import
-{
+import {
   CardTitle,
   CardHeader,
   CardContent,
   Card,
 } from "../components/ui/card";
-import { Link } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
-import
-{
+import {
   TableHead,
   TableRow,
   TableHeader,
@@ -25,8 +22,7 @@ import { getAdminData } from "../api/admin";
 import { Plus, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 
-interface ProjectData
-{
+interface ProjectData {
   name: string;
   location: string;
   status: string;
@@ -35,59 +31,48 @@ interface ProjectData
   image: string;
 }
 
-export default function AdminDashboard()
-{
+export default function AdminDashboard() {
   const [projectData, setProjectData] = useState<ProjectData[]>([]);
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Added state for search term
 
-  const handleAddProject = () =>
-  {
+  const handleAddProject = () => {
     setIsModalOpen(true);
   };
 
-  const toggleModal = () =>
-  {
+  const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleDeleteProject = async (id: string) =>
-  {
-    try
-    {
+  const handleDeleteProject = async (id: string) => {
+    try {
       await deleteProject({ id });
       setProjectData((prev) =>
         prev.filter((project: any) => project._id !== id)
       );
-    } catch (error)
-    {
+    } catch (error) {
       console.error("Failed to delete project", error);
     }
   };
 
-  useEffect(() =>
-  {
-    const fetchAdminData = async () =>
-    {
+  useEffect(() => {
+    const fetchAdminData = async () => {
       const res = await getAdminData();
       setProjectData(res.data.allProjects);
       setDashBoardData(res.data);
     };
 
-    const fetchFarmData = async () =>
-    {
-      try
-      {
+    const fetchFarmData = async () => {
+      try {
         const res = await getFarmOnboard();
         const approvedFarms = res.data.filter(
           (farm: any) => farm.approvedByAdmin
         );
 
         setApprovedFarmData(approvedFarms.length);
-      } catch (error)
-      {
+      } catch (error) {
         console.error("Failed to fetch farm data", error);
       }
     };
@@ -111,10 +96,7 @@ export default function AdminDashboard()
       </div>
       <div className="flex flex-col">
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" to="#">
-            <Package2Icon className="h-6 w-6" />
-            <span className="sr-only">Home</span>
-          </Link>
+          <h1 className="text-lg font-bold">Admin Dashboard</h1>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -255,8 +237,7 @@ export default function AdminDashboard()
                             <Button
                               variant="outline"
                               className="hover:text-white hover:bg-red-600"
-                              onClick={() =>
-                              {
+                              onClick={() => {
                                 handleDeleteProject(project._id);
                               }}
                             >
@@ -288,27 +269,5 @@ export default function AdminDashboard()
         </main>
       </div>
     </div>
-  );
-}
-
-function Package2Icon(props: React.SVGProps<SVGSVGElement>)
-{
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-      <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
-      <path d="M12 3v6" />
-    </svg>
   );
 }

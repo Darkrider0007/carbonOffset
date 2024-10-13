@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GrPowerReset } from "react-icons/gr";
 import CarbonOffsetCalculator from "../components/Calculator/Calculator";
 import { getTokenData } from "../api/token";
+import Newsletter from "../components/Newsletter";
 
 const factors = ["Vehicle", "Natural Gas", "Electricity", "Fuel Oil", "Waste"];
 
@@ -402,6 +403,7 @@ const CarbonCalculator = () => {
           </Link>
         </div>
       </div>
+      <Newsletter />
       <Footer />
     </div>
   );
