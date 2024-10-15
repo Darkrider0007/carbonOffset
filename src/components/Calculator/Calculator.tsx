@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 
 type FormData = {
     remoteWorkers?: string;
@@ -143,6 +144,21 @@ const CarbonOffsetCalculator: React.FC = () => {
                     If you run a business, select the relevant worker categories and add their quantities.To calculate the additional emission you can refer the <span onClick={() =>
                         navigate('/calculator/calculationMethods')} className="text-green-600 hover:text-green-700 cursor-pointer">Calculation Methods</span>
                 </p>
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Remote Worker Carbon Footprint</AccordionTrigger>
+                        <AccordionContent>
+                            If you are working remotely, your carbon footprint is generally lower due to the absence of daily commuting. By staying at home, you reduce emissions from transportation and limit the energy consumption needed to power large office spaces. Remote workers contribute to sustainability by lowering the need for heating, cooling, lighting, and other office infrastructure. If you’re working from home, please select this option to calculate your reduced carbon impact.
+
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>In-Office Worker Carbon Footprint</AccordionTrigger>
+                        <AccordionContent>
+                            If you work from an office, your carbon footprint will likely be higher due to daily commutes and the energy consumed by shared workspaces. Office environments require significant energy for climate control, equipment usage, and amenities, in addition to the emissions generated from transportation. If you’re primarily commuting to a workplace, please choose this option to accurately reflect your environmental impact.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
             {/* Dropdown for selecting options */}
