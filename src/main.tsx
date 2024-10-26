@@ -33,6 +33,7 @@ import CalculationMethods from "./pages/CalculationMethods";
 import PageNotFound from "./pages/PageNotFound";
 import AdminAllTransactions from "./pages/AdminAllTransactions";
 import AdminNewsletter from "./pages/AdminNewsletter";
+import Project from "./pages/Project";
 
 const router = createBrowserRouter([
   {
@@ -72,35 +73,24 @@ const router = createBrowserRouter([
     element: <OurProjects />,
   },
   {
+    path: "/projects/:id",
+    element: <Project />,
+  },
+  {
     path: "/userDashboard",
-    element: (
-
-      <UserDashboard />
-    ),
+    element: <UserDashboard />,
   },
   {
     path: "/userTransactions",
-    element: (
-
-      <UserTransactions />
-
-    ),
+    element: <UserTransactions />,
   },
   {
     path: "/userOffsetDetails",
-    element: (
-
-      <UserOffsetDetails />
-
-    ),
+    element: <UserOffsetDetails />,
   },
   {
     path: "/allTransactions",
-    element: (
-
-      <AdminAllTransaction />
-
-    ),
+    element: <AdminAllTransaction />,
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`,
@@ -164,9 +154,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/farm-onboarding",
-    element: (
-      <FarmOnboarding />
-    ),
+    element: <FarmOnboarding />,
   },
   {
     path: "/signup",
@@ -187,7 +175,7 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <PageNotFound />,
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

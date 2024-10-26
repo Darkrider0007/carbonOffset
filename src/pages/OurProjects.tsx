@@ -4,21 +4,18 @@ import mainbg from "../assets/services/mainbg.png";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getProjects } from "../api/addProject";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import Newsletter from "../components/Newsletter";
+import { Link } from "react-router-dom";
 
 const OurProjects = () => {
   const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
-
-
     const fetchdata = async () => {
       try {
         const res = await getProjects();
-        console.log("Response:", res);
         setProjectData(res);
-
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -39,7 +36,9 @@ const OurProjects = () => {
         }}
         className="flex items-center justify-center relative"
       >
-        <h1 className="text-3xl md:text-5xl font-bold text-white">Our Projects</h1>
+        <h1 className="text-3xl md:text-5xl font-bold text-white">
+          Our Projects
+        </h1>
 
         <img src={curve} className="absolute bottom-0 w-full" />
       </div>
@@ -48,8 +47,10 @@ const OurProjects = () => {
       <div className="p-5 md:p-24 flex flex-col gap-10 md:gap-20">
         {projectData.map((project: any, index: number) => (
           <div
-            key={project.id}
-            className={`flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-5 md:gap-10 h-auto md:h-[70vh] shadow-xl`}
+            key={project._id}
+            className={`flex flex-col md:flex-row ${
+              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            } gap-5 md:gap-10 h-auto md:h-[70vh] shadow-xl`}
           >
             <img
               src={project.image}
@@ -61,12 +62,18 @@ const OurProjects = () => {
                 {project.name}
               </h1>
               <h1 className="text-lg md:text-xl">
-                {parse(project.details.split(' ').slice(0, 20).join(' ') + '...')}
+                {parse(
+                  project.details.split(" ").slice(0, 20).join(" ") + "..."
+                )}
               </h1>
 
-              <button className="border-2 border-green-600 w-32 md:w-40 py-2 md:py-3 text-lg rounded-xl text-green-600 font-bold">
+              <Link
+                to={`/projects/${project._id}`}
+                state={project}
+                className="flex items-center justify-center bg-green-600 hover:bg-green-700 w-32 md:w-40 py-2 md:py-3 text-lg rounded-xl text-white font-bold"
+              >
                 Read More
-              </button>
+              </Link>
             </div>
           </div>
         ))}

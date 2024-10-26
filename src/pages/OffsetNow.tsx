@@ -26,7 +26,6 @@ const OffsetNow = () => {
   //   setSelectedFrequency(frequency);
   // };
 
-
   const handleAddToWallet = async () => {
     setSubmitting(true);
     try {
@@ -35,7 +34,7 @@ const OffsetNow = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   // useEffect(() => {
   //   if (selectedFrequency === "One-Time") setTokens(amount / 10);
@@ -43,7 +42,6 @@ const OffsetNow = () => {
   //   if (selectedFrequency === "Quarterly") setTokens(amount / (10 * 4));
   //   if (selectedFrequency === "Yearly") setTokens(amount / 10);
   // }, [amount, selectedFrequency]);
-
 
   useEffect(() => {
     const amountChange = async () => {
@@ -54,12 +52,10 @@ const OffsetNow = () => {
       } catch (error) {
         console.log("error", error);
       }
-    }
+    };
 
     amountChange();
-
   }, [amount]);
-
 
   return (
     <div>
@@ -84,9 +80,9 @@ const OffsetNow = () => {
               <button className="bg-white text-green-600 font-bold px-7 py-2 rounded-md">
                 Dollar/INR Amount
               </button>
-              <button className="border-2 border-green-600 font-bold px-10 py-2 rounded-md">
+              {/* <button className="border-2 border-green-600 font-bold px-10 py-2 rounded-md">
                 Credit Amount
-              </button>
+              </button> */}
             </div>
             <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 py-10 rounded-md flex flex-col items-center">
               <h1 className="font-semibold">Enter Dollar Amount</h1>
@@ -112,21 +108,26 @@ const OffsetNow = () => {
                 ))}
               </div> */}
               <h1 className="text-xs tracking-[4px] uppercase font-bold">
-                total <span className="text-green-600">{tokens.toFixed(2)} tokens</span>
+                total{" "}
+                <span className="text-green-600">
+                  {tokens.toFixed(2)} tokens
+                </span>
               </h1>
               <button
                 onClick={handleAddToWallet}
                 className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[80%] rounded-full"
               >
-                {!submitting ? <>
-                  <h1 className="font-bold">Add to Wallet</h1>
-                  <FaLock />
-                </> :
+                {!submitting ? (
+                  <>
+                    <h1 className="font-bold">Add to Wallet</h1>
+                    <FaLock />
+                  </>
+                ) : (
                   <>
                     <h1 className="font-bold">Adding to Wallet</h1>
                     <Loader2 />
                   </>
-                }
+                )}
               </button>
             </div>
           </div>
@@ -136,20 +137,24 @@ const OffsetNow = () => {
       {/* calculator  */}
       <div className="bg-[#DEFFDD] pt-8 md:pt-0 p-10 md:p-20 flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 flex flex-col gap-5 items-center text-center">
-          <h1 className="uppercase text-xs font-bold">unsure about your impact?</h1>
+          <h1 className="uppercase text-xs font-bold">
+            unsure about your impact?
+          </h1>
           <h1 className="text-xl md:text-3xl w-[90%] md:w-[70%]">
             Use Our Calculator To See How Much Carbon To Offset
           </h1>
-          <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-[60%] md:w-[40%] rounded-full"
-            onClick={() => navigate('/calculator')}
+          <button
+            className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-[60%] md:w-[40%] rounded-full"
+            onClick={() => navigate("/calculator")}
           >
-
             <h1 className="font-bold">Calculate Carbon footprint</h1>
             <FaArrowRight />
           </button>
         </div>
         <div className="w-full md:w-1/2 flex flex-col gap-5 items-center mt-10 md:mt-0 text-center">
-          <h1 className="uppercase text-xs font-bold">Already Know Your Impact?</h1>
+          <h1 className="uppercase text-xs font-bold">
+            Already Know Your Impact?
+          </h1>
           <h1 className="text-xl md:text-3xl w-[90%] md:w-[70%]">
             Instantly Offset Your Carbon With Our Custom Purchase Tool
           </h1>
@@ -170,7 +175,10 @@ const OffsetNow = () => {
         </div>
         <div className="w-full md:w-[30%] relative">
           <img src={road} className="w-full" />
-          <img src={certificate} className="w-full absolute -top-10 -left-10 md:-left-56" />
+          <img
+            src={certificate}
+            className="w-full absolute -top-10 -left-10 md:-left-56"
+          />
         </div>
       </div>
 
