@@ -5,6 +5,7 @@ import mainbg from "../assets/services/mainbg.png";
 import about from "../assets/about/about.png";
 import { FaLeaf } from "react-icons/fa";
 import Newsletter from "../components/Newsletter";
+import { useEffect } from "react";
 
 const aboutData = [
   {
@@ -40,6 +41,10 @@ const aboutData = [
 ];
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <Navbar />

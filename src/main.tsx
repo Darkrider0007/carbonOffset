@@ -34,63 +34,134 @@ import PageNotFound from "./pages/PageNotFound";
 import AdminAllTransactions from "./pages/AdminAllTransactions";
 import AdminNewsletter from "./pages/AdminNewsletter";
 import Project from "./pages/Project";
+import ScrollToTop from "./components/ScrollToTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Home />
+      </>
+    ),
   },
   {
     path: "/about",
-    element: <About />,
+    element: (
+      <>
+        <ScrollToTop />
+        <About />
+      </>
+    ),
   },
   {
     path: "/gallery",
-    element: <Gallery />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Gallery />
+      </>
+    ),
   },
   {
     path: "/offsetNow",
-    element: <OffsetNow />,
+    element: (
+      <>
+        <ScrollToTop />
+        <OffsetNow />
+      </>
+    ),
   },
   {
     path: "/calculator",
-    element: <CarbonCalculator />,
+    element: (
+      <>
+        <ScrollToTop />
+        <CarbonCalculator />
+      </>
+    ),
   },
   {
     path: "/calculator/calculationMethods",
-    element: <CalculationMethods />,
+    element: (
+      <>
+        <ScrollToTop />
+        <CalculationMethods />
+      </>
+    ),
   },
   {
     path: "/services",
-    element: <OurServices />,
+    element: (
+      <>
+        <ScrollToTop />
+        <OurServices />
+      </>
+    ),
   },
   {
     path: "/contact",
-    element: <Contact />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Contact />
+      </>
+    ),
   },
   {
     path: "/projects",
-    element: <OurProjects />,
+    element: (
+      <>
+        <ScrollToTop />
+        <OurProjects />
+      </>
+    ),
   },
   {
     path: "/projects/:id",
-    element: <Project />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Project />
+      </>
+    ),
   },
   {
     path: "/userDashboard",
-    element: <UserDashboard />,
+    element: (
+      <>
+        <ScrollToTop />
+        <UserDashboard />
+      </>
+    ),
   },
   {
     path: "/userTransactions",
-    element: <UserTransactions />,
+    element: (
+      <>
+        <ScrollToTop />
+        <UserTransactions />
+      </>
+    ),
   },
   {
     path: "/userOffsetDetails",
-    element: <UserOffsetDetails />,
+    element: (
+      <>
+        <ScrollToTop />
+        <UserOffsetDetails />
+      </>
+    ),
   },
   {
     path: "/allTransactions",
-    element: <AdminAllTransaction />,
+    element: (
+      <>
+        <ScrollToTop />
+        <AdminAllTransaction />
+      </>
+    ),
   },
   {
     path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminDashboard`,
@@ -154,7 +225,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/farm-onboarding",
-    element: <FarmOnboarding />,
+    element: (
+      <>
+        <ScrollToTop />
+        <FarmOnboarding />
+      </>
+    ),
   },
   {
     path: "/signup",
