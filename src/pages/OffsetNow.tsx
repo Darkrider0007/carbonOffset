@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import main from "../assets/offset/main.png";
-import road from "../assets/offset/road.png";
-import certificate from "../assets/offset/certificate.png";
+// import road from "../assets/offset/road.png";
+// import certificate from "../assets/offset/certificate.png";
 import Footer from "../components/Footer";
 import { FaArrowRight, FaLock } from "react-icons/fa6";
 import { useState, useEffect } from "react";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { AddToWallet } from "../api/stripe/checkout";
 import { Loader2 } from "lucide-react";
 import { getTokenData } from "../api/token";
+import Newsletter from "../components/Newsletter";
 
 const OffsetNow = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -135,7 +136,7 @@ const OffsetNow = () => {
       </div>
 
       {/* calculator  */}
-      <div className="bg-[#DEFFDD] pt-8 md:pt-0 p-10 md:p-20 flex flex-col md:flex-row">
+      <div className="bg-[#DEFFDD] flex items-center justify-center pt-8 md:pt-0 p-10 md:p-20 flex-col md:flex-row">
         <div className="w-full md:w-1/2 flex flex-col gap-5 items-center text-center">
           <h1 className="uppercase text-xs font-bold">
             unsure about your impact?
@@ -151,7 +152,7 @@ const OffsetNow = () => {
             <FaArrowRight />
           </button>
         </div>
-        <div className="w-full md:w-1/2 flex flex-col gap-5 items-center mt-10 md:mt-0 text-center">
+        {/* <div className="w-full md:w-1/2 flex flex-col gap-5 items-center mt-10 md:mt-0 text-center">
           <h1 className="uppercase text-xs font-bold">
             Already Know Your Impact?
           </h1>
@@ -162,11 +163,13 @@ const OffsetNow = () => {
             <h1 className="font-bold">Buy Carbon Credits Now</h1>
             <FaArrowRight />
           </button>
-        </div>
+        </div> */}
       </div>
 
+      <Newsletter />
+
       {/* certificate */}
-      <div className="flex flex-col md:flex-row">
+      {/* <div className="flex flex-col md:flex-row">
         <div className="bg-black px-10 py-10 text-white w-full md:w-[70%]">
           <h1 className="uppercase text-xs font-bold">Proof Of Purchase</h1>
           <h1 className="text-2xl md:text-3xl w-full md:w-80">
@@ -180,7 +183,7 @@ const OffsetNow = () => {
             className="w-full absolute -top-10 -left-10 md:-left-56"
           />
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </div>
