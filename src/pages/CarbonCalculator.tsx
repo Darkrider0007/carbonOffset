@@ -133,6 +133,7 @@ const CarbonCalculator = () => {
     localStorage.removeItem("monthlyConsumption");
     localStorage.removeItem("electricityMonthlyConsumption");
     localStorage.removeItem("wasteNumberOfPeople");
+    window.location.reload();
   };
 
   const location = useLocation();
