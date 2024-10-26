@@ -59,7 +59,7 @@ function Login() {
           duration: 5000,
         });
         setTimeout(() => {
-          if (location.state.from)
+          if (location.state?.from)
             navigate(location.state.from, { state: location.state });
           else navigate("/");
         }, 1000);
