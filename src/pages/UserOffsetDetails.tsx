@@ -67,7 +67,7 @@ export default function UserOffsetDetails() {
   // Ensure context is defined before accessing properties
 
   if (!context) {
-    throw new Error('UserProfile must be used within a UserContextProvider');
+    throw new Error("UserProfile must be used within a UserContextProvider");
   }
 
   const { setUser } = context;
@@ -82,24 +82,24 @@ export default function UserOffsetDetails() {
           firstName: "",
           lastName: "",
           email: "",
-        })
+        });
         toast({
-          title: "Logged out successfully"
-        })
+          title: "Logged out successfully",
+        });
         setTimeout(() => {
-          navigate('/login');
-        }, 1000)
+          navigate("/login");
+        }, 1000);
       }
     } catch (error) {
       console.log("error", error);
       toast({
         title: "Error",
         description: "Error during logout",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
     }
     setExpenseData([]);
-  }
+  };
 
   useEffect(() => {
     const getUserDetails = async () => {
@@ -108,7 +108,6 @@ export default function UserOffsetDetails() {
       // console.log(res.data.data);
     };
     getUserDetails();
-
   }, []);
 
   return (
@@ -138,10 +137,7 @@ export default function UserOffsetDetails() {
               </div>
             </form>
           </div> */}
-          <Button
-            className="ml-auto"
-            onClick={handelLogout}
-          >
+          <Button className="ml-auto" onClick={handelLogout}>
             Logout
           </Button>
         </header>
@@ -159,7 +155,9 @@ export default function UserOffsetDetails() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-white">{user ? user.tokenCount * 10 : 0} Tokens</div>
+                <div className="text-2xl font-bold text-white">
+                  {user ? user.tokenCount * 10 : 0} Tokens
+                </div>
               </CardContent>
             </Card>
 
@@ -212,7 +210,6 @@ export default function UserOffsetDetails() {
       </div>
     </div>
   );
-
 }
 
 function Package2Icon(props: React.SVGProps<SVGSVGElement>) {

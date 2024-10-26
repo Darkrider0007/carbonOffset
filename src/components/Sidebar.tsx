@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaTree } from "react-icons/fa";
+// import { FaTree } from "react-icons/fa";
 import logo from "../assets/home/logo.png";
 
 const Sidebar = () => {
@@ -14,7 +14,9 @@ const Sidebar = () => {
 
   // Function to determine if the link is active
   const isActive = (path: string) => {
-    return location.pathname === path ? "bg-green-300 text-gray-900 dark:text-gray-50" : "";
+    return location.pathname === path
+      ? "bg-green-300 text-gray-900 dark:text-gray-50"
+      : "";
   };
 
   return (
@@ -43,7 +45,8 @@ const Sidebar = () => {
               to="/userDashboard"
             >
               <PackageIcon className="h-5 w-5" />
-              Dashboard
+              {/* Dashboard */}
+              Profile Details
             </Link>
             <Link
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
@@ -54,7 +57,7 @@ const Sidebar = () => {
               <GiMoneyStack className="h-5 w-5" />
               Transactions
             </Link>
-            <Link
+            {/* <Link
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
                 "/userOffsetDetails"
               )}`}
@@ -62,7 +65,7 @@ const Sidebar = () => {
             >
               <FaTree className="h-5 w-5" />
               Offset Details
-            </Link>
+            </Link> */}
           </nav>
         </div>
       )}
@@ -80,16 +83,17 @@ const Sidebar = () => {
         <div className="flex-1 overflow-auto w-60 min-h-[90vh] py-2">
           <nav className="grid items-start px-4 text-md font-medium">
             <Link
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
+              className={`flex items-center text-lg gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
                 "/userDashboard"
               )}`}
               to="/userDashboard"
             >
               <PackageIcon className="h-5 w-5" />
-              Dashboard
+              {/* Dashboard */}
+              Profile Details
             </Link>
             <Link
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
+              className={`flex items-center text-lg gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
                 "/userTransactions"
               )}`}
               to="/userTransactions"
@@ -97,7 +101,7 @@ const Sidebar = () => {
               <GiMoneyStack className="h-5 w-5" />
               Transactions
             </Link>
-            <Link
+            {/* <Link
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${isActive(
                 "/userOffsetDetails"
               )}`}
@@ -105,7 +109,7 @@ const Sidebar = () => {
             >
               <FaTree className="h-5 w-5" />
               Offset Details
-            </Link>
+            </Link> */}
           </nav>
         </div>
       </div>
