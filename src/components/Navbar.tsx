@@ -14,7 +14,7 @@ const Navbar = () => {
 
   // Ensure context is defined before accessing properties
   if (!context) {
-    throw new Error('UserProfile must be used within a UserContextProvider');
+    throw new Error("UserProfile must be used within a UserContextProvider");
   }
 
   const { user, setUser } = context;
@@ -64,36 +64,49 @@ const Navbar = () => {
           {/* Menu items */}
           <Link
             to="/"
-            className={`hover:text-green-600 ${isActive("/") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/") ? "text-green-600 font-bold" : ""
+            }`}
           >
             Home
           </Link>
           <Link
             to="/calculator"
-            className={`hover:text-green-600 ${isActive("/calculator") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/calculator") ? "text-green-600 font-bold" : ""
+            }`}
           >
             Carbon Calculator
           </Link>
           <Link
             to="/projects"
-            className={`hover:text-green-600 ${isActive("/projects") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/projects") ? "text-green-600 font-bold" : ""
+            }`}
           >
             Projects
           </Link>
           <Link
+            to="/awards"
+            className={`hover:text-green-600 ${
+              isActive("/awards") ? "text-green-600 font-bold" : ""
+            }`}
+          >
+            Awards
+          </Link>
+          <Link
             to="/about"
-            className={`hover:text-green-600 ${isActive("/about") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/about") ? "text-green-600 font-bold" : ""
+            }`}
           >
             About Us
           </Link>
           <Link
             to="/contact"
-            className={`hover:text-green-600 ${isActive("/contact") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/contact") ? "text-green-600 font-bold" : ""
+            }`}
           >
             Contact Us
           </Link>
@@ -104,12 +117,14 @@ const Navbar = () => {
           >
             Our Services
           </Link>
-          {user && <Link
-            to="/offsetNow"
-            className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
-          >
-            <FaTree /> Offset Now
-          </Link>}
+          {user && (
+            <Link
+              to="/offsetNow"
+              className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+            >
+              <FaTree /> Offset Now
+            </Link>
+          )}
           {user ? (
             <Link
               to="/userDashboard"
@@ -131,47 +146,53 @@ const Navbar = () => {
 
       {/* Mobile menu (visible when isMobileMenuOpen is true) */}
       <div
-        className={`${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'
-          } overflow-hidden transition-max-height duration-300 ease-in-out md:hidden`}
+        className={`${
+          isMobileMenuOpen ? "max-h-screen" : "max-h-0"
+        } overflow-hidden transition-max-height duration-300 ease-in-out md:hidden`}
       >
         <div className="flex flex-col items-start px-4 py-2 space-y-2">
           {/* Menu items */}
           <Link
             to="/"
-            className={`hover:text-green-600 ${isActive("/") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/") ? "text-green-600 font-bold" : ""
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Home
           </Link>
           <Link
             to="/calculator"
-            className={`hover:text-green-600 ${isActive("/calculator") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/calculator") ? "text-green-600 font-bold" : ""
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Carbon Calculator
           </Link>
           <Link
             to="/projects"
-            className={`hover:text-green-600 ${isActive("/projects") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/projects") ? "text-green-600 font-bold" : ""
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Projects
           </Link>
           <Link
             to="/about"
-            className={`hover:text-green-600 ${isActive("/about") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/about") ? "text-green-600 font-bold" : ""
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             About Us
           </Link>
           <Link
             to="/contact"
-            className={`hover:text-green-600 ${isActive("/contact") ? "text-green-600 font-bold" : ""
-              }`}
+            className={`hover:text-green-600 ${
+              isActive("/contact") ? "text-green-600 font-bold" : ""
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Contact Us

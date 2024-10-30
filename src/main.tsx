@@ -35,6 +35,7 @@ import AdminAllTransactions from "./pages/AdminAllTransactions";
 import AdminNewsletter from "./pages/AdminNewsletter";
 import Project from "./pages/Project";
 import ScrollToTop from "./components/ScrollToTop";
+import Awards from "./pages/Awards";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,15 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <Contact />
+      </>
+    ),
+  },
+  {
+    path: "/awards",
+    element: (
+      <>
+        <ScrollToTop />
+        <Awards />
       </>
     ),
   },
