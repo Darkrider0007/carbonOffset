@@ -62,7 +62,7 @@ const Home = () => {
 
   // Ensure context is defined before accessing properties
   if (!context) {
-    throw new Error('UserProfile must be used within a UserContextProvider');
+    throw new Error("UserProfile must be used within a UserContextProvider");
   }
 
   const { user } = context;
@@ -93,19 +93,21 @@ const Home = () => {
         </h1>
 
         {/* Button */}
-        {user ? <button
-          onClick={() => navigate("/offsetNow")}
-          className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
-        >
-          <FaTree /> Offset Now
-        </button> :
+        {user ? (
+          <button
+            onClick={() => navigate("/offsetNow")}
+            className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+          >
+            <FaTree /> Offset Now
+          </button>
+        ) : (
           <button
             onClick={() => navigate("/login")}
             className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
           >
             <FaTree /> Login to Offset Now
           </button>
-        }
+        )}
 
         {/* Curve Image */}
         <img src={curve} alt="curve" className="absolute bottom-20 w-full" />
@@ -113,7 +115,6 @@ const Home = () => {
         {/* White Background at Bottom */}
         <div className="bg-white w-full h-20 absolute bottom-0"></div>
       </div>
-
 
       {/* Onboarding */}
       <div className="bg-white h-[50vh] relative">
@@ -129,10 +130,9 @@ const Home = () => {
             </h1>
             <div className="relative">
               <button
-                onClick={
-                  () => navigate("/about")
-                }
-                className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
+                onClick={() => navigate("/about")}
+                className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full"
+              >
                 <h1>Learn More</h1>
                 <FaArrowRight />
               </button>
@@ -144,7 +144,9 @@ const Home = () => {
             <h1 className="uppercase text-sm font-bold ">
               Sustainability Options For
             </h1>
-            <h1 className="text-4xl md:text-6xl font-bold my-3">Farm Onboarding</h1>
+            <h1 className="text-4xl md:text-6xl font-bold my-3">
+              Farm Onboarding
+            </h1>
             <h1 className="text-lg mb-10">
               We can help Farm Onborder of all sizes measure and offset their
               carbon footprint!
@@ -173,7 +175,7 @@ const Home = () => {
         }}
         className="flex flex-col md:flex-row items-center"
       >
-        <div className="w-full md:w-1/2 p-5 md:p-14 flex flex-col gap-6 text-white">
+        <div className="w-full mt-96 lg:mt-0 md:w-1/2 p-5 md:p-14 flex flex-col gap-6 text-white">
           <h1 className="text-3xl md:text-5xl">Purchase Carbon Credits</h1>
           <h1 className="text-lg">
             A whopping 50,000 pounds a year! That’s the average carbon footprint
@@ -187,57 +189,17 @@ const Home = () => {
           </h1>
           <button
             onClick={() => {
-              navigate("/calculator")
+              navigate("/calculator");
             }}
-            className="bg-green-600 px-3 py-2 rounded-full">
+            className="bg-green-600 px-3 py-2 rounded-full"
+          >
             Individual Carbon Footprint Calculator
           </button>
         </div>
-
-        {/* <div className="w-full hidden md:w-1/2 md:flex flex-col gap-5 items-center p-5  text-white">
-          <h1 className="uppercase text-xs font-bold">I want to offset by</h1>
-          <div className="flex gap-2">
-            <button className="bg-white text-green-600 font-bold px-7 py-2 rounded-md">
-              Dollar/INR Amount
-            </button>
-            <button className="border-2 border-green-600 font-bold px-10 py-2 rounded-md">
-              Credit Amount
-            </button>
-          </div>
-          <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 rounded-md flex flex-col items-center ">
-            <h1 className="font-semibold">Enter Dollar Amount</h1>
-            <input
-              placeholder="100 $"
-              className="w-full h-14 text-4xl font-bold text-center border-b-2 border-black focus:outline-none focus:border-b-2"
-            />
-            <h1 className="font-semibold">Select Frequency</h1>
-            <div className="flex flex-wrap gap-3">
-              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
-                One-Time
-              </div>
-              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
-                Monthly
-              </div>
-              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
-                Quaterly
-              </div>
-              <div className="w-24 md:w-32 text-center py-3 bg-gray-300 hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer">
-                Yearly
-              </div>
-            </div>
-            <h1 className="text-xs tracking-[4px] uppercase font-bold">
-              total <span className="text-green-600">10 tokens</span>
-            </h1>
-            <button className="flex justify-between px-6 py-3 bg-green-600 items-center text-white w-full md:w-[80%] rounded-full">
-              <h1 className="font-bold">Add to Wallet</h1>
-              <FaLock />
-            </button>
-          </div>
-        </div> */}
       </div>
 
       {/* how we work  */}
-      <div className="flex flex-col md:flex-row justify-between items-center p-5 md:p-10">
+      <div className="flex flex-col mt-40 lg:mt-0 md:flex-row justify-between items-center p-5 md:p-10">
         <div className="w-full md:w-1/2 mb-5 md:mb-0">
           <div className="flex gap-2 items-center">
             <FaLeaf color="green" />{" "}
@@ -255,7 +217,6 @@ const Home = () => {
         </div>
       </div>
 
-
       <div className="flex flex-col md:flex-row justify-between md:px-32 py-5 gap-5 md:gap-14">
         {FutureData.map((item, index) => (
           <div
@@ -271,7 +232,9 @@ const Home = () => {
 
       {/* our projects */}
       <div>
-        <h1 className="text-center text-3xl md:text-4xl font-bold my-5">Our Projects</h1>
+        <h1 className="text-center text-3xl md:text-4xl font-bold my-5">
+          Our Projects
+        </h1>
 
         <div className="flex flex-col md:flex-row p-5 md:p-10 md:px-32 gap-5 md:gap-20 ">
           {ProjectData.map((item, index) => (
@@ -292,9 +255,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <Link to="/projects" className="flex justify-center"
-
-        >
+        <Link to="/projects" className="flex justify-center">
           <button className="bg-green-600 py-2 px-8 rounded-md text-white item-center text-md font-bold my-5">
             View More Projects
           </button>

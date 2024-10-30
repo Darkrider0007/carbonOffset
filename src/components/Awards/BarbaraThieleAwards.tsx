@@ -8,12 +8,12 @@ import {
 
 function BarbaraThieleAwards() {
   return (
-    <div className="w-full mx-auto p-8 rounded-lg shadow-lg bg-white">
+    <div className="w-full mx-auto p-8">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-green-600 text-3xl font-semibold text-center">
-            BARBARA THIELE – First Citizen of the United World
-            {/* Barbara Thiele Awards */}
+          <AccordionTrigger className="text-green-600 text-3xl font-semibold text-center hover:no-underline">
+            {/* BARBARA THIELE – First Citizen of the United World */}
+            Barbara Thiele Awards
           </AccordionTrigger>
           <AccordionContent className="pt-6">
             <div className="flex flex-col lg:flex-row items-center lg:items-start lg:space-x-8 mx-auto">

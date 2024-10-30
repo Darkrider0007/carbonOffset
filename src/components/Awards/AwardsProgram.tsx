@@ -22,10 +22,10 @@ function AwardsProgram() {
   const nominationDetails = [
     "Contact details: Nominee’s name, contact address, telephone numbers, e-mail address, affiliations, SFUO membership number (UIN) etc.",
     "Nominator’s Contact details: Your name, address, telephone numbers, e-mail address, affiliations, SFUO membership number (UIN)",
-    "Contact details for a minimum of three and a maximum of five referees who can be contacted (name, address, telephone numbers, e-mail address, affiliations, SFUO membership number) and are able to make a recommendations in favor of the nominee in a timely manner. These are highly respected and qualified people in their respective fields who are familiar with work of the nominee. If required, SFUO may contact them to obtain recommendations.",
+    "Provide contact details for three to five referees who can support the nominee. Include each referee's name, address, phone number, email, affiliation, and SFUO membership number. Referees should be highly respected and qualified individuals familiar with the nominee's work, able to provide recommendations promptly if requested by SFUO.",
     "Any other details not covered above, that are relevant to the decision making process.",
     "Leader of the Universe Award nominations are to be accompanied by an essay on ‘Vision for Future of the World.’",
-    "Each nomination must be accompanied by a $50 processing fee. The processing fee includes a certificate of nomination, that is suitable for framing and is issued after the awards ceremony to all nominees. Additional certificates can be obtained for $25 each. These certificates would be suitable for framing.",
+    "Include any additional relevant details not covered above to assist in the decision-making process.",
   ];
 
   const nominationQuestions = [
@@ -39,8 +39,8 @@ function AwardsProgram() {
     "One page synopsis for Press Release",
   ];
   return (
-    <div className="flex flex-col w-full gap-10 p-6 bg-green-50 rounded-lg shadow-lg">
-      <p className="text-base leading-relaxed">
+    <div className="flex flex-col w-full gap-6 p-4 md:p-6 bg-green-50 rounded-lg shadow-lg">
+      <p className="text-sm md:text-base leading-relaxed">
         SFUO shall constitute &lsquo;Awards and Contests for Peace&rsquo; on a
         global basis that would honor and appreciate the efforts towards the
         creation of peace on the planet. Endeavors such as the protection of the
@@ -60,40 +60,40 @@ function AwardsProgram() {
         &nbsp; quoting your UIN issued by SFUO in the following format:
       </p>
 
-      <div className="flex flex-row w-full gap-5 ">
+      <div className="flex flex-col lg:flex-row w-full gap-5">
         <img
           src={AwardProgram1}
           alt="placeholder"
-          className="w-[664px] h-[500px] object-fill"
+          className="w-full lg:w-1/2 h-auto md:h-[500px] object-fill"
         />
 
-        <div className="flex flex-col w-1/2 px-2 space-y-3">
+        <div className="flex flex-col w-full lg:w-1/2 px-2 space-y-3">
           {nominationQuestions.map((question, index) => (
             <Card
               key={index}
               className="bg-[#4BAF47] rounded font-normal px-2 py-1"
             >
-              <CardDescription className="text-white text-base">
+              <CardDescription className="text-white text-sm md:text-base">
                 {question}
               </CardDescription>
             </Card>
           ))}
         </div>
       </div>
-      <div className="flex flex-row-reverse w-full gap-5 ">
+      <div className="flex flex-col lg:flex-row-reverse w-full gap-5">
         <img
           src={AwardProgram2}
           alt="placeholder"
-          className="w-[650px] h-[560px] object-contain align-start"
+          className="w-full lg:w-1/2 h-auto md:h-[500px] object-fill"
         />
 
-        <div className="flex flex-col w-1/2 px-2 space-y-3 pt-2">
+        <div className="flex flex-col w-full lg:w-1/2 px-2 space-y-3 pt-2">
           {nominationDetails.map((detail, index) => (
             <Card
               key={index}
               className="bg-[#4BAF47] rounded font-normal px-2 py-1"
             >
-              <CardDescription className="text-white text-base">
+              <CardDescription className="text-white text-sm md:text-base">
                 {detail}
               </CardDescription>
             </Card>
@@ -102,16 +102,16 @@ function AwardsProgram() {
       </div>
 
       <div className="flex flex-col w-full space-y-4">
-        <h1 className="text-2xl font-semibold text-green-600">
+        <h1 className="text-xl md:text-2xl font-semibold text-green-600">
           The categories are{" "}
         </h1>
         <div className="flex flex-wrap w-full gap-4">
           {catagories.map((item, index) => (
             <Card
               key={index}
-              className="bg-white shadow-lg rounded font-normal px-4 py-2"
+              className="bg-white shadow-lg rounded font-normal px-2 py-2 text-center w-full sm:w-auto"
             >
-              <CardDescription className="text-black text-base">
+              <CardDescription className="text-black text-sm md:text-base">
                 {item}
               </CardDescription>
             </Card>

@@ -50,17 +50,17 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-white">
-      <div className="flex items-center justify-between px-4 py-3 md:px-10">
+      <div className="flex items-center justify-between px-4 py-3 lg:px-10">
         {/* Logo */}
         <h1 className="text-green-600 text-3xl font-bold">Carbon</h1>
         {/* Hamburger menu button (visible on mobile) */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
         {/* Desktop menu (hidden on mobile) */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden lg:flex items-center space-x-6">
           {/* Menu items */}
           <Link
             to="/"
@@ -148,7 +148,7 @@ const Navbar = () => {
       <div
         className={`${
           isMobileMenuOpen ? "max-h-screen" : "max-h-0"
-        } overflow-hidden transition-max-height duration-300 ease-in-out md:hidden`}
+        } overflow-hidden transition-max-height duration-300 ease-in-out lg:hidden`}
       >
         <div className="flex flex-col items-start px-4 py-2 space-y-2">
           {/* Menu items */}
@@ -178,6 +178,14 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Projects
+          </Link>
+          <Link
+            to="/awards"
+            className={`hover:text-green-600 ${
+              isActive("/awards") ? "text-green-600 font-bold" : ""
+            }`}
+          >
+            Awards
           </Link>
           <Link
             to="/about"
