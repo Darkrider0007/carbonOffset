@@ -4,15 +4,18 @@ import { RiWallet3Fill } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext";
 import { getUser, refreshToken } from "../api/auth/getUser";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Navbar = () => {
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation(); // Hook to get the current path
+  const location = useLocation();
 
   const context = useContext(UserContext);
-
-  // Ensure context is defined before accessing properties
   if (!context) {
     throw new Error("UserProfile must be used within a UserContextProvider");
   }
@@ -31,96 +34,94 @@ const Navbar = () => {
           email: res.data.data.email,
         });
       } else {
-        const res = await refreshToken();
-        if (res.status === 201) {
+        const refreshRes = await refreshToken();
+        if (refreshRes.status === 201) {
           setUser({
-            id: res.data.id,
-            firstName: res.data.firstName,
-            lastName: res.data.lastName,
-            email: res.data.email,
+            id: refreshRes.data.id,
+            firstName: refreshRes.data.firstName,
+            lastName: refreshRes.data.lastName,
+            email: refreshRes.data.email,
           });
         }
       }
     };
     fetchUser();
-  }, []);
+  }, [setUser]);
 
-  // Function to check if the current URL matches the link
-  const isActive = (path: string) => location.pathname === path;
+  const menuItems = [
+    { path: "/", label: "Home" },
+    {
+      path: "/products",
+      label: "Products",
+      isSubmenu: true,
+      subMenu: [
+        { path: "/uny", label: "UNY" },
+        { path: "/bamboohut", label: "Bamboo Hut" },
+        { path: "/divinehealer", label: "Divine Healer" },
+        { path: "/cmrbitplast", label: "CMR Bitplast" },
+        { path: "/books", label: "Books" },
+      ],
+    },
+    { path: "/calculator", label: "Carbon Calculator" },
+    { path: "/projects", label: "Projects" },
+    { path: "/awards", label: "Awards" },
+    { path: "/about", label: "About Us" },
+    { path: "/contact", label: "Contact Us" },
+  ];
+
+  const isActive = (path: any) => {
+    console.log(path.split("/")[1]);
+    return (
+      location.pathname === path ||
+      location.pathname.split("/")[1] === path.split("/")[1]
+    );
+  };
 
   return (
-    <nav className="w-full bg-white">
+    <nav className="w-full bg-white shadow-lg">
       <div className="flex items-center justify-between px-4 py-3 lg:px-10">
-        {/* Logo */}
         <h1 className="text-green-600 text-3xl font-bold">Carbon</h1>
-        {/* Hamburger menu button (visible on mobile) */}
         <div className="lg:hidden">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
-        {/* Desktop menu (hidden on mobile) */}
         <div className="hidden lg:flex items-center space-x-6">
-          {/* Menu items */}
-          <Link
-            to="/"
-            className={`hover:text-green-600 ${
-              isActive("/") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/calculator"
-            className={`hover:text-green-600 ${
-              isActive("/calculator") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Carbon Calculator
-          </Link>
-          <Link
-            to="/projects"
-            className={`hover:text-green-600 ${
-              isActive("/projects") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Projects
-          </Link>
-          <Link
-            to="/awards"
-            className={`hover:text-green-600 ${
-              isActive("/awards") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Awards
-          </Link>
-          <Link
-            to="/about"
-            className={`hover:text-green-600 ${
-              isActive("/about") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/contact"
-            className={`hover:text-green-600 ${
-              isActive("/contact") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Contact Us
-          </Link>
-          {/* Right side buttons */}
+          {menuItems.map((item) => (
+            <div key={item.path} className="relative group">
+              <Link
+                to={item.isSubmenu ? "" : item.path}
+                className={`hover:text-green-600 ${
+                  isActive(item.path) ? "text-green-600 font-bold" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+              {item.isSubmenu && (
+                <div className="hidden group-hover:flex flex-col z-30 absolute left-0 bg-white w-40 rounded-lg shadow-lg p-4 space-y-2">
+                  {item.subMenu?.map((subItem) => (
+                    <Link
+                      key={subItem.path}
+                      to={`${item.path}${subItem.path}`}
+                      className="block hover:bg-green-500 hover:text-white rounded-lg px-2 py-1"
+                    >
+                      {subItem.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
           <Link
             to="/services"
-            className="px-5 py-2 border-green-600 border-2 rounded-xl font-bold"
+            className="px-4 py-2 border-green-600 border-2 rounded-xl font-bold"
           >
             Our Services
           </Link>
           {user && (
             <Link
               to="/offsetNow"
-              className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+              className="px-4 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
             >
               <FaTree /> Offset Now
             </Link>
@@ -128,7 +129,7 @@ const Navbar = () => {
           {user ? (
             <Link
               to="/userDashboard"
-              className="px-5 py-2 border-black border-2 rounded-xl flex gap-2 items-center font-bold"
+              className="px-4 py-2 border-black border-2 rounded-xl flex gap-2 items-center font-bold"
               state={{ user: userData }}
             >
               <RiWallet3Fill size={20} fill="black" /> Wallet
@@ -136,7 +137,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="px-5 py-2 border-black border-2 rounded-xl flex gap-2 items-center font-bold"
+              className="px-4 py-2 border-black border-2 rounded-xl flex gap-2 items-center font-bold"
             >
               <FaUser size={20} fill="black" /> Login
             </Link>
@@ -144,68 +145,46 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu (visible when isMobileMenuOpen is true) */}
+      {/* Mobile menu */}
       <div
         className={`${
           isMobileMenuOpen ? "max-h-screen" : "max-h-0"
-        } overflow-hidden transition-max-height duration-300 ease-in-out lg:hidden`}
+        } overflow-hidden transition-all duration-300 ease-in-out lg:hidden`}
       >
         <div className="flex flex-col items-start px-4 py-2 space-y-2">
-          {/* Menu items */}
-          <Link
-            to="/"
-            className={`hover:text-green-600 ${
-              isActive("/") ? "text-green-600 font-bold" : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            to="/calculator"
-            className={`hover:text-green-600 ${
-              isActive("/calculator") ? "text-green-600 font-bold" : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Carbon Calculator
-          </Link>
-          <Link
-            to="/projects"
-            className={`hover:text-green-600 ${
-              isActive("/projects") ? "text-green-600 font-bold" : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Projects
-          </Link>
-          <Link
-            to="/awards"
-            className={`hover:text-green-600 ${
-              isActive("/awards") ? "text-green-600 font-bold" : ""
-            }`}
-          >
-            Awards
-          </Link>
-          <Link
-            to="/about"
-            className={`hover:text-green-600 ${
-              isActive("/about") ? "text-green-600 font-bold" : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/contact"
-            className={`hover:text-green-600 ${
-              isActive("/contact") ? "text-green-600 font-bold" : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Contact Us
-          </Link>
-          {/* Buttons */}
+          {menuItems.map((item) => (
+            <div key={item.path}>
+              {item.isSubmenu ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="hover:text-green-600">
+                    {item.label}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white w-40 rounded-lg shadow-lg p-4 space-y-2 ml-4">
+                    {item.subMenu?.map((subItem) => (
+                      <Link
+                        key={subItem.path}
+                        to={`${item.path}${subItem.path}`}
+                        className="block hover:bg-green-500 hover:text-white rounded-lg px-2 py-1"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  to={item.path}
+                  className={`hover:text-green-600 ${
+                    isActive(item.path) ? "text-green-600 font-bold" : ""
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </div>
+          ))}
           <Link
             to="/services"
             className="px-5 py-2 border-green-600 border-2 rounded-xl font-bold"
@@ -213,13 +192,15 @@ const Navbar = () => {
           >
             Our Services
           </Link>
-          <Link
-            to="/offsetNow"
-            className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <FaTree /> Offset Now
-          </Link>
+          {user && (
+            <Link
+              to="/offsetNow"
+              className="px-5 py-2 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <FaTree /> Offset Now
+            </Link>
+          )}
           {user ? (
             <Link
               to="/userDashboard"

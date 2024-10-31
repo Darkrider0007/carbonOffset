@@ -36,6 +36,11 @@ import AdminNewsletter from "./pages/AdminNewsletter";
 import Project from "./pages/Project";
 import ScrollToTop from "./components/ScrollToTop";
 import Awards from "./pages/Awards";
+import Uny from "./pages/Products/Uny";
+import Bamboohut from "./pages/Products/Bamboohut";
+import Divinehealer from "./pages/Products/Divinehealer";
+import Cmrbitplast from "./pages/Products/Cmrbitplast";
+import Books from "./pages/Products/Books";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +49,51 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <Home />
+      </>
+    ),
+  },
+  {
+    path: "/products/uny",
+    element: (
+      <>
+        <ScrollToTop />
+        <Uny />
+      </>
+    ),
+  },
+  {
+    path: "/products/bamboohut",
+    element: (
+      <>
+        <ScrollToTop />
+        <Bamboohut />
+      </>
+    ),
+  },
+  {
+    path: "/products/divinehealer",
+    element: (
+      <>
+        <ScrollToTop />
+        <Divinehealer />
+      </>
+    ),
+  },
+  {
+    path: "/products/cmrbitplast",
+    element: (
+      <>
+        <ScrollToTop />
+        <Cmrbitplast />
+      </>
+    ),
+  },
+  {
+    path: "/products/books",
+    element: (
+      <>
+        <ScrollToTop />
+        <Books />
       </>
     ),
   },
