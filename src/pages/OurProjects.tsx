@@ -48,14 +48,14 @@ const OurProjects = () => {
         {projectData.map((project: any, index: number) => (
           <div
             key={project._id}
-            className={`flex flex-col md:flex-row ${
+            className={`flex flex-col md:flex-row p-4 rounded-md ${
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             } gap-5 md:gap-10 h-auto md:h-[70vh] shadow-xl`}
           >
             <img
               src={project.image}
               alt={project.title}
-              className="w-full md:w-1/2 object-cover"
+              className="w-full md:w-1/2 object-cover hover:scale-105 transform transition duration-500 ease-out rounded-md"
             />
             <div className="flex flex-col px-5 md:px-12 gap-6 justify-center w-full md:w-1/2">
               <h1 className="text-2xl md:text-4xl text-gray-600 font-bold">
@@ -70,7 +70,7 @@ const OurProjects = () => {
               <Link
                 to={`/projects/${project._id}`}
                 state={project}
-                className="flex items-center justify-center bg-green-600 hover:bg-green-700 w-32 md:w-40 py-2 md:py-3 text-lg rounded-xl text-white font-bold"
+                className="flex items-center justify-center bg-green-600 hover:bg-green-700 w-32 md:w-40 py-2 md:py-3 mb-4 text-lg rounded-xl text-white font-bold"
               >
                 Read More
               </Link>
