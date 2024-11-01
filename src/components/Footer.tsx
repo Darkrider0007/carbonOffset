@@ -33,7 +33,7 @@ const Footer = () => {
             {" "}
             Projects
           </Link>
-          <Link to="/farm-onboarding" className="hover:underline">
+          <Link to="/joinUs/submitYourProposal" className="hover:underline">
             {" "}
             Submit Your Proposal
           </Link>

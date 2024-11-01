@@ -152,7 +152,7 @@ const Home = () => {
               carbon footprint!
             </h1>
             <div className="relative">
-              <Link to="/farm-onboarding">
+              <Link to="/joinUs/farmOnboardApplication">
                 <button className="flex bg-green-600 text-white items-center gap-3 px-3 py-2 rounded-full">
                   <h1>Learn More</h1>
                   <FaArrowRight />
@@ -264,7 +264,6 @@ const Home = () => {
 
       {/* newsletter */}
       <Newsletter />
-
       <Footer />
     </div>
   );

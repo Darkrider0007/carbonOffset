@@ -40,7 +40,7 @@ function Awards() {
           alt="decorative curve"
         />
       </div>
-      <main className="min-h-screen bg-green-50 p-4 md:p-8 lg:p-16">
+      <main className="min-h-screen  p-4 md:p-8 lg:p-16">
         <section className="bg-white shadow-lg rounded-lg p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
           <p className="text-base md:text-lg font-medium">
             The Society for Universal Oneness brings together people of the

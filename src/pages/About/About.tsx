@@ -1,13 +1,30 @@
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import curve from "../assets/home/curve.png";
-import mainbg from "../assets/services/mainbg.png";
-import about from "../assets/about/about.png";
+import React from "react";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
+import curve from "../../assets/home/curve.png";
+import mainbg from "../../assets/services/mainbg.png";
+import about from "../../assets/about/about.png";
 import { FaLeaf } from "react-icons/fa";
-import Newsletter from "../components/Newsletter";
-import { useEffect } from "react";
+import Newsletter from "../../components/Newsletter";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../components/ui/accordion";
 
-const aboutData = [
+// Define types for the data items
+interface AboutDataItem {
+  title: string;
+  description: string;
+}
+
+interface ServicesDataItem {
+  trigger: string;
+  content: string;
+}
+
+const aboutData: AboutDataItem[] = [
   {
     title: "What is Carbon Offset?",
     description:
@@ -40,11 +57,35 @@ const aboutData = [
   },
 ];
 
-const About = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const servicesData: ServicesDataItem[] = [
+  {
+    trigger: "Business and IP Consulting",
+    content:
+      "Business and IP Consulting (Business Plans, Business Case, Proposals, Business Analysis, Enterprise Reengineering, Create Intellectual Property, Consultation to File Patents, Create Business Analysis Reports)",
+  },
+  {
+    trigger: "Technology Consulting",
+    content:
+      "Technology Consulting (IT, Medical Science, Engineering, Interdisciplinary): Creating Technology Reports, Executing Technology Projects from Concepts to Commissioning on a turn-key basis.",
+  },
+  {
+    trigger: "Environment Friendly Power Generation",
+    content:
+      "Environment Friendly Power Generation: IP creation, File Patent, Build Prototype, Turn Key Projects, Create Environment Friendly Communities.",
+  },
+  {
+    trigger: "Information Technology",
+    content:
+      "Information Technology: Understanding client needs, pain points, business priorities, budget constraints and relate these to state of the art in technology to create roadmap and solution architecture for realizable initiatives. Areas of expertise span AI/ML, Big Data and Analytics, 5G, IoT, Cognitive Computing, Microservice, Service Oriented Architecture, transforming legacy applications, building software from the ground up, re-architecting, software engineering, process improvement and re-engineering, agile development, program management, and programming services.",
+  },
+  {
+    trigger: "System Dynamics",
+    content:
+      "System Dynamics: Modeling complex problems for root cause analysis, and researching scope for improvement. Scope can range from social to technical to environmental problems.",
+  },
+];
 
+const About: React.FC = () => {
   return (
     <div>
       <Navbar />
@@ -59,7 +100,6 @@ const About = () => {
         className="flex items-center justify-center relative"
       >
         <h1 className="text-3xl md:text-5xl font-bold text-white">About Us</h1>
-
         <img src={curve} className="absolute bottom-0 w-full" />
       </div>
 
@@ -112,6 +152,37 @@ const About = () => {
             <h1 className="text-base md:text-lg">{item.description}</h1>
           </div>
         ))}
+      </div>
+
+      {/* Services Section */}
+      <div className="flex flex-col w-full items-start p-6 md:px-20 text-lg my-10">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6 border-b-4 border-green-600 pb-2 inline-block">
+          Services
+        </h1>
+        <Accordion type="single" collapsible className="w-full max-w-3xl">
+          {servicesData.map((service, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="hover:no-underline w-full text-start hover:text-green-900 font-semibold py-2 px-4 bg-white border border-gray-300 rounded-md shadow-sm mb-2 transition duration-200 ease-in-out transform hover:-translate-y-1">
+                {service.trigger}
+              </AccordionTrigger>
+              <AccordionContent className="text-gray-700 p-4 w-full bg-green-50 border-l-4 border-green-400 rounded-b-md">
+                {service.content}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+
+      {/* Future Vision and Roadmap */}
+      <div className="flex flex-col w-full items-center p-6 md:px-20 text-lg my-10">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6 border-b-4 border-green-600 pb-2 inline-block">
+          Future Vision and Roadmap
+        </h1>
+        <img
+          src="https://1world1nation.org/wp-content/uploads/2024/02/Screen-Shot-2019-06-28-at-3.10.48-PM-1024x496.png"
+          alt="Future Vision and Roadmap"
+          className="w-full max-w-4xl rounded-lg shadow-lg mt-4"
+        />
       </div>
 
       {/* Newsletter */}

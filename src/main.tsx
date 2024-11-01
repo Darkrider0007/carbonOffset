@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-import About from "./pages/About";
+import About from "./pages/About/About";
 import OffsetNow from "./pages/OffsetNow";
 import CarbonCalculator from "./pages/CarbonCalculator";
 import OurProjects from "./pages/OurProjects";
@@ -26,7 +26,7 @@ import { Toaster } from "./components/ui/toaster";
 import ForgetPassword from "./pages/ForgetPassword";
 import AdminLogin from "./pages/AdminLogin";
 import Token from "./pages/Token";
-import FarmOnboarding from "./pages/FarmOnboarding";
+import FarmOnboarding from "./pages/JoinUs/FarmOnboarding";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminUsers from "./pages/AdminUsers";
 import CalculationMethods from "./pages/CalculationMethods";
@@ -41,6 +41,11 @@ import Bamboohut from "./pages/Products/Bamboohut";
 import Divinehealer from "./pages/Products/Divinehealer";
 import Cmrbitplast from "./pages/Products/Cmrbitplast";
 import Books from "./pages/Products/Books";
+import Sfuo from "./pages/About/Sfuo";
+import AffiliateOrganization from "./pages/About/AffiliateOrganization";
+import FutureCity from "./pages/About/FutureCity";
+import Membership from "./pages/JoinUs/Membership";
+import SubmitYourProposal from "./pages/JoinUs/SubmitYourProposal";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +108,33 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <About />
+      </>
+    ),
+  },
+  {
+    path: "/about/sfuo",
+    element: (
+      <>
+        <ScrollToTop />
+        <Sfuo />
+      </>
+    ),
+  },
+  {
+    path: "/about/affiliateOrganization",
+    element: (
+      <>
+        <ScrollToTop />
+        <AffiliateOrganization />
+      </>
+    ),
+  },
+  {
+    path: "/about/future-city",
+    element: (
+      <>
+        <ScrollToTop />
+        <FutureCity />
       </>
     ),
   },
@@ -184,6 +216,15 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <Project />
+      </>
+    ),
+  },
+  {
+    path: "/joinUs/membership",
+    element: (
+      <>
+        <ScrollToTop />
+        <Membership />
       </>
     ),
   },
@@ -284,11 +325,20 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/farm-onboarding",
+    path: "/joinUs/farmOnboardApplication",
     element: (
       <>
         <ScrollToTop />
         <FarmOnboarding />
+      </>
+    ),
+  },
+  {
+    path: "/joinUs/submitYourProposal",
+    element: (
+      <>
+        <ScrollToTop />
+        <SubmitYourProposal />
       </>
     ),
   },

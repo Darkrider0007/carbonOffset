@@ -65,12 +65,32 @@ const Navbar = () => {
     { path: "/calculator", label: "Carbon Calculator" },
     { path: "/projects", label: "Projects" },
     { path: "/awards", label: "Awards" },
-    { path: "/about", label: "About Us" },
+    { path: "/gallery", label: "Gallery" },
+    {
+      path: "/about",
+      label: "About Us",
+      isSubmenu: true,
+      subMenu: [
+        { path: "/", label: "About Us" },
+        { path: "/sfuo", label: "SFUO" },
+        { path: "/affiliateOrganization", label: "Affiliate Organization" },
+        { path: "/future-city", label: "Future City" },
+      ],
+    },
+    {
+      path: "/joinUs",
+      label: "Join Us",
+      isSubmenu: true,
+      subMenu: [
+        { path: "/membership", label: "Membership" },
+        { path: "/submitYourProposal", label: "Submit Your Proposal" },
+        { path: "/farmOnboardApplication", label: "Farm Onboard Application" },
+      ],
+    },
     { path: "/contact", label: "Contact Us" },
   ];
 
   const isActive = (path: any) => {
-    console.log(path.split("/")[1]);
     return (
       location.pathname === path ||
       location.pathname.split("/")[1] === path.split("/")[1]

@@ -3,7 +3,6 @@ import curve from "../../assets/home/curve.png";
 import mainbg from "../../assets/Products/productsBanner.jpg";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
-import ReactPlayer from "react-player";
 
 function Uny() {
   return (
@@ -83,15 +82,17 @@ function Uny() {
         </section>
 
         {/* Video Section (Placeholder) */}
-        <div className="mt-12 text-center">
-          <ReactPlayer
-            url="https://1world1nation.org/wp-content/uploads/2024/02/uny_introduction.mp4"
-            controls
-            width="70%"
-            maxWidth="70%"
-            height="auto"
-            className="mx-auto"
-          />
+        <div className="mt-12 flex items-center justify-center">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/lc8U3CxLbmA?si=5QRduGkJeOCOAhGU"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
         </div>
       </div>
       {/* Newsletter */}
