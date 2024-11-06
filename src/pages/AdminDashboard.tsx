@@ -21,6 +21,7 @@ import { deleteProject } from "../api/addProject";
 import { getAdminData } from "../api/admin";
 import { Plus, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
+import EditProject from "../components/EditProject";
 
 interface ProjectData {
   name: string;
@@ -36,10 +37,18 @@ export default function AdminDashboard() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // Added state for search term
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(
+    null
+  );
 
   const handleAddProject = () => {
     setIsModalOpen(true);
+  };
+
+  const toggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
   };
 
   const toggleModal = () => {
@@ -151,7 +160,9 @@ export default function AdminDashboard() {
                   <FaArrowUp color="green" />
                   <h1>
                     <span className="text-green-600">
-                      {Math.floor(Math.abs(dashBoardData?.projectCountPerMonth))}
+                      {Math.floor(
+                        Math.abs(dashBoardData?.projectCountPerMonth)
+                      )}
                     </span>{" "}
                     % vs last month
                   </h1>
@@ -161,7 +172,9 @@ export default function AdminDashboard() {
           </div>
           <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <h2 className="font-bold text-2xl mb-4 md:mb-0">Active Projects</h2>
+              <h2 className="font-bold text-2xl mb-4 md:mb-0">
+                Active Projects
+              </h2>
               <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
                 {/* Search Input Container */}
                 <div className="flex flex-row items-center gap-2 border border-gray-300 rounded-lg text-gray-600 pl-2 focus-within:ring-2 focus-within:ring-green-500 w-full md:w-64 lg:w-80">
@@ -222,10 +235,11 @@ export default function AdminDashboard() {
                         <TableCell>{project.location}</TableCell>
                         <TableCell>
                           <div
-                            className={`p-1 ${project.status
-                              ? "bg-green-500 text-white"
-                              : "bg-red-500 text-white"
-                              } flex justify-center items-center rounded-2xl`}
+                            className={`p-1 ${
+                              project.status
+                                ? "bg-green-500 text-white"
+                                : "bg-red-500 text-white"
+                            } flex justify-center items-center rounded-2xl`}
                           >
                             {project.status}
                           </div>
@@ -233,10 +247,18 @@ export default function AdminDashboard() {
 
                         <TableCell>{project.userCount}</TableCell>
                         <TableCell>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-row">
                             <Button
-                              variant="outline"
-                              className="hover:text-white hover:bg-red-600"
+                              className="bg-green-500 hover:text-white hover:bg-green-600"
+                              onClick={() => {
+                                setSelectedProject(project);
+                                toggleEditModal();
+                              }}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              className="bg-red-500 hover:text-white hover:bg-red-600"
                               onClick={() => {
                                 handleDeleteProject(project._id);
                               }}
@@ -265,6 +287,12 @@ export default function AdminDashboard() {
             isOpen={isModalOpen}
             toggleModal={toggleModal}
             onAddProject={setProjectData}
+          />
+          <EditProject
+            isOpen={isEditModalOpen}
+            toggleModal={toggleEditModal}
+            onEditProject={setProjectData}
+            projectData={selectedProject}
           />
         </main>
       </div>

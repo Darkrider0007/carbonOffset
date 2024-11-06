@@ -36,6 +36,25 @@ export async function getProjects(): Promise<any> {
   }
 }
 
+export async function updateProject(
+  id: string,
+  project: any
+): Promise<{ data: any; status: number }> {
+  try {
+    console.log("project", project);
+    const res = await axios.put(`${BASE_URL}/api/add-project/${id}`, project, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return { data: res.data, status: res.status };
+  } catch (error) {
+    console.error("Error updating project:", error);
+    throw error;
+  }
+}
+
 export async function deleteProject({ id }: any): Promise<any> {
   try {
     const res = await axios.delete(`${BASE_URL}/api/add-project/${id}`);
