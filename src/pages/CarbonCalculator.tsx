@@ -18,6 +18,8 @@ import { GrPowerReset } from "react-icons/gr";
 import CarbonOffsetCalculator from "../components/Calculator/Calculator";
 import { getTokenData } from "../api/token";
 import Newsletter from "../components/Newsletter";
+import { useToast } from "../hooks/use-toast";
+import { AddToWallet } from "../api/stripe/checkout";
 
 const factors = ["Vehicle", "Natural Gas", "Electricity", "Fuel Oil", "Waste"];
 
@@ -83,8 +85,37 @@ const CarbonCalculator = () => {
   }
 
   const { user } = context;
+  const { toast } = useToast();
 
   const navigate = useNavigate();
+
+  const handleOffsetNow = async () => {
+    try {
+      const token = await getTokenData();
+      const tokenPrice = token.data.tokenPrice;
+
+      const cost = tokenPrice * totalCost;
+
+      if (cost === 0) {
+        toast({
+          title: "Error",
+          description: "Please calculate your emissions first",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const res = await AddToWallet({ amount: cost, tokens: totalCost });
+
+      console.log(res);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error in offsetting your emissions",
+        variant: "destructive",
+      });
+    }
+  };
 
   useEffect(() => {
     setIsLoggedin(!!user);
@@ -436,7 +467,7 @@ const CarbonCalculator = () => {
                       <p className="font-semibold text-lg">{totalCost}</p>
                     </div>
                     <Button
-                      onClick={() => navigate("/offsetNow")}
+                      onClick={handleOffsetNow}
                       className="bg-green-600 hover:bg-green-500 w-full md:w-48 py-2 text-white font-bold rounded-md shadow-md my-5"
                       disabled={totalCO2 === 0}
                     >
