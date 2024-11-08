@@ -22,6 +22,7 @@ import { getAdminData } from "../api/admin";
 import { Plus, Search } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 import EditProject from "../components/EditProject";
+import { BarGraph } from "./Graphs/BarGraph";
 
 interface ProjectData {
   name: string;
@@ -30,6 +31,7 @@ interface ProjectData {
   userCount: number;
   _id: string;
   image: string;
+  details: string;
 }
 
 export default function AdminDashboard() {
@@ -69,6 +71,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchAdminData = async () => {
       const res = await getAdminData();
+      console.log(res.data.allProjects);
       setProjectData(res.data.allProjects);
       setDashBoardData(res.data);
     };
@@ -170,6 +173,7 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
           </div>
+          <BarGraph projects={projectData} />
           <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <h2 className="font-bold text-2xl mb-4 md:mb-0">
