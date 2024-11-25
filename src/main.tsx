@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About/About";
 import OffsetNow from "./pages/OffsetNow";
-import CarbonCalculator from "./pages/CarbonCalculator";
+import CarbonCalculator from "./pages/Calculator/CarbonCalculator";
 import OurProjects from "./pages/OurProjects";
 import UserDashboard from "./pages/UserDashboard";
 import UserTransactions from "./pages/UserTransactions";
@@ -46,6 +46,7 @@ import AffiliateOrganization from "./pages/About/AffiliateOrganization";
 import FutureCity from "./pages/About/FutureCity";
 import Membership from "./pages/JoinUs/Membership";
 import SubmitYourProposal from "./pages/JoinUs/SubmitYourProposal";
+import IndividualCalculator from "./pages/Calculator/IndividualCalculator";
 
 const router = createBrowserRouter([
   {
@@ -160,8 +161,15 @@ const router = createBrowserRouter([
     path: "/calculator",
     element: (
       <>
-        <ScrollToTop />
         <CarbonCalculator />
+      </>
+    ),
+  },
+  {
+    path: "/calculator/individual",
+    element: (
+      <>
+        <IndividualCalculator />
       </>
     ),
   },
