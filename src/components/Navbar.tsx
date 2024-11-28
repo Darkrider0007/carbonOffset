@@ -25,7 +25,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await getUser();
-      setUserData(res.data.data);
+      if (res.data?.data) setUserData(res.data.data);
       if (res.status === 201) {
         setUser({
           id: res.data.data._id,
