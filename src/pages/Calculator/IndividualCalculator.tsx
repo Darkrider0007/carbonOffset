@@ -1,17 +1,17 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
 import { EmissionsCalculator } from "./EmissionsCalculator";
 
 const IndividualCalculator: React.FC = () => {
-  // useEffect(() => {
-  //   // Scroll to the <main> element on the first render
-  //   const mainElement = document.querySelector("main");
-  //   if (mainElement) {
-  //     mainElement.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Scroll to the <main> element on the first render
+    const mainElement = document.querySelector("main");
+    if (mainElement) {
+      mainElement.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <div>
