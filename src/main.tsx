@@ -47,6 +47,7 @@ import FutureCity from "./pages/About/FutureCity";
 import Membership from "./pages/JoinUs/Membership";
 import SubmitYourProposal from "./pages/JoinUs/SubmitYourProposal";
 import IndividualCalculator from "./pages/Calculator/IndividualCalculator";
+import BusinessCalculator from "./pages/Calculator/BusinessCalculator";
 
 const router = createBrowserRouter([
   {
@@ -170,6 +171,14 @@ const router = createBrowserRouter([
     element: (
       <>
         <IndividualCalculator />
+      </>
+    ),
+  },
+  {
+    path: "/calculator/business",
+    element: (
+      <>
+        <BusinessCalculator />
       </>
     ),
   },

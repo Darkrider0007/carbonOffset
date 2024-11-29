@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, max = 10, step = 1, ...props }, ref) => {
+>(({ className, min = 0, max = 10, step = 1, ...props }, ref) => {
   const steps = Array.from(
     { length: max / step + 1 },
     (_, index) => index * step
@@ -34,7 +34,7 @@ const Slider = React.forwardRef<
         {steps.length < 20 &&
           steps.map((stepValue) => (
             <span key={stepValue} className="w-4 text-center font-bold">
-              {stepValue}
+              {stepValue + min}
             </span>
           ))}
       </div>

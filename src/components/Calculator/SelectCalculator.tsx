@@ -50,7 +50,10 @@ const SelectCalculator: React.FC<SelectCalculatorProps> = ({
               <span>Individual</span>
             </Button>
 
-            <Button className="w-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center gap-2 h-12 rounded-lg">
+            <Button
+              onClick={() => navigate("/calculator/business")}
+              className="w-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center gap-2 h-12 rounded-lg"
+            >
               <Leaf size={20} />
               <span>Business</span>
             </Button>

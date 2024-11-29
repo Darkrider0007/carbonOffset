@@ -1,21 +1,14 @@
-import { Button } from "../../components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
+import Electricity from "./StepOfTheCalculator/Electricity";
+import FuelOil from "./StepOfTheCalculator/FuelOil";
+import NaturalGas from "./StepOfTheCalculator/NaturalGas";
 import Vehicles from "./StepOfTheCalculator/Vehicles";
+import Waste from "./StepOfTheCalculator/Waste";
 
 export function EmissionsCalculator() {
   return (
@@ -30,28 +23,17 @@ export function EmissionsCalculator() {
       <TabsContent value="vehicle">
         <Vehicles />
       </TabsContent>
-      <TabsContent value="password">
-        <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you'll be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
-        </Card>
+      <TabsContent value="naturalGas">
+        <NaturalGas />
+      </TabsContent>
+      <TabsContent value="electricity">
+        <Electricity />
+      </TabsContent>
+      <TabsContent value="fuelOil">
+        <FuelOil />
+      </TabsContent>
+      <TabsContent value="waste">
+        <Waste />
       </TabsContent>
     </Tabs>
   );
