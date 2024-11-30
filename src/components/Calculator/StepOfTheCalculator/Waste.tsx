@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,15 +7,24 @@ import {
 } from "../../../components/ui/card";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
+import { useDispatch, useSelector } from "react-redux";
+import { changeWaste } from "../../../store/features/calculator/calculatorSlice";
 
 function Waste() {
-  // Initial value for monthly fuel oil consumption (defaulting to ~83 gallons/month).
+  const dispatch = useDispatch();
+
+  const wasteData = useSelector((state: any) => state.calculator.waste);
   const [value, setValue] = useState(3);
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
     setValue(newValue[0]);
+    dispatch(changeWaste(newValue[0]));
   };
+
+  useEffect(() => {
+    setValue(wasteData);
+  }, [wasteData]);
 
   return (
     <div>
@@ -34,7 +43,7 @@ function Waste() {
               </Label>
               <Slider
                 value={[value]}
-                min={1}
+                min={0}
                 max={14} // Maximum allows for above-average consumption
                 step={1} // Step size for precise adjustments
                 onValueChange={handleChange}

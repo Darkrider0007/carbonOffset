@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,16 +7,25 @@ import {
 } from "../../../components/ui/card";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
+import { useDispatch, useSelector } from "react-redux";
+import { changeNaturalGas } from "../../../store/features/calculator/calculatorSlice";
 
 function NaturalGas() {
-  // Initial value for monthly consumption (defaulting to ~7 cubic feet).
+  const dispatch = useDispatch();
+  const naturalGasData = useSelector(
+    (state: any) => state.calculator.naturalgas
+  );
   const [value, setValue] = useState(7);
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
     setValue(newValue[0]);
+    dispatch(changeNaturalGas(newValue[0]));
   };
 
+  useEffect(() => {
+    setValue(naturalGasData);
+  }, [naturalGasData]);
   return (
     <div>
       <Card className="border-0 shadow-none">

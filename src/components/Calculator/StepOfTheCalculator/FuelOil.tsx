@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,15 +7,23 @@ import {
 } from "../../../components/ui/card";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFuelOil } from "../../../store/features/calculator/calculatorSlice";
 
 function FuelOil() {
-  // Initial value for monthly fuel oil consumption (defaulting to ~83 gallons/month).
+  const dispatch = useDispatch();
+  const fuelOilData = useSelector((state: any) => state.calculator.fueloil);
   const [value, setValue] = useState(83);
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
+    dispatch(changeFuelOil(newValue[0]));
     setValue(newValue[0]);
   };
+
+  useEffect(() => {
+    setValue(fuelOilData);
+  }, [fuelOilData]);
 
   return (
     <div>
@@ -48,7 +56,7 @@ function FuelOil() {
               <div className="text-center text-lg font-medium text-gray-700">
                 Current Monthly Consumption:{" "}
                 <span className="text-green-600 font-bold">
-                  {value.toLocaleString()} gallons
+                  {value && value?.toLocaleString()} gallons
                 </span>
               </div>
             </div>

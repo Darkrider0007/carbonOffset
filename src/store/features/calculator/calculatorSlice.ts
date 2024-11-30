@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface VehicleData {
-  id: string;
+  id: number | string;
   vehicleType: string;
   months: number;
   milesPerYear: number;
@@ -18,10 +18,10 @@ export interface CalculatorState {
 
 const initialState: CalculatorState = {
   vehicleData: [],
-  naturalgas: 0,
-  electricity: 0,
-  fueloil: 0,
-  waste: 0,
+  naturalgas: 7,
+  electricity: 877,
+  fueloil: 83,
+  waste: 3,
 };
 
 const calculatorSlice = createSlice({
@@ -29,6 +29,16 @@ const calculatorSlice = createSlice({
   initialState,
   reducers: {
     addVehicleData: (state, action: PayloadAction<VehicleData>) => {
+      const vehicle = state.vehicleData.find(
+        (vehicle) => vehicle.id === action.payload.id
+      );
+      if (vehicle) {
+        const index = state.vehicleData.findIndex(
+          (vehicle) => vehicle.id === action.payload.id
+        );
+        state.vehicleData[index] = action.payload;
+        return;
+      }
       state.vehicleData.push(action.payload);
     },
     updateVehicleData: (state, action: PayloadAction<VehicleData>) => {
@@ -36,6 +46,11 @@ const calculatorSlice = createSlice({
         (vehicle) => vehicle.id === action.payload.id
       );
       state.vehicleData[index] = action.payload;
+    },
+    removeVehicalData: (state, action: PayloadAction<number>) => {
+      state.vehicleData = state.vehicleData.filter(
+        (vehicle) => vehicle.id !== action.payload
+      );
     },
     changeNaturalGas: (state, action: PayloadAction<number>) => {
       state.naturalgas = action.payload;
@@ -54,6 +69,8 @@ const calculatorSlice = createSlice({
 
 export const {
   addVehicleData,
+  updateVehicleData,
+  removeVehicalData,
   changeNaturalGas,
   changeElectricity,
   changeFuelOil,

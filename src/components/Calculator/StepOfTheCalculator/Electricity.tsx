@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,15 +7,25 @@ import {
 } from "../../../components/ui/card";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
+import { useDispatch, useSelector } from "react-redux";
+import { changeElectricity } from "../../../store/features/calculator/calculatorSlice";
 
 function Electricity() {
-  // Initial value for monthly electricity consumption (defaulting to U.S. average of ~877 kWh).
+  const dispatch = useDispatch();
+  const electricityData = useSelector(
+    (state: any) => state.calculator.electricity
+  );
   const [value, setValue] = useState(877);
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
+    dispatch(changeElectricity(newValue[0]));
     setValue(newValue[0]);
   };
+
+  useEffect(() => {
+    setValue(electricityData);
+  }, [electricityData]);
 
   return (
     <div>

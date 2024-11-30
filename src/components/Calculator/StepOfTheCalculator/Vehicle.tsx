@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Car, Zap } from "lucide-react";
 import { Card, CardContent, CardHeader } from "../../../components/ui/card";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
+import {
+  addVehicleData,
+  updateVehicleData,
+} from "../../../store/features/calculator/calculatorSlice";
 
 interface VehicleProps {
   vehicleNum: number;
-  totalVehicles?: number;
-  onVehicleCountChange?: (action: "increment" | "decrement") => void;
 }
 
 interface FormData {
@@ -26,24 +30,65 @@ interface SliderConfig {
 }
 
 const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
-  const [vehicleType, setVehicleType] = useState<VehicleType>("gas");
+  const dispatch = useDispatch();
+  const vehicleData = useSelector((state: any) =>
+    state.calculator.vehicleData.find(
+      (vehicle: any) => vehicle.id === vehicleNum
+    )
+  );
+
+  const [vehicleType, setVehicleType] = useState<VehicleType>(
+    vehicleData?.vehicleType || "gas"
+  );
   const [formData, setFormData] = useState<FormData>({
-    months: 8,
-    milesPerYear: 12000,
-    fuelEfficiency: 25,
+    months: vehicleData?.months || 8,
+    milesPerYear: vehicleData?.milesPerYear || 12000,
+    fuelEfficiency: vehicleData?.fuelEfficiency || 25,
   });
 
+  // Push initial data if not present
+  useEffect(() => {
+    if (!vehicleData) {
+      dispatch(
+        addVehicleData({
+          id: vehicleNum,
+          vehicleType,
+          ...formData,
+        })
+      );
+    }
+  }, [dispatch, vehicleNum, vehicleData, vehicleType, formData]);
+
   const handleSliderChange = (name: keyof FormData, value: number[]): void => {
-    setFormData((prev) => ({
-      ...prev,
+    const updatedFormData = {
+      ...formData,
       [name]: value[0],
-    }));
+    };
+    setFormData(updatedFormData);
+    dispatch(
+      updateVehicleData({
+        id: vehicleNum,
+        vehicleType,
+        ...updatedFormData,
+      })
+    );
+  };
+
+  const handleVehicleTypeChange = (type: VehicleType): void => {
+    setVehicleType(type);
+    dispatch(
+      updateVehicleData({
+        id: vehicleNum,
+        vehicleType: type,
+        ...formData,
+      })
+    );
   };
 
   const getSliderConfig = (type: keyof FormData): SliderConfig => {
     switch (type) {
       case "months":
-        return { min: 1, max: 12, step: 1, defaultValue: 8 };
+        return { min: 0, max: 12, step: 1, defaultValue: 8 };
       case "milesPerYear":
         return { min: 1000, max: 30000, step: 1000, defaultValue: 12000 };
       case "fuelEfficiency":
@@ -56,7 +101,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto bg-white border-0">
       <CardHeader>
-        <h1 className="text-3xl font-bold">Vehicle {vehicleNum}</h1>
+        <h1 className="text-3xl font-bold">Vehicle {vehicleNum + 1}</h1>
       </CardHeader>
 
       <CardContent className="px-6 space-y-8">
@@ -68,7 +113,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
           <div className="flex gap-4">
             <button
               type="button"
-              onClick={() => setVehicleType("gas")}
+              onClick={() => handleVehicleTypeChange("gas")}
               className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border-2 transition-all duration-200 ${
                 vehicleType === "gas"
                   ? "border-green-600 bg-green-50 text-green-700"
@@ -85,7 +130,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
             </button>
             <button
               type="button"
-              onClick={() => setVehicleType("ev")}
+              onClick={() => handleVehicleTypeChange("ev")}
               className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border-2 transition-all duration-200 ${
                 vehicleType === "ev"
                   ? "border-green-600 bg-green-50 text-green-700"
