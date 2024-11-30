@@ -48,6 +48,8 @@ import Membership from "./pages/JoinUs/Membership";
 import SubmitYourProposal from "./pages/JoinUs/SubmitYourProposal";
 import IndividualCalculator from "./pages/Calculator/IndividualCalculator";
 import BusinessCalculator from "./pages/Calculator/BusinessCalculator";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const router = createBrowserRouter([
   {
@@ -383,9 +385,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <UserContextProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </UserContextProvider>
+    <Provider store={store}>
+      <UserContextProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </UserContextProvider>
+    </Provider>
   </React.StrictMode>
 );
