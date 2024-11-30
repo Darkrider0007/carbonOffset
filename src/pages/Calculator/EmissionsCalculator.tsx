@@ -4,11 +4,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import Electricity from "./StepOfTheCalculator/Electricity";
-import FuelOil from "./StepOfTheCalculator/FuelOil";
-import NaturalGas from "./StepOfTheCalculator/NaturalGas";
-import Vehicles from "./StepOfTheCalculator/Vehicles";
-import Waste from "./StepOfTheCalculator/Waste";
+import Electricity from "../../components/Calculator/StepOfTheCalculator/Electricity";
+import FuelOil from "../../components/Calculator/StepOfTheCalculator/FuelOil";
+import NaturalGas from "../../components/Calculator/StepOfTheCalculator/NaturalGas";
+import Vehicles from "../../components/Calculator/StepOfTheCalculator/Vehicles";
+import Waste from "../../components/Calculator/StepOfTheCalculator/Waste";
 
 export function EmissionsCalculator() {
   return (
