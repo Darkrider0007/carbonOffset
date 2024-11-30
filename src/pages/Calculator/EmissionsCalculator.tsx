@@ -13,12 +13,13 @@ import Waste from "../../components/Calculator/StepOfTheCalculator/Waste";
 export function EmissionsCalculator() {
   return (
     <Tabs defaultValue="vehicle" className="w-full">
-      <TabsList className="grid w-full grid-cols-5">
+      <TabsList className="grid w-full grid-cols-6">
         <TabsTrigger value="vehicle">Vehicle</TabsTrigger>
         <TabsTrigger value="naturalGas">Natural Gas</TabsTrigger>
         <TabsTrigger value="electricity">Electricity</TabsTrigger>
         <TabsTrigger value="fuelOil">Fuel Oil</TabsTrigger>
         <TabsTrigger value="waste">Waste</TabsTrigger>
+        <TabsTrigger value="calculate">Calculate</TabsTrigger>
       </TabsList>
       <TabsContent value="vehicle">
         <Vehicles />
@@ -33,6 +34,9 @@ export function EmissionsCalculator() {
         <FuelOil />
       </TabsContent>
       <TabsContent value="waste">
+        <Waste />
+      </TabsContent>
+      <TabsContent value="calculate">
         <Waste />
       </TabsContent>
     </Tabs>
