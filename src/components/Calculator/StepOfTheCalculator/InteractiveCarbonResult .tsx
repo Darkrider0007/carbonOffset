@@ -91,22 +91,22 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
   return (
     <div className="w-full text-center space-y-4">
       {calculationState === "initial" && (
-        <div className="">
-          <div className=" p-8 ">
-            <p className="text-2xl text-gray-800 mb-4">
+        <div className="px-4">
+          <div className="py-8">
+            <p className="text-xl sm:text-2xl text-gray-800 mb-4">
               Welcome back,{" "}
               <span className="font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {userDetails?.firstName}
               </span>
               !
             </p>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-sm sm:text-lg text-gray-600 mb-8">
               Ready to discover your environmental impact? Calculate your annual
               carbon emissions using our advanced analytics engine.
             </p>
             <button
               onClick={handleCalculateClick}
-              className="group relative inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:from-green-600 hover:to-emerald-700"
+              className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-lg font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:from-green-600 hover:to-emerald-700"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-green-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               <span className="relative">Calculate Now</span>
@@ -116,16 +116,16 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
       )}
 
       {calculationState === "loading" && (
-        <div className="transform transition-all duration-500 ">
-          <div className="bg-white p-8">
+        <div className="transform transition-all duration-500 px-4">
+          <div className="bg-white py-8">
             <div className="flex flex-col items-center space-y-6">
               {/* Glowing loader with gradient */}
               <div className="relative">
-                <Loader2 className="h-16 w-16 text-green-500 animate-spin relative" />
+                <Loader2 className="h-12 w-12 sm:h-16 sm:w-16 text-green-500 animate-spin" />
               </div>
 
               {/* Progress bar */}
-              <div className="w-full max-w-md bg-gray-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full max-w-xs sm:max-w-md bg-gray-100 rounded-full h-2 overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-300"
                   style={{ width: `${progress}%` }}
@@ -133,8 +133,8 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
               </div>
 
               {/* Animated message */}
-              <div className="min-h-[3rem] flex items-center">
-                <p className="text-lg font-medium text-gray-700 animate-fade-in">
+              <div className="min-h-[2rem] sm:min-h-[3rem] flex items-center">
+                <p className="text-sm sm:text-lg font-medium text-gray-700 animate-fade-in">
                   {currentMessage}
                 </p>
               </div>
@@ -145,7 +145,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
 
       {calculationState === "result" && (
         <div
-          className="relative flex flex-col items-center justify-center w-[1000px] h-[600px] bg-cover bg-center bg-no-repeat rounded-lg shadow-lg"
+          className="relative flex flex-col items-center justify-center w-full max-w-[90%] sm:max-w-[800px] md:max-w-[1000px] h-auto sm:h-[500px] bg-cover bg-center bg-no-repeat rounded-lg shadow-lg"
           style={{
             backgroundImage:
               "url('https://i.ibb.co/y0xym8t/9640795-hd-1920-1080-25fps-ezgif-com-video-to-gif-converter.gif')",
@@ -154,28 +154,28 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
           {/* Red Overlay */}
           <div className="absolute inset-0 bg-black bg-opacity-30 z-20 rounded-lg"></div>
           {/* Content */}
-          <div className="z-30">
-            <div className="space-y-6 flex flex-col items-center justify-center">
+          <div className="z-30 px-4">
+            <div className="space-y-6 flex flex-col items-center">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-gray-100">
+                <h2 className="text-lg sm:text-2xl font-bold text-gray-100">
                   YOUR CARBON IMPACT IS
                 </h2>
-                <div className="flex items-center justify-center space-x-3">
-                  <span className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                <div className="flex items-center justify-center space-x-2 sm:space-x-3">
+                  <span className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     {totalEmissions ? totalEmissions.toFixed(4) : "0"}
                   </span>
-                  <span className="text-2xl font-medium text-gray-50">
+                  <span className="text-lg sm:text-2xl font-medium text-gray-50">
                     METRIC TONS CO2
                   </span>
                 </div>
               </div>
 
-              <p className="text-gray-200 mt-4 text-2xl font-bold text-center w-[600px]">
+              <p className="text-gray-200 text-center text-sm sm:text-lg w-full max-w-xs sm:max-w-md">
                 Protecting {(totalEmissions * 0.36).toFixed(2)} hectares of
                 tropical forest can neutralise that amount of carbon dioxide.
               </p>
 
-              <p className="text-gray-200 mt-4 text-lg w-[950px]">
+              <p className="text-gray-200 text-center text-xs sm:text-sm max-w-xs sm:max-w-lg">
                 On average, a hectare of tropical forest stores carbon equating
                 to 550 metric tons of CO2. With annual tropical deforestation
                 rates averaging 0.5%, this results in 2.75 metric tons of CO2

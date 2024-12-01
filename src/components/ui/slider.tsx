@@ -31,7 +31,7 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Root>
       {/* Render step markers below the slider */}
       <div className="relative flex justify-between mt-2 text-sm text-gray-700">
-        {steps.length < 20 &&
+        {steps.length < 13 &&
           steps.map((stepValue) => (
             <span key={stepValue} className="w-4 text-center font-bold">
               {stepValue + min}

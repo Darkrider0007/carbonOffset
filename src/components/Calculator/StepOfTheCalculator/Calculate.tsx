@@ -21,9 +21,9 @@ const Calculate: React.FC = () => {
   const { user } = context;
 
   return (
-    <Card className="border-0 ">
-      <CardHeader className="flex items-center justify-center">
-        <CardTitle className="text-4xl font-bold text-green-700">
+    <Card className="border-0 mx-auto max-w-full px-4 sm:max-w-sm md:max-w-md lg:max-w-2xl">
+      <CardHeader className="flex items-center justify-center px-2 text-center">
+        <CardTitle className="text-2xl font-bold text-green-700 sm:text-3xl lg:text-4xl">
           Calculate Your Annual Carbon Emissions
         </CardTitle>
       </CardHeader>
@@ -35,12 +35,12 @@ const Calculate: React.FC = () => {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center gap-6">
-              <h1 className="text-xl text-gray-700 font-medium">
+              <h1 className="text-base text-gray-700 font-medium sm:text-lg">
                 Please log in to continue.
               </h1>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md text-sm sm:text-base"
               >
                 Login
               </button>

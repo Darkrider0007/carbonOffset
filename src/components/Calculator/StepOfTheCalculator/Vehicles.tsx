@@ -26,7 +26,7 @@ function Vehicles() {
 
   useEffect(() => {
     setValue(vehiclesData.length);
-    if (vehiclesData.length - 1 == value) {
+    if (vehiclesData.length - 1 === value) {
       // Remove the last vehicle (assuming vehicle IDs are sequentially based on array index)
       const vehicleToRemove = vehiclesData[vehiclesData.length - 1];
       dispatch(removeVehicalData(vehicleToRemove.id));
@@ -38,14 +38,18 @@ function Vehicles() {
     <div>
       <Card className="border-0 shadow-none">
         <CardHeader className="flex items-center justify-center">
-          <CardTitle className="text-4xl font-bold">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold">
             Vehicle Emissions
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          <div className="flex flex-col justify-center items-center my-10">
-            <div className="w-[600px] flex flex-col gap-6">
-              <Label className="text-xl" htmlFor="vehicle">
+          <div className="flex flex-col justify-center items-center my-6 sm:my-10">
+            {/* Responsive Container for Slider */}
+            <div className="w-full sm:w-[400px] md:w-[600px] flex flex-col gap-4 sm:gap-6">
+              <Label
+                className="text-base sm:text-lg md:text-xl"
+                htmlFor="vehicle"
+              >
                 Number of Vehicles
               </Label>
               <Slider
@@ -53,9 +57,11 @@ function Vehicles() {
                 max={10}
                 step={1}
                 onValueChange={handleChange}
+                className="w-full"
               />
             </div>
-            <div className="w-[600px] py-8">
+            {/* Responsive Container for Vehicle List */}
+            <div className="w-full sm:w-[400px] md:w-[600px] py-4 sm:py-6 md:py-8">
               {[...Array(value)].map((_, index) => (
                 <Vehicle key={index} vehicleNum={index} />
               ))}

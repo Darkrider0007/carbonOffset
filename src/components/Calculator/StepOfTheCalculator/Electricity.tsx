@@ -31,16 +31,19 @@ function Electricity() {
     <div>
       <Card className="border-0 shadow-none">
         <CardHeader className="flex items-center justify-center">
-          <CardTitle className="text-4xl font-bold">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
             Annual Carbon Emissions from Electricity
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex flex-col justify-center items-center my-10">
-            <div className="w-[600px] flex flex-col gap-6">
+        <CardContent className="space-y-4">
+          <div className="flex flex-col justify-center items-center my-8 sm:my-10">
+            <div className="w-full max-w-xs sm:max-w-md md:w-[600px] flex flex-col gap-6 px-4 sm:px-6 md:px-0">
               {/* Monthly Electricity Consumption Input */}
-              <Label className="text-xl" htmlFor="electricity">
-                Monthly Consumption (kilowatt-hours)
+              <Label
+                className="text-lg sm:text-xl font-semibold text-gray-700"
+                htmlFor="electricity"
+              >
+                Monthly Electricity Consumption (kilowatt-hours)
               </Label>
               <Slider
                 value={[value]}
@@ -55,7 +58,7 @@ function Electricity() {
               </div>
 
               {/* Display Current Monthly and Annual Consumption */}
-              <div className="text-center text-lg font-medium text-gray-700">
+              <div className="text-center text-sm sm:text-lg font-medium text-gray-700">
                 Current Monthly Consumption:{" "}
                 <span className="text-green-600 font-bold">
                   {value.toLocaleString()} kWh

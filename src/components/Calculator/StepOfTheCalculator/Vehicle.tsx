@@ -46,7 +46,6 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
     fuelEfficiency: vehicleData?.fuelEfficiency || 25,
   });
 
-  // Push initial data if not present
   useEffect(() => {
     if (!vehicleData) {
       dispatch(
@@ -101,20 +100,22 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto bg-white border-0">
       <CardHeader>
-        <h1 className="text-3xl font-bold">Vehicle {vehicleNum + 1}</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+          Vehicle {vehicleNum + 1}
+        </h1>
       </CardHeader>
 
-      <CardContent className="px-6 space-y-8">
+      <CardContent className="px-4 sm:px-6 md:px-8 space-y-8">
         {/* Vehicle Type Selection */}
         <div className="space-y-3">
-          <Label className="text-lg font-semibold text-gray-700">
+          <Label className="text-base sm:text-lg md:text-xl font-semibold text-gray-700">
             Vehicle Type <span className="text-red-500">*</span>
           </Label>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               type="button"
               onClick={() => handleVehicleTypeChange("gas")}
-              className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border-2 transition-all duration-200 ${
+              className={`flex-1 flex items-center justify-center gap-2 p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${
                 vehicleType === "gas"
                   ? "border-green-600 bg-green-50 text-green-700"
                   : "border-gray-200 hover:border-green-200 hover:bg-gray-50"
@@ -131,7 +132,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
             <button
               type="button"
               onClick={() => handleVehicleTypeChange("ev")}
-              className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-lg border-2 transition-all duration-200 ${
+              className={`flex-1 flex items-center justify-center gap-2 p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${
                 vehicleType === "ev"
                   ? "border-green-600 bg-green-50 text-green-700"
                   : "border-gray-200 hover:border-green-200 hover:bg-gray-50"
@@ -155,14 +156,14 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
               (field !== "fuelEfficiency" || vehicleType === "gas") && (
                 <div key={field} className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <Label className="text-lg font-semibold text-gray-700">
+                    <Label className="text-base sm:text-lg md:text-xl font-semibold text-gray-700">
                       {field === "milesPerYear"
                         ? "Miles per Year"
                         : field === "fuelEfficiency"
                         ? "Fuel Efficiency (MPG)"
                         : "Months in a Year"}
                     </Label>
-                    <span className="text-2xl font-bold text-green-600">
+                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">
                       {field === "milesPerYear"
                         ? formData[field].toLocaleString()
                         : formData[field]}
@@ -177,7 +178,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                     defaultValue={[getSliderConfig(field).defaultValue]}
                     className="cursor-pointer"
                   />
-                  <div className="flex justify-between text-sm text-gray-500">
+                  <div className="flex justify-between text-xs sm:text-sm text-gray-500">
                     <span>
                       {field === "milesPerYear"
                         ? "1,000 mi"
