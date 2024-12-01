@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { calculate } from "../../../api/calculator";
 import { toast } from "../../../hooks/use-toast";
+import { updateCalculatedState } from "../../../store/features/calculator/calculatorSlice";
 
 interface InteractiveCarbonResultProps {
   userDetails: any;
@@ -24,6 +25,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
 
   const [totalEmissions, setTotalEmissions] = useState<number>(0);
 
+  const dispatch = useDispatch();
   const calculatorData = useSelector(
     (state: CalculatorState) => state.calculator
   );
@@ -35,6 +37,13 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
     "Running advanced calculations...",
     "Almost there! Processing final calculations...",
   ];
+
+  useEffect(() => {
+    if (calculatorData.isCalculated) {
+      setCalculationState("result");
+      setTotalEmissions(calculatorData.totalEmissions);
+    }
+  }, []);
 
   useEffect(() => {
     let messageInterval: NodeJS.Timeout;
@@ -78,6 +87,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
     try {
       const res = await calculate(calculatorData);
       setTotalEmissions(res.data.totalEmissions);
+      dispatch(updateCalculatedState(res.data.totalEmissions));
     } catch (error) {
       toast({
         title: "Error calculating emissions",
