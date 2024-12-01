@@ -9,6 +9,7 @@ import FuelOil from "../../components/Calculator/StepOfTheCalculator/FuelOil";
 import NaturalGas from "../../components/Calculator/StepOfTheCalculator/NaturalGas";
 import Vehicles from "../../components/Calculator/StepOfTheCalculator/Vehicles";
 import Waste from "../../components/Calculator/StepOfTheCalculator/Waste";
+import Calculate from "../../components/Calculator/StepOfTheCalculator/Calculate";
 
 export function EmissionsCalculator() {
   return (
@@ -37,7 +38,7 @@ export function EmissionsCalculator() {
         <Waste />
       </TabsContent>
       <TabsContent value="calculate">
-        <Waste />
+        <Calculate />
       </TabsContent>
     </Tabs>
   );

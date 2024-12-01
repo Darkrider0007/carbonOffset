@@ -22,19 +22,6 @@ export async function getUser(): Promise<any> {
   }
 }
 
-export async function refreshToken(): Promise<any> {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/user/refresh-token`, {
-      withCredentials: true, // Ensures cookies are sent with the request
-    });
-
-    return { data: res.data, status: res.status };
-  } catch (error: any) {
-    console.error("Error getting user:", error);
-    return error.response?.data || { message: "Unknown error occurred" };
-  }
-}
-
 export async function getAllUsers(): Promise<any> {
   try {
     const res = await axios.get(`${BASE_URL}/api/user/get-all-users`);

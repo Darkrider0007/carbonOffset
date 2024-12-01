@@ -3,7 +3,7 @@ import { FaTree, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { RiWallet3Fill } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext";
-import { getUser, refreshToken } from "../api/auth/getUser";
+import { getUser } from "../api/auth/getUser";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,16 +33,6 @@ const Navbar = () => {
           lastName: res.data.data.lastName,
           email: res.data.data.email,
         });
-      } else {
-        const refreshRes = await refreshToken();
-        if (refreshRes.status === 201) {
-          setUser({
-            id: refreshRes.data.id,
-            firstName: refreshRes.data.firstName,
-            lastName: refreshRes.data.lastName,
-            email: refreshRes.data.email,
-          });
-        }
       }
     };
     fetchUser();

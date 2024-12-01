@@ -1,0 +1,192 @@
+import React, { useState, useEffect } from "react";
+import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import { calculate } from "../../../api/calculator";
+import { toast } from "../../../hooks/use-toast";
+
+interface InteractiveCarbonResultProps {
+  userDetails: any;
+}
+
+interface CalculatorState {
+  calculator: any;
+}
+
+type CalculationState = "initial" | "loading" | "result";
+
+const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
+  userDetails,
+}) => {
+  const [calculationState, setCalculationState] =
+    useState<CalculationState>("initial");
+  const [currentMessage, setCurrentMessage] = useState<string>("");
+  const [progress, setProgress] = useState<number>(0);
+
+  const [totalEmissions, setTotalEmissions] = useState<number>(0);
+
+  const calculatorData = useSelector(
+    (state: CalculatorState) => state.calculator
+  );
+  const loadingMessages: string[] = [
+    "Evaluating your data...",
+    "Hold on a few moments, we're about to show your results.",
+    "Analyzing your vehicle emissions...",
+    "Comparing with global standards...",
+    "Running advanced calculations...",
+    "Almost there! Processing final calculations...",
+  ];
+
+  useEffect(() => {
+    let messageInterval: NodeJS.Timeout;
+    let progressInterval: NodeJS.Timeout;
+
+    if (calculationState === "loading") {
+      setProgress(0);
+
+      // Progress bar animation
+      progressInterval = setInterval(() => {
+        setProgress((prev) => Math.min(prev + 1, 100));
+      }, 100);
+
+      // Random messages
+      setCurrentMessage(
+        loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
+      );
+      messageInterval = setInterval(() => {
+        setCurrentMessage(
+          loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
+        );
+      }, 2000);
+
+      // Show final result after 5 seconds
+      const resultTimer: NodeJS.Timeout = setTimeout(() => {
+        clearInterval(messageInterval);
+        clearInterval(progressInterval);
+        setCalculationState("result");
+      }, 9000);
+
+      return () => {
+        clearInterval(messageInterval);
+        clearInterval(progressInterval);
+        clearTimeout(resultTimer);
+      };
+    }
+  }, [calculationState]);
+
+  const handleCalculateClick = async () => {
+    setCalculationState("loading");
+    try {
+      const res = await calculate(calculatorData);
+      setTotalEmissions(res.data.totalEmissions);
+    } catch (error) {
+      toast({
+        title: "Error calculating emissions",
+        description:
+          "An error occurred while calculating your emissions. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="w-full text-center space-y-4">
+      {calculationState === "initial" && (
+        <div className="">
+          <div className=" p-8 ">
+            <p className="text-2xl text-gray-800 mb-4">
+              Welcome back,{" "}
+              <span className="font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                {userDetails?.firstName}
+              </span>
+              !
+            </p>
+            <p className="text-lg text-gray-600 mb-8">
+              Ready to discover your environmental impact? Calculate your annual
+              carbon emissions using our advanced analytics engine.
+            </p>
+            <button
+              onClick={handleCalculateClick}
+              className="group relative inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:from-green-600 hover:to-emerald-700"
+            >
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-green-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="relative">Calculate Now</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {calculationState === "loading" && (
+        <div className="transform transition-all duration-500 ">
+          <div className="bg-white p-8">
+            <div className="flex flex-col items-center space-y-6">
+              {/* Glowing loader with gradient */}
+              <div className="relative">
+                <Loader2 className="h-16 w-16 text-green-500 animate-spin relative" />
+              </div>
+
+              {/* Progress bar */}
+              <div className="w-full max-w-md bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+
+              {/* Animated message */}
+              <div className="min-h-[3rem] flex items-center">
+                <p className="text-lg font-medium text-gray-700 animate-fade-in">
+                  {currentMessage}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {calculationState === "result" && (
+        <div
+          className="relative flex flex-col items-center justify-center w-[1000px] h-[600px] bg-cover bg-center bg-no-repeat rounded-lg shadow-lg"
+          style={{
+            backgroundImage:
+              "url('https://i.ibb.co/y0xym8t/9640795-hd-1920-1080-25fps-ezgif-com-video-to-gif-converter.gif')",
+          }}
+        >
+          {/* Red Overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-40 z-20 rounded-lg"></div>
+          {/* Content */}
+          <div className="z-30">
+            <div className="space-y-6 flex flex-col items-center justify-center">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-gray-100">
+                  YOUR CARBON IMPACT IS
+                </h2>
+                <div className="flex items-center justify-center space-x-3">
+                  <span className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                    {totalEmissions ? totalEmissions.toFixed(4) : "0"}
+                  </span>
+                  <span className="text-2xl font-medium text-gray-50">
+                    METRIC TONS CO2
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-gray-200 mt-4 text-2xl font-bold text-center w-[600px]">
+                Protecting {(totalEmissions * 0.36).toFixed(2)} hectares of
+                tropical forest can neutralise that amount of carbon dioxide.
+              </p>
+
+              <p className="text-gray-200 mt-4 text-lg w-[950px]">
+                On average, a hectare of tropical forest stores carbon equating
+                to 550 metric tons of CO2. With annual tropical deforestation
+                rates averaging 0.5%, this results in 2.75 metric tons of CO2
+                emitted per hectare each year.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default InteractiveCarbonResult;
