@@ -152,7 +152,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
           }}
         >
           {/* Red Overlay */}
-          <div className="absolute inset-0 bg-black bg-opacity-40 z-20 rounded-lg"></div>
+          <div className="absolute inset-0 bg-black bg-opacity-30 z-20 rounded-lg"></div>
           {/* Content */}
           <div className="z-30">
             <div className="space-y-6 flex flex-col items-center justify-center">
