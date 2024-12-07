@@ -17,7 +17,7 @@ interface VehicleProps {
 interface FormData {
   months: number;
   milesPerYear: number;
-  fuelEfficiency: number;
+  fuelEfficiency: number; // Stored as MPG
 }
 
 type VehicleType = "gas" | "ev";
@@ -88,6 +88,8 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
   const toggleUnitDisplay = () => setShowKM(!showKM);
 
   const convertMilesToKM = (miles: number): number => miles * 1.60934;
+
+  const convertMPGToKMPL = (mpg: number): number => mpg * 0.425144; // 1 MPG ≈ 0.425144 KM/L
 
   const getSliderConfig = (type: keyof FormData): SliderConfig => {
     switch (type) {
@@ -164,7 +166,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
             onClick={toggleUnitDisplay}
             className="p-3 mx-2 sm:p-4 rounded-lg border-2 border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-200"
           >
-            Show in {showKM ? "Miles" : "KM"}
+            Show in {showKM ? "Miles/MPG" : "KM/KMPL"}
           </button>
         </div>
 
@@ -179,12 +181,14 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                       {field === "milesPerYear"
                         ? `Miles per Year (${showKM ? "KM" : "Miles"})`
                         : field === "fuelEfficiency"
-                        ? "Fuel Efficiency (MPG)"
+                        ? `Fuel Efficiency (${showKM ? "KM/L" : "MPG"})`
                         : "Months in a Year"}
                     </Label>
                     <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">
                       {field === "milesPerYear" && showKM
                         ? convertMilesToKM(formData[field]).toFixed(2)
+                        : field === "fuelEfficiency" && showKM
+                        ? convertMPGToKMPL(formData[field]).toFixed(2)
                         : formData[field]}
                     </span>
                   </div>
@@ -204,7 +208,9 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                           ? "1,609 KM"
                           : "1,000 mi"
                         : field === "fuelEfficiency"
-                        ? "10 MPG"
+                        ? showKM
+                          ? "4.25 KM/L"
+                          : "10 MPG"
                         : "1 month"}
                     </span>
                     <span>
@@ -213,7 +219,9 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                           ? "48,280 KM"
                           : "30,000 mi"
                         : field === "fuelEfficiency"
-                        ? "50 MPG"
+                        ? showKM
+                          ? "21.26 KM/L"
+                          : "50 MPG"
                         : "12 months"}
                     </span>
                   </div>
