@@ -16,7 +16,7 @@ interface FlightProps {
 const SingleFlight: React.FC<FlightProps> = ({ flightNum }) => {
   const dispatch = useDispatch();
   const flightData = useSelector((state: any) =>
-    state.calculator?.flight?.find((flight: any) => flight.id === flightNum)
+    state.calculator.flight?.find((flight: any) => flight.id === flightNum)
   );
 
   const [distance, setDistance] = useState<number>(flightData?.distance || 0);

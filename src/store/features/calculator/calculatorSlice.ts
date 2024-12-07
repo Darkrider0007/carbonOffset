@@ -106,11 +106,11 @@ const calculatorSlice = createSlice({
       saveStateToLocalStorage(state);
     },
     addFlightData: (state, action: PayloadAction<FlightData>) => {
-      const flight = state.flight?.find(
+      const flight = state.flight.find(
         (flight) => flight.id === action.payload.id
       );
       if (flight) {
-        const index = state.flight?.findIndex(
+        const index = state.flight.findIndex(
           (flight) => flight.id === action.payload.id
         );
         state.flight[index] = action.payload;
@@ -123,7 +123,7 @@ const calculatorSlice = createSlice({
     },
 
     updateFlightData: (state, action: PayloadAction<FlightData>) => {
-      const index = state.flight?.findIndex(
+      const index = state.flight.findIndex(
         (flight) => flight.id === action.payload.id
       );
       if (index !== -1) {
