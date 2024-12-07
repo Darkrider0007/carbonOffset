@@ -28,11 +28,16 @@ interface VehicleData {
   fuelEfficiency?: number;
 }
 
+interface FlightData {
+  id: number;
+  distance: number;
+}
+
 export interface CalculatorState {
   vehicleData: VehicleData[];
   naturalgas: number;
   electricity: number;
-  flight: number;
+  flight: FlightData[];
   waste: number;
   isCalculated: boolean;
   totalEmissions: number;
@@ -43,7 +48,7 @@ const initialState: CalculatorState = loadStateFromLocalStorage() || {
   vehicleData: [],
   naturalgas: 7,
   electricity: 877,
-  flight: 3,
+  flight: [],
   waste: 3,
   isCalculated: false,
   totalEmissions: 0,
@@ -100,12 +105,44 @@ const calculatorSlice = createSlice({
       // Save updated state to localStorage
       saveStateToLocalStorage(state);
     },
-    changeFlight: (state, action: PayloadAction<number>) => {
-      state.flight = action.payload;
+    addFlightData: (state, action: PayloadAction<FlightData>) => {
+      const flight = state.flight.find(
+        (flight) => flight.id === action.payload.id
+      );
+      if (flight) {
+        const index = state.flight.findIndex(
+          (flight) => flight.id === action.payload.id
+        );
+        state.flight[index] = action.payload;
+      } else {
+        state.flight.push(action.payload);
+      }
 
       // Save updated state to localStorage
       saveStateToLocalStorage(state);
     },
+
+    updateFlightData: (state, action: PayloadAction<FlightData>) => {
+      const index = state.flight.findIndex(
+        (flight) => flight.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.flight[index] = action.payload;
+      }
+
+      // Save updated state to localStorage
+      saveStateToLocalStorage(state);
+    },
+
+    removeFlightData: (state, action: PayloadAction<number>) => {
+      state.flight = state.flight.filter(
+        (flight) => flight.id !== action.payload
+      );
+
+      // Save updated state to localStorage
+      saveStateToLocalStorage(state);
+    },
+
     changeWaste: (state, action: PayloadAction<number>) => {
       state.waste = action.payload;
 
@@ -128,7 +165,9 @@ export const {
   removeVehicalData,
   changeNaturalGas,
   changeElectricity,
-  changeFlight,
+  addFlightData,
+  updateFlightData,
+  removeFlightData,
   changeWaste,
   updateCalculatedState,
 } = calculatorSlice.actions;

@@ -3,24 +3,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Label } from "../../ui/label";
 import { Slider } from "../../ui/slider";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFlight } from "../../../store/features/calculator/calculatorSlice";
+
 import { HoverCardOnInfo } from "../../HoverCardOnInfo";
 import { FaInfoCircle } from "react-icons/fa";
+import { removeFlightData } from "../../../store/features/calculator/calculatorSlice";
+import SingleFlight from "./SingleFilght";
 
 function Flight() {
+  const [value, setValue] = useState(1);
+
   const dispatch = useDispatch();
   const flightData = useSelector((state: any) => state.calculator.flight);
-  const [value, setValue] = useState(3);
+
+  // Sync slider value with flight data length
+  useEffect(() => {
+    setValue(flightData.length);
+  }, [flightData]);
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
-    dispatch(changeFlight(newValue[0]));
     setValue(newValue[0]);
   };
 
   useEffect(() => {
-    setValue(flightData);
-  }, [flightData]);
+    setValue(flightData.length);
+    if (flightData.length - 1 === value) {
+      const flightRemove = flightData[flightData.length - 1];
+      dispatch(removeFlightData(flightRemove.id));
+      setValue(value - 1);
+    }
+  }, [flightData, value]);
 
   return (
     <div>
@@ -53,21 +65,21 @@ function Flight() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex flex-col justify-center items-center my-8 sm:my-10">
+          <div className="flex flex-col w-full justify-center items-center my-8 sm:my-10">
             <div className="w-full max-w-xs sm:max-w-md md:w-[600px] flex flex-col gap-6 px-4 sm:px-6 md:px-0">
               {/* Monthly Fuel Oil Consumption Input */}
               <Label
                 className="text-lg sm:text-xl font-semibold text-gray-700"
                 htmlFor="fuel-oil"
               >
-                Monthly Flight Consumption
+                Number of Flights per Month
               </Label>
               <Slider
                 value={[value]}
-                min={0}
-                max={30} // Maximum allows for above-average consumption
-                step={1} // Step size for precise adjustments
+                max={30}
+                step={1}
                 onValueChange={handleChange}
+                className="w-full"
               />
               <div className="flex justify-between w-full text-sm text-gray-600">
                 <span>0 flights</span>
@@ -78,8 +90,15 @@ function Flight() {
               <div className="text-center text-sm sm:text-lg font-medium text-gray-700">
                 Monthly Flight Consumption:{" "}
                 <span className="text-green-600 font-bold">
-                  {value.toLocaleString()} flights
+                  {value?.toLocaleString()} flights
                 </span>
+              </div>
+              <div className="flex justify-center w-full py-4 sm:py-6 md:py-8">
+                <div className="w-full sm:w-[400px] md:w-[600px] flex flex-col items-center">
+                  {[...Array(value)].map((_, index) => (
+                    <SingleFlight key={index} flightNum={index} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
