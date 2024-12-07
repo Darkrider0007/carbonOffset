@@ -18,12 +18,20 @@ function NaturalGas() {
     (state: any) => state.calculator.naturalgas
   );
   const [value, setValue] = useState(7);
+  const [showCubicCentimeters, setShowCubicCentimeters] = useState(false); // Toggle for cubic centimeters display
 
   // Handle slider value changes
   const handleChange = (newValue: number[]) => {
     setValue(newValue[0]);
     dispatch(changeNaturalGas(newValue[0]));
   };
+
+  const toggleUnitDisplay = () => {
+    setShowCubicCentimeters(!showCubicCentimeters);
+  };
+
+  const convertToCubicCentimeters = (cubicFeet: number): number =>
+    cubicFeet * 28316.8466; // Conversion factor from cubic feet to cubic centimeters
 
   useEffect(() => {
     setValue(naturalGasData);
@@ -56,12 +64,26 @@ function NaturalGas() {
         <CardContent className="space-y-2">
           <div className="flex flex-col justify-center items-center my-8 sm:my-10">
             <div className="w-full max-w-xs sm:max-w-md md:w-[600px] flex flex-col gap-6 px-4 sm:px-6 md:px-0">
+              {/* Toggle Unit Display */}
+              <Label className="text-lg sm:text-xl font-semibold text-gray-700">
+                Units
+              </Label>
+              <button
+                type="button"
+                onClick={toggleUnitDisplay}
+                className="p-3 mx-2 sm:p-4 rounded-lg border-2 border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-200"
+              >
+                Show in{" "}
+                {showCubicCentimeters ? "Cubic Feet" : "Cubic Centimeters"}
+              </button>
+
               {/* Monthly Consumption Input */}
               <Label
                 className="text-lg sm:text-xl font-semibold text-gray-700"
-                htmlFor="vehicle"
+                htmlFor="natural-gas"
               >
-                Monthly Consumption (cubic feet)
+                Monthly Consumption (
+                {showCubicCentimeters ? "cubic centimeters" : "cubic feet"})
               </Label>
               <Slider
                 value={[value]}
@@ -71,15 +93,22 @@ function NaturalGas() {
                 onValueChange={handleChange}
               />
               <div className="flex justify-between w-full text-xs sm:text-sm text-gray-600">
-                <span>0 cubic feet</span>
-                <span>20 cubic feet</span>
+                <span>{showCubicCentimeters ? "0 cc" : "0 cubic feet"}</span>
+                <span>
+                  {showCubicCentimeters
+                    ? `${(20 * 28316.8466).toLocaleString()} cc`
+                    : "20 cubic feet"}
+                </span>
               </div>
 
               {/* Display Current Monthly and Annual Consumption */}
               <div className="text-center text-sm sm:text-lg font-medium text-gray-700">
                 Current Monthly Consumption:{" "}
                 <span className="text-green-600 font-bold">
-                  {value.toFixed(1)} cubic feet
+                  {showCubicCentimeters
+                    ? convertToCubicCentimeters(value).toLocaleString()
+                    : value.toFixed(1)}{" "}
+                  {showCubicCentimeters ? "cc" : "cubic feet"}
                 </span>
               </div>
             </div>

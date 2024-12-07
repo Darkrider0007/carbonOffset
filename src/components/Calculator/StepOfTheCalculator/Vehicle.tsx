@@ -45,6 +45,7 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
     milesPerYear: vehicleData?.milesPerYear || 12000,
     fuelEfficiency: vehicleData?.fuelEfficiency || 25,
   });
+  const [showKM, setShowKM] = useState(false); // Toggle for displaying KM or Miles
 
   useEffect(() => {
     if (!vehicleData) {
@@ -83,6 +84,10 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
       })
     );
   };
+
+  const toggleUnitDisplay = () => setShowKM(!showKM);
+
+  const convertMilesToKM = (miles: number): number => miles * 1.60934;
 
   const getSliderConfig = (type: keyof FormData): SliderConfig => {
     switch (type) {
@@ -149,6 +154,20 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
           </div>
         </div>
 
+        {/* Toggle Unit Display */}
+        <div className="space-y-4 gap-4">
+          <Label className="text-base sm:text-lg md:text-xl font-semibold text-gray-700">
+            Units
+          </Label>
+          <button
+            type="button"
+            onClick={toggleUnitDisplay}
+            className="p-3 mx-2 sm:p-4 rounded-lg border-2 border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all duration-200"
+          >
+            Show in {showKM ? "Miles" : "KM"}
+          </button>
+        </div>
+
         {/* Slider Inputs */}
         <div className="space-y-6">
           {(Object.keys(formData) as Array<keyof FormData>).map(
@@ -158,14 +177,14 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                   <div className="flex justify-between items-center">
                     <Label className="text-base sm:text-lg md:text-xl font-semibold text-gray-700">
                       {field === "milesPerYear"
-                        ? "Miles per Year"
+                        ? `Miles per Year (${showKM ? "KM" : "Miles"})`
                         : field === "fuelEfficiency"
                         ? "Fuel Efficiency (MPG)"
                         : "Months in a Year"}
                     </Label>
                     <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">
-                      {field === "milesPerYear"
-                        ? formData[field].toLocaleString()
+                      {field === "milesPerYear" && showKM
+                        ? convertMilesToKM(formData[field]).toFixed(2)
                         : formData[field]}
                     </span>
                   </div>
@@ -181,14 +200,18 @@ const Vehicle: React.FC<VehicleProps> = ({ vehicleNum }) => {
                   <div className="flex justify-between text-xs sm:text-sm text-gray-500">
                     <span>
                       {field === "milesPerYear"
-                        ? "1,000 mi"
+                        ? showKM
+                          ? "1,609 KM"
+                          : "1,000 mi"
                         : field === "fuelEfficiency"
                         ? "10 MPG"
                         : "1 month"}
                     </span>
                     <span>
                       {field === "milesPerYear"
-                        ? "30,000 mi"
+                        ? showKM
+                          ? "48,280 KM"
+                          : "30,000 mi"
                         : field === "fuelEfficiency"
                         ? "50 MPG"
                         : "12 months"}
