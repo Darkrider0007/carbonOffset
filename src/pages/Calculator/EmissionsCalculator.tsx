@@ -5,11 +5,11 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 import Electricity from "../../components/Calculator/StepOfTheCalculator/Electricity";
-import FuelOil from "../../components/Calculator/StepOfTheCalculator/FuelOil";
 import NaturalGas from "../../components/Calculator/StepOfTheCalculator/NaturalGas";
 import Vehicles from "../../components/Calculator/StepOfTheCalculator/Vehicles";
 import Waste from "../../components/Calculator/StepOfTheCalculator/Waste";
 import Calculate from "../../components/Calculator/StepOfTheCalculator/Calculate";
+import Flight from "../../components/Calculator/StepOfTheCalculator/Flight";
 
 export function EmissionsCalculator() {
   return (
@@ -23,6 +23,12 @@ export function EmissionsCalculator() {
           Vehicle
         </TabsTrigger>
         <TabsTrigger
+          value="fuelOil"
+          className="text-sm md:text-base lg:text-lg py-2 px-4 md:py-3 md:px-6 lg:py-4 lg:px-8"
+        >
+          Flight
+        </TabsTrigger>
+        <TabsTrigger
           value="naturalGas"
           className="text-sm md:text-base lg:text-lg py-2 px-4 md:py-3 md:px-6 lg:py-4 lg:px-8"
         >
@@ -34,12 +40,7 @@ export function EmissionsCalculator() {
         >
           Electricity
         </TabsTrigger>
-        <TabsTrigger
-          value="fuelOil"
-          className="text-sm md:text-base lg:text-lg py-2 px-4 md:py-3 md:px-6 lg:py-4 lg:px-8"
-        >
-          Fuel Oil
-        </TabsTrigger>
+
         <TabsTrigger
           value="waste"
           className="text-sm md:text-base lg:text-lg py-2 px-4 md:py-3 md:px-6 lg:py-4 lg:px-8"
@@ -65,7 +66,7 @@ export function EmissionsCalculator() {
         <Electricity />
       </TabsContent>
       <TabsContent value="fuelOil" className="p-4 md:p-6 lg:p-10">
-        <FuelOil />
+        <Flight />
       </TabsContent>
       <TabsContent value="waste" className="p-4 md:p-6 lg:p-10">
         <Waste />

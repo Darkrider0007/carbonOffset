@@ -10,6 +10,8 @@ import { Slider } from "../../../components/ui/slider";
 import Vehicle from "./Vehicle";
 import { useDispatch, useSelector } from "react-redux";
 import { removeVehicalData } from "../../../store/features/calculator/calculatorSlice";
+import { HoverCardOnInfo } from "../../HoverCardOnInfo";
+import { FaInfoCircle } from "react-icons/fa";
 
 function Vehicles() {
   const [value, setValue] = useState(1);
@@ -38,8 +40,26 @@ function Vehicles() {
     <div>
       <Card className="border-0 shadow-none">
         <CardHeader className="flex items-center justify-center">
-          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold items-center justify-center">
             Vehicle Emissions
+            <span className="text-green-600 font-bold">
+              <HoverCardOnInfo
+                cardTrigger={
+                  <FaInfoCircle className="text-lg sm:text-xl text-green-600" />
+                }
+                cardContent={
+                  <div className="text-sm text-gray-700">
+                    <li>
+                      The average car emits 4.6 metric tons of CO2 per year.
+                    </li>
+                    <li>
+                      The average car emits 404 grams of CO2 per mile driven.
+                    </li>
+                    <li>The average car emits 9,000 pounds of CO2 per year.</li>
+                  </div>
+                }
+              />
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">

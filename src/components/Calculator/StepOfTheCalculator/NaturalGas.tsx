@@ -9,6 +9,8 @@ import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNaturalGas } from "../../../store/features/calculator/calculatorSlice";
+import { HoverCardOnInfo } from "../../HoverCardOnInfo";
+import { FaInfoCircle } from "react-icons/fa";
 
 function NaturalGas() {
   const dispatch = useDispatch();
@@ -31,8 +33,24 @@ function NaturalGas() {
     <div>
       <Card className="border-0 shadow-none">
         <CardHeader className="flex items-center justify-center">
-          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-center items-center justify-center">
             Annual Natural Gas Emissions
+            <span className="text-green-600 font-bold">
+              <HoverCardOnInfo
+                cardTrigger={
+                  <FaInfoCircle className="text-lg sm:text-xl text-green-600" />
+                }
+                cardContent={
+                  <div className="text-sm text-gray-700">
+                    Natural gas is a fossil fuel used for heating, cooking, and
+                    electricity generation. It is primarily composed of methane,
+                    a potent greenhouse gas. The average household in the United
+                    States consumes about 70 cubic feet of natural gas per day,
+                    or 2,100 cubic feet per month.
+                  </div>
+                }
+              />
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">

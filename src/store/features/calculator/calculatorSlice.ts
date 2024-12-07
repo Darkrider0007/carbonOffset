@@ -32,7 +32,7 @@ export interface CalculatorState {
   vehicleData: VehicleData[];
   naturalgas: number;
   electricity: number;
-  fueloil: number;
+  flight: number;
   waste: number;
   isCalculated: boolean;
   totalEmissions: number;
@@ -43,7 +43,7 @@ const initialState: CalculatorState = loadStateFromLocalStorage() || {
   vehicleData: [],
   naturalgas: 7,
   electricity: 877,
-  fueloil: 83,
+  flight: 3,
   waste: 3,
   isCalculated: false,
   totalEmissions: 0,
@@ -100,8 +100,8 @@ const calculatorSlice = createSlice({
       // Save updated state to localStorage
       saveStateToLocalStorage(state);
     },
-    changeFuelOil: (state, action: PayloadAction<number>) => {
-      state.fueloil = action.payload;
+    changeFlight: (state, action: PayloadAction<number>) => {
+      state.flight = action.payload;
 
       // Save updated state to localStorage
       saveStateToLocalStorage(state);
@@ -128,7 +128,7 @@ export const {
   removeVehicalData,
   changeNaturalGas,
   changeElectricity,
-  changeFuelOil,
+  changeFlight,
   changeWaste,
   updateCalculatedState,
 } = calculatorSlice.actions;

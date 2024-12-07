@@ -9,6 +9,8 @@ import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../components/ui/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { changeWaste } from "../../../store/features/calculator/calculatorSlice";
+import { HoverCardOnInfo } from "../../HoverCardOnInfo";
+import { FaInfoCircle } from "react-icons/fa";
 
 function Waste() {
   const dispatch = useDispatch();
@@ -29,8 +31,21 @@ function Waste() {
     <div>
       <Card className="border-0 shadow-none">
         <CardHeader className="flex items-center justify-center">
-          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-center items-center justify-center">
             Annual Carbon Emissions from Waste
+            <span className="text-green-600 font-bold">
+              <HoverCardOnInfo
+                cardTrigger={
+                  <FaInfoCircle className="text-lg sm:text-xl text-green-600" />
+                }
+                cardContent={
+                  <div className="text-sm sm:text-base text-gray-700">
+                    The average annual carbon emissions from waste per person in
+                    the United States is 3 metric tons.
+                  </div>
+                }
+              />
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
