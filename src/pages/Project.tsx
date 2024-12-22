@@ -26,7 +26,7 @@ function Project() {
           backgroundImage: `url(${mainbg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "70vh",
+          height: "60vh",
           width: "100%",
         }}
         className="relative flex items-center justify-center"
@@ -37,7 +37,7 @@ function Project() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-white">
             Our Project
           </h1>
-          <h2 className="text-2xl md:text-4xl font-semibold text-teal-300">
+          <h2 className="text-2xl md:text-4xl font-semibold text-white">
             {projectData.name}
           </h2>
         </div>
@@ -56,7 +56,7 @@ function Project() {
                 className="w-full md:w-1/2 rounded-lg shadow-lg"
               />
             </div>
-            <h2 className="text-3xl font-bold text-teal-600">
+            <h2 className="text-3xl font-bold text-green-600">
               {projectData.name}
             </h2>
 
@@ -77,47 +77,6 @@ function Project() {
                 {new Date(projectData.createdAt).toLocaleDateString()}
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Why Our Projects Matter Section */}
-      <div className="py-16 px-4 md:px-20 lg:px-40 bg-teal-100">
-        <h3 className="text-3xl font-bold text-center text-teal-800 mb-8">
-          Why Our Projects Matter
-        </h3>
-
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 text-center">
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h4 className="text-xl font-semibold text-teal-700">
-              Carbon Reduction
-            </h4>
-            <p className="text-gray-600">
-              By planting trees, we actively absorb carbon dioxide from the
-              atmosphere, mitigating climate change and fostering a cleaner,
-              healthier environment.
-            </p>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h4 className="text-xl font-semibold text-teal-700">
-              Biodiversity
-            </h4>
-            <p className="text-gray-600">
-              Trees support diverse ecosystems, offering habitats to countless
-              species and enhancing biodiversity across regions.
-            </p>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h4 className="text-xl font-semibold text-teal-700">
-              Community Impact
-            </h4>
-            <p className="text-gray-600">
-              Our projects provide greener spaces, cleaner air, and a healthier
-              environment, contributing to the well-being of communities for
-              generations to come.
-            </p>
           </div>
         </div>
       </div>

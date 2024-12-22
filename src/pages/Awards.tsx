@@ -24,7 +24,7 @@ function Awards() {
           backgroundImage: `url(${mainbg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh",
+          height: "60vh",
           width: "100%",
         }}
         className="flex items-center justify-center relative"

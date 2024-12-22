@@ -199,7 +199,7 @@ const Home = () => {
       </div>
 
       {/* how we work  */}
-      <div className="flex flex-col mt-40 lg:mt-0 md:flex-row justify-between items-center p-5 md:p-10">
+      <div className="flex flex-col mt-40 lg:mt-0 md:flex-row justify-between md:px-32 items-center p-5 md:p-10">
         <div className="w-full md:w-1/2 mb-5 md:mb-0">
           <div className="flex gap-2 items-center">
             <FaLeaf color="green" />{" "}
