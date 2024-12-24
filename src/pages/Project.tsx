@@ -4,6 +4,8 @@ import curve from "../assets/home/curve.png";
 import mainbg from "../assets/services/mainbg.png";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
+import parse from 'html-react-parser';
+
 
 function Project() {
   const location = useLocation();
@@ -60,10 +62,14 @@ function Project() {
               {projectData.name}
             </h2>
 
-            <div
-              className="text-lg leading-relaxed text-gray-600"
+            {/* <div
+              className="project-details text-lg leading-relaxed text-gray-600"
               dangerouslySetInnerHTML={{ __html: projectData.details }}
-            ></div>
+            ></div> */}
+
+            <div id="project-details" className="project-details text-lg leading-relaxed text-gray-600">
+              {parse(projectData.details)}
+            </div>
 
             <div className="text-base md:text-lg text-gray-600">
               <p>

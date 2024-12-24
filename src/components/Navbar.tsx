@@ -74,6 +74,7 @@ const Navbar = () => {
       subMenu: [
         { path: "/membership", label: "Membership" },
         { path: "/submitYourProposal", label: "Submit Your Proposal" },
+        { path: "/memberShipForm", label: "Membership Form" },
         { path: "/farmOnboardApplication", label: "Farm Onboard Application" },
       ],
     },

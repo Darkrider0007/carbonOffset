@@ -85,3 +85,24 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+#project-details {
+  @apply bg-card text-card-foreground;
+}
+
+#project-details p {
+  @apply text-lg;
+  @apply text-gray-700;
+}
+
+.project-details h2 {
+  @apply text-2xl font-bold my-3;
+}
+
+.project-details h3 {
+  @apply text-xl font-semibold my-2;
+}
+
+.project-details ul {
+  @apply list-disc list-inside;
+}
