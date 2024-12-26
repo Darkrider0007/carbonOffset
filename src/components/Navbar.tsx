@@ -80,10 +80,10 @@ const Navbar = () => {
           path: "/collaborativeParticipationPlatform",
           label: "Collaborative Participation Platform",
         },
-        // {
-        //   path: "/volunteerRegistrationForm",
-        //   label: "Volunteer Registration Form",
-        // },
+        {
+          path: "/volunteerRegistrationForm",
+          label: "Volunteer Registration Form",
+        },
       ],
     },
     { path: "/contact", label: "Contact Us" },

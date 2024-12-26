@@ -52,6 +52,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import MembershipForm from "./pages/JoinUs/MembershipForm";
 import CollaborativeParticipationPlatform from "./pages/JoinUs/CollaborativeParticipationPlatform";
+import VolunteerRegistrationForm from "./pages/JoinUs/VolunteerRegistrationForm";
 
 const router = createBrowserRouter([
   {
@@ -378,6 +379,15 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <CollaborativeParticipationPlatform />
+      </>
+    ),
+  },
+  {
+    path: "/joinUs/volunteerRegistrationForm",
+    element: (
+      <>
+        <ScrollToTop />
+        <VolunteerRegistrationForm />
       </>
     ),
   },
