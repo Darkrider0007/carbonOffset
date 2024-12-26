@@ -76,6 +76,14 @@ const Navbar = () => {
         { path: "/submitYourProposal", label: "Submit Your Proposal" },
         { path: "/memberShipForm", label: "Membership Form" },
         { path: "/farmOnboardApplication", label: "Farm Onboard Application" },
+        {
+          path: "/collaborativeParticipationPlatform",
+          label: "Collaborative Participation Platform",
+        },
+        {
+          path: "/volunteerRegistrationForm",
+          label: "Volunteer Registration Form",
+        },
       ],
     },
     { path: "/contact", label: "Contact Us" },
@@ -102,8 +110,9 @@ const Navbar = () => {
             <div key={item.path} className="relative group">
               <Link
                 to={item.isSubmenu ? "" : item.path}
-                className={`hover:text-green-600 ${isActive(item.path) ? "text-green-600 font-bold" : ""
-                  }`}
+                className={`hover:text-green-600 ${
+                  isActive(item.path) ? "text-green-600 font-bold" : ""
+                }`}
               >
                 {item.label}
               </Link>
@@ -157,8 +166,9 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       <div
-        className={`${isMobileMenuOpen ? "max-h-screen" : "max-h-0"
-          } overflow-hidden transition-all duration-300 ease-in-out lg:hidden`}
+        className={`${
+          isMobileMenuOpen ? "max-h-screen" : "max-h-0"
+        } overflow-hidden transition-all duration-300 ease-in-out lg:hidden`}
       >
         <div className="flex flex-col items-start px-4 py-2 space-y-2">
           {menuItems.map((item) => (
@@ -184,8 +194,9 @@ const Navbar = () => {
               ) : (
                 <Link
                   to={item.path}
-                  className={`hover:text-green-600 ${isActive(item.path) ? "text-green-600 font-bold" : ""
-                    }`}
+                  className={`hover:text-green-600 ${
+                    isActive(item.path) ? "text-green-600 font-bold" : ""
+                  }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
