@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import curve from "../../assets/home/curve.png";
 import mainbg from "../../assets/services/mainbg.png";
 import { countries } from "../../constants/countries";
-import { sendMembership } from "../../api/Membership";
+import { postCollaborativeParticipation } from "../../api/collaborativeParticipation";
 
 type FormData = {
   fullName: string;
@@ -36,6 +36,9 @@ type FormData = {
   idProof?: FileList;
   corporateRegistration?: FileList;
   digitalSignatureName: string;
+  additionalInfo: string;
+  collaborationType: string;
+  collaborationFocus: string;
 };
 
 const CollaborativeParticipationPlatform: React.FC = () => {
@@ -47,14 +50,12 @@ const CollaborativeParticipationPlatform: React.FC = () => {
   } = useForm<FormData>();
   const navigate = useNavigate();
 
-  const [selectedPurpose, setSelectedPurpose] = useState("");
-
   const onSubmit = async (data: FormData) => {
     console.log(data);
     setSubmitting(true);
     try {
       // Placeholder for actual API submission logic
-      const res = await sendMembership(data);
+      const res = await postCollaborativeParticipation(data);
 
       if (res.status == 201) {
         navigate("/");
@@ -242,8 +243,10 @@ const CollaborativeParticipationPlatform: React.FC = () => {
             </Label>
             <select
               id="membershipType"
-              value={selectedPurpose}
-              onChange={(e) => setSelectedPurpose(e.target.value)}
+              {...register("membershipType", {
+                required: "Purpose is required",
+              })
+              }
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">-- Select Purpose --</option>
@@ -274,6 +277,10 @@ const CollaborativeParticipationPlatform: React.FC = () => {
               </Label>
               <select
                 id="collaborationType"
+                {...register("collaborationType", {
+                  required: "Collaboration Type is required",
+                })
+                }
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">-- Select Collaboration Type --</option>
@@ -293,6 +300,10 @@ const CollaborativeParticipationPlatform: React.FC = () => {
               </Label>
               <select
                 id="collaborationFocus"
+                {...register("collaborationFocus", {
+                  required: "Collaboration Focus is required",
+                })
+                }
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">-- Select Collaboration Focus --</option>
@@ -318,11 +329,18 @@ const CollaborativeParticipationPlatform: React.FC = () => {
           </h1>
 
           <div>
-            <input type="checkbox" id="privacyPolicy" className="mr-2" />
+            <input type="checkbox" id="privacyPolicy"
+              {...register("agreePrivacy", { required: "You must agree to the privacy policy" })}
+              className="mr-2" />
             <Label htmlFor="privacyPolicy">
               I agree to comply with the data privacy policies
               <span className="text-red-500">*</span>
             </Label>
+            {errors.agreePrivacy && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.agreePrivacy.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -334,6 +352,7 @@ const CollaborativeParticipationPlatform: React.FC = () => {
             </Label>
             <textarea
               id="additionalInfo"
+              {...register("additionalInfo")}
               placeholder="Please provide any additional details or messages..."
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[150px]"
             />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Newsletter from "../../components/Newsletter";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import curve from "../../assets/home/curve.png";
 import mainbg from "../../assets/services/mainbg.png";
 import { countries } from "../../constants/countries";
-import { sendMembership } from "../../api/Membership";
+import { postVolunteerRegistration } from "../../api/volunteerRegistration";
 
 type FormData = {
   fullName: string;
@@ -37,6 +37,12 @@ type FormData = {
   idProof?: FileList;
   corporateRegistration?: FileList;
   digitalSignatureName: string;
+  volunteerRole: string;
+  otherRole?: string;
+  preferredInitiative: string;
+  privacyPolicy: boolean;
+  additionalInfo: string;
+  otherRoleText: string;
 };
 
 const VolunteerRegistrationForm: React.FC = () => {
@@ -44,19 +50,22 @@ const VolunteerRegistrationForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormData>();
   const navigate = useNavigate();
-
-  const [selectedRole, setSelectedRole] = useState("");
-  const [otherRoleText, setOtherRoleText] = useState("");
+  const selectedRole = useWatch({
+    control,
+    name: "volunteerRole",
+    defaultValue: "", // Provide a default value
+  });
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
     setSubmitting(true);
     try {
       // Placeholder for actual API submission logic
-      const res = await sendMembership(data);
+      const res = await postVolunteerRegistration(data);
 
       if (res.status == 201) {
         navigate("/");
@@ -101,7 +110,7 @@ const VolunteerRegistrationForm: React.FC = () => {
         <img src={curve} className="absolute bottom-0 w-full" />
       </div>
 
-      <section className="bg-white px-5 md:px-20 py-10">
+      <section className="bg-white px-5 md:px-20 pt-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
             Welcome to SFUO Volunteer Registration Form
@@ -143,6 +152,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                 className="px-4 py-2 border rounded-md"
                 placeholder="Enter your email"
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div className="flex flex-col">
               <Label htmlFor="phone" className="mb-1 font-medium">
@@ -155,6 +169,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                 className="px-4 py-2 border rounded-md"
                 placeholder="Enter your phone number"
               />
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col">
@@ -167,6 +186,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                   className="px-4 py-2 border rounded-md"
                   placeholder="Enter your city"
                 />
+                {errors.city && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.city.message}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col">
                 <Label htmlFor="stateOrRegion" className="mb-1 font-medium">
@@ -180,6 +204,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                   className="px-4 py-2 border rounded-md"
                   placeholder="Enter your state or region"
                 />
+                {errors.stateOrRegion && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.stateOrRegion.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -199,6 +228,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                {errors.country && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.country.message}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col">
                 <Label htmlFor="ageGroup" className="mb-1 font-medium">
@@ -217,6 +251,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                   <option value="36-50">36-50</option>
                   <option value="50+">50+</option>
                 </select>
+                {errors.ageGroup && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.ageGroup.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -237,8 +276,9 @@ const VolunteerRegistrationForm: React.FC = () => {
               </Label>
               <select
                 id="volunteerRole"
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
+                {...register("volunteerRole", {
+                  required: "Preferred role is required",
+                })}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">-- Select Preferred Role --</option>
@@ -252,6 +292,11 @@ const VolunteerRegistrationForm: React.FC = () => {
                 <option value="Technical Support">Technical Support</option>
                 <option value="Other">Other</option>
               </select>
+              {errors.volunteerRole && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.volunteerRole.message}
+                </p>
+              )}
             </div>
 
             {selectedRole === "Other" && (
@@ -266,11 +311,17 @@ const VolunteerRegistrationForm: React.FC = () => {
                 <Input
                   id="otherRole"
                   type="text"
-                  value={otherRoleText}
-                  onChange={(e) => setOtherRoleText(e.target.value)}
+                  {...register("otherRole", {
+                    required: "Please specify your role",
+                  })}
                   className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="Please specify your preferred role"
                 />
+                {errors.otherRole && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.otherRole.message}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -291,6 +342,9 @@ const VolunteerRegistrationForm: React.FC = () => {
             </Label>
             <select
               id="preferredInitiative"
+              {...register("preferredInitiative", {
+                required: "Preferred initiative is required",
+              })}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">
@@ -306,6 +360,11 @@ const VolunteerRegistrationForm: React.FC = () => {
               </option>
               <option value="Community Gardens">Community Gardens</option>
             </select>
+            {errors.preferredInitiative && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.preferredInitiative.message}
+              </p>
+            )}
           </div>
         </section>
 
@@ -316,11 +375,23 @@ const VolunteerRegistrationForm: React.FC = () => {
           </h1>
 
           <div>
-            <input type="checkbox" id="privacyPolicy" className="mr-2" />
+            <input
+              type="checkbox"
+              id="privacyPolicy"
+              {...register("privacyPolicy", {
+                required: "You must agree to the privacy policy",
+              })}
+              className="mr-2"
+            />
             <Label htmlFor="privacyPolicy">
               I agree to comply with the data privacy policies
               <span className="text-red-500">*</span>
             </Label>
+            {errors.privacyPolicy && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.privacyPolicy.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -332,6 +403,7 @@ const VolunteerRegistrationForm: React.FC = () => {
             </Label>
             <textarea
               id="additionalInfo"
+              {...register("additionalInfo")}
               placeholder="Please provide any additional details or messages..."
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[150px]"
             />
