@@ -51,6 +51,7 @@ import BusinessCalculator from "./pages/Calculator/BusinessCalculator";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import MembershipForm from "./pages/JoinUs/MembershipForm";
+import CollaborativeParticipationPlatform from "./pages/JoinUs/CollaborativeParticipationPlatform";
 
 const router = createBrowserRouter([
   {
@@ -368,6 +369,15 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <MembershipForm />
+      </>
+    ),
+  },
+  {
+    path: "/joinUs/collaborativeParticipationPlatform",
+    element: (
+      <>
+        <ScrollToTop />
+        <CollaborativeParticipationPlatform />
       </>
     ),
   },
