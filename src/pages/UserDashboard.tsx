@@ -199,6 +199,7 @@ import { getUser } from "../api/auth/getUser";
 import { logout } from "../api/auth/loginAndLogout";
 import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
+import SmoothScroll from "../components/SmoothScroll";
 
 export default function UserUpdates() {
   const navigate = useNavigate();
@@ -265,78 +266,80 @@ export default function UserUpdates() {
   }
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <div className="border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
-        <Sidebar />
+    <SmoothScroll>
+      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+        <div className="border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+          <Sidebar />
+        </div>
+        <div className="flex flex-col h-full">
+          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+            <Link className="lg:hidden" to="#">
+              <span className="sr-only">Home</span>
+            </Link>
+            <Button className="ml-auto" onClick={handelLogout}>
+              Logout
+            </Button>
+          </header>
+
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+            <h1 className="font-bold text-2xl text-gray-800 dark:text-white">
+              {user.firstName
+                ? `${
+                    user.firstName.charAt(0).toUpperCase() +
+                    user.firstName.slice(1)
+                  }'s Profile`
+                : "User's Profile"}
+            </h1>
+
+            {/* User Information */}
+            <div className="bg-white shadow rounded-lg p-4">
+              <h2 className="text-lg font-semibold">User Details</h2>
+              <p>
+                <strong>ID:</strong> {user._id}
+              </p>
+              <p>
+                <strong>Name:</strong> {user.firstName} {user.lastName}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p>
+                <strong>Token Count:</strong> {user.tokenCount} Tokens
+              </p>
+              <p>
+                <strong>Verified:</strong> {user.isVerified ? "Yes" : "No"}
+              </p>
+            </div>
+
+            {/* Card Grid */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <Card className="bg-green-600">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-white">
+                    Available Tokens
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">
+                    {user.tokenCount || 0} Tokens
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-green-600">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-white">
+                    Used Tokens
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">0 Tokens</div>
+                </CardContent>
+              </Card>
+            </div>
+          </main>
+        </div>
       </div>
-      <div className="flex flex-col h-full">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" to="#">
-            <span className="sr-only">Home</span>
-          </Link>
-          <Button className="ml-auto" onClick={handelLogout}>
-            Logout
-          </Button>
-        </header>
-
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-          <h1 className="font-bold text-2xl text-gray-800 dark:text-white">
-            {user.firstName
-              ? `${
-                  user.firstName.charAt(0).toUpperCase() +
-                  user.firstName.slice(1)
-                }'s Profile`
-              : "User's Profile"}
-          </h1>
-
-          {/* User Information */}
-          <div className="bg-white shadow rounded-lg p-4">
-            <h2 className="text-lg font-semibold">User Details</h2>
-            <p>
-              <strong>ID:</strong> {user._id}
-            </p>
-            <p>
-              <strong>Name:</strong> {user.firstName} {user.lastName}
-            </p>
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-            <p>
-              <strong>Token Count:</strong> {user.tokenCount} Tokens
-            </p>
-            <p>
-              <strong>Verified:</strong> {user.isVerified ? "Yes" : "No"}
-            </p>
-          </div>
-
-          {/* Card Grid */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card className="bg-green-600">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-white">
-                  Available Tokens
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-white">
-                  {user.tokenCount || 0} Tokens
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-green-600">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-white">
-                  Used Tokens
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-white">0 Tokens</div>
-              </CardContent>
-            </Card>
-          </div>
-        </main>
-      </div>
-    </div>
+    </SmoothScroll>
   );
 }

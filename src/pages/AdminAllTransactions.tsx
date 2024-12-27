@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import SmoothScroll from "../components/SmoothScroll";
 
 export default function AdminAllTransactions() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
@@ -77,97 +78,98 @@ export default function AdminAllTransactions() {
   });
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
-        <AdminSidebar />
-      </div>
-      <div className="flex flex-col">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" to="#">
-            <Package2Icon className="h-6 w-6" />
-          </Link>
-        </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-          <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card className="shadow-xl bg-green-300">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-black">
-                  Total Users
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-black">
-                  {dashBoardData?.totalUsers}
-                </div>
-              </CardContent>
-              <CardContent>
-                <div className="flex gap-2 items-center">
-                  <FaArrowUp color="green" />
-                  <h1>
-                    <span className="text-green-600">
-                      {Math.abs(dashBoardData?.percentageUserIncrease)}
-                    </span>{" "}
-                    % vs last month
-                  </h1>
-                </div>
-              </CardContent>
-            </Card>
+    <SmoothScroll>
+      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+          <AdminSidebar />
+        </div>
+        <div className="flex flex-col">
+          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+            <Link className="lg:hidden" to="#">
+              <Package2Icon className="h-6 w-6" />
+            </Link>
+          </header>
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
+            <div className="grid h-[20vh] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <Card className="shadow-xl bg-green-300">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-black">
+                    Total Users
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-black">
+                    {dashBoardData?.totalUsers}
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <div className="flex gap-2 items-center">
+                    <FaArrowUp color="green" />
+                    <h1>
+                      <span className="text-green-600">
+                        {Math.abs(dashBoardData?.percentageUserIncrease)}
+                      </span>{" "}
+                      % vs last month
+                    </h1>
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card className="shadow-xl">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-black">
-                  Total Farm Onboarded
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-black">
-                  {" "}
-                  {dashBoardData?.totalProjects}
-                </div>
-              </CardContent>
-              <CardContent>
-                <div className="flex gap-2 items-center">
-                  <FaArrowUp color="green" />
-                  <h1>
-                    <span className="text-green-600">
-                      {Math.floor(
-                        Math.abs(dashBoardData?.projectCountPerMonth)
-                      )}
-                    </span>{" "}
-                    % vs last month
-                  </h1>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <h1 className="text-2xl font-bold text-black">
-            All Token Purchase Transactions
-          </h1>
-
-          {/* Dropdown and search bar for filtering records */}
-          <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div>
-              <label
-                htmlFor="records"
-                className="text-lg text-black font-medium mr-2"
-              >
-                Show Records:
-              </label>
-              <Select onValueChange={handleLimitChange} defaultValue="100">
-                <SelectTrigger className="w-48 bg-white border border-gray-300 rounded">
-                  <SelectValue placeholder="Select Limit" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="100">100</SelectItem>
-                  <SelectItem value="250">250</SelectItem>
-                  <SelectItem value="500">500</SelectItem>
-                  <SelectItem value="1000">1000</SelectItem>
-                </SelectContent>
-              </Select>
+              <Card className="shadow-xl">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-black">
+                    Total Farm Onboarded
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-black">
+                    {" "}
+                    {dashBoardData?.totalProjects}
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <div className="flex gap-2 items-center">
+                    <FaArrowUp color="green" />
+                    <h1>
+                      <span className="text-green-600">
+                        {Math.floor(
+                          Math.abs(dashBoardData?.projectCountPerMonth)
+                        )}
+                      </span>{" "}
+                      % vs last month
+                    </h1>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* <div>
+            <h1 className="text-2xl font-bold text-black">
+              All Token Purchase Transactions
+            </h1>
+
+            {/* Dropdown and search bar for filtering records */}
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <div>
+                <label
+                  htmlFor="records"
+                  className="text-lg text-black font-medium mr-2"
+                >
+                  Show Records:
+                </label>
+                <Select onValueChange={handleLimitChange} defaultValue="100">
+                  <SelectTrigger className="w-48 bg-white border border-gray-300 rounded">
+                    <SelectValue placeholder="Select Limit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="100">100</SelectItem>
+                    <SelectItem value="250">250</SelectItem>
+                    <SelectItem value="500">500</SelectItem>
+                    <SelectItem value="1000">1000</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* <div>
               <label htmlFor="status" className="text-lg text-black font-medium mr-2">Filter by Status:</label>
               <Select onValueChange={handleStatusChange} defaultValue="all">
                 <SelectTrigger className="w-48 bg-white border border-gray-300 rounded">
@@ -181,104 +183,105 @@ export default function AdminAllTransactions() {
               </Select>
             </div> */}
 
-            {/* Search Input */}
-            <div className="flex flex-col ">
-              <label
-                htmlFor="search"
-                className="text-lg text-black font-medium mr-2"
-              >
-                Search:
-              </label>
-              <input
-                type="text"
-                id="search"
-                className="w-64 bg-white border border-gray-300 rounded px-3 py-1"
-                placeholder="Search by name, email, payment ID"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
+              {/* Search Input */}
+              <div className="flex flex-col ">
+                <label
+                  htmlFor="search"
+                  className="text-lg text-black font-medium mr-2"
+                >
+                  Search:
+                </label>
+                <input
+                  type="text"
+                  id="search"
+                  className="w-64 bg-white border border-gray-300 rounded px-3 py-1"
+                  placeholder="Search by name, email, payment ID"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="overflow-y-auto h-96 mt-4">
-            <Table className="min-w-full table-auto">
-              <TableHeader>
-                <TableRow className="bg-gray-100 border-b">
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Sl No.
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Payment Id
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Name
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Email
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Total Amount
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Currency
-                  </TableHead>
-                  <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                    Time
-                  </TableHead>
-                  {/* <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</TableHead> */}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredPayments.length > 0 ? (
-                  filteredPayments.map((payment: any, index: number) => (
-                    <TableRow
-                      key={payment.id}
-                      className="border-b hover:bg-gray-50"
-                    >
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {payment.paymentId}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {payment.name}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {payment.email}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {(payment.totalAmount / 100).toFixed(2)}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {payment.currency.toUpperCase()}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-sm text-gray-700">
-                        {payment.paymentTime}
-                      </TableCell>
-                      {/* <TableCell className="px-4 py-2">
+            <div className="overflow-y-auto h-96 mt-4">
+              <Table className="min-w-full table-auto">
+                <TableHeader>
+                  <TableRow className="bg-gray-100 border-b">
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Sl No.
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Payment Id
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Name
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Email
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Total Amount
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Currency
+                    </TableHead>
+                    <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Time
+                    </TableHead>
+                    {/* <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</TableHead> */}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredPayments.length > 0 ? (
+                    filteredPayments.map((payment: any, index: number) => (
+                      <TableRow
+                        key={payment.id}
+                        className="border-b hover:bg-gray-50"
+                      >
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {payment.paymentId}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {payment.name}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {payment.email}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {(payment.totalAmount / 100).toFixed(2)}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {payment.currency.toUpperCase()}
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-sm text-gray-700">
+                          {payment.paymentTime}
+                        </TableCell>
+                        {/* <TableCell className="px-4 py-2">
                         <div className={`${payment.status === 'paid' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'} text-center px-2 py-1 rounded-lg`}>
                           {payment.status}
                         </div>
                       </TableCell> */}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={8}
+                        className="text-center px-4 py-2 text-sm text-gray-700"
+                      >
+                        No transactions found.
+                      </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={8}
-                      className="text-center px-4 py-2 text-sm text-gray-700"
-                    >
-                      No transactions found.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </main>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </SmoothScroll>
   );
 }
 

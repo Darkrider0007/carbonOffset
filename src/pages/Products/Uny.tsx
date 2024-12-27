@@ -2,10 +2,10 @@ import Navbar from "../../components/Navbar";
 import curve from "../../assets/home/curve.png";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
+import SmoothScroll from "../../components/SmoothScroll";
 
 const bannerContent = {
-  backgroundImage:
-    "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
+  backgroundImage: "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
   title: "Products > UNY",
 };
 
@@ -123,155 +123,169 @@ const videoContent = {
 
 function Uny() {
   return (
-    <div>
-      <Navbar />
-      {/* Banner Section */}
-      <div
-        style={{
-          backgroundImage: `url('${bannerContent.backgroundImage}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          width: "100%",
-        }}
-        className="flex items-center justify-center relative"
-      >
-        <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
-          {bannerContent.title}
-        </h1>
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <img src={curve} className="absolute bottom-0 w-full" />
-      </div>
-
-      {/* Main Content Section */}
-      <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
-        {/* Introduction */}
-        <section className="mb-12">
-          <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
-            {introductionContent.title}
-          </h2>
-          <h3 className="text-4xl font-semibold">
-            {introductionContent.subtitle}
-          </h3>
-          <p className="text-2xl font-normal text-Slate_Gray mt-5">
-            {introductionContent.description}
-          </p>
-        </section>
-
-        {/* Other Sections */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{climateCrisisContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {climateCrisisContent.description}
-          </p>
-        </section>
-
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{unyDefinitionContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {unyDefinitionContent.description}
-          </p>
-        </section>
-
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{envisionedContent.title}</h3>
-          <ul className="list-disc ml-5 mt-5">
-            {envisionedContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                <span>{point.title}</span>{" "}
-                <span className="text-Slate_Gray">{point.description}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{howUnyWorksContent.title}</h3>
-          <p className="text-2xl mt-5 italic">{howUnyWorksContent.subtitle}</p>
-          <p className="text-2xl font-normal text-Slate_Gray mt-5 text-justify">
-            {howUnyWorksContent.description}
-          </p>
-          <ul className="list-disc ml-5 mt-5">
-            {howUnyWorksContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                <span>{point.title}</span>{" "}
-                <span className="text-Slate_Gray">{point.description}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Cards Section */}
-        <section className="my-10">
-          <div className="flex flex-wrap items-center justify-between gap-20">
-            {cardsContent.map((card, index) => (
-              <div
-                key={index}
-                className="w-[625px] h-auto md:h-[725px] bg-Mint_Green px-7 py-20 rounded-lg"
-              >
-                <h1 className="text-3xl font-semibold text-black mb-8">
-                  {card.title}
-                </h1>
-                <p className="text-2xl mb-8 italic text-justify">{card.description}</p>
-                <ul className="list-disc ml-5 space-y-8">
-                  {card.points.map((point, idx) => (
-                    <li key={idx} className="text-2xl text-Charcoal_Blue">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section className="py-14 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
-          <h1 className="text-3xl font-semibold text-black mb-8">
-            {contactContent.title}
+    <SmoothScroll>
+      <div>
+        <Navbar />
+        {/* Banner Section */}
+        <div
+          style={{
+            backgroundImage: `url('${bannerContent.backgroundImage}')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "60vh",
+            width: "100%",
+          }}
+          className="flex items-center justify-center relative"
+        >
+          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
+            {bannerContent.title}
           </h1>
-          {contactContent.description.map((desc, index) => (
-            <p key={index} className="text-2xl font-normal text-justify">
-              {desc}
-            </p>
-          ))}
-          <p className="text-2xl font-normal my-4">
-            {contactContent.callToAction}
-          </p>
-          <ul className="list-disc ml-5">
-            {contactContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal">
-                {point}
-              </li>
-            ))}
-          </ul>
-          <ul className="list-none mt-5">
-            {contactContent.contactInfo.map((info, index) => (
-              <li key={index} className="text-2xl font-normal">
-                {info}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Video Section */}
-        <div className="mt-12 flex items-center justify-center">
-          <iframe
-            width="560"
-            height="315"
-            src={videoContent.url}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+          <div className="absolute inset-0 bg-black opacity-40"></div>
+          <img src={curve} className="absolute bottom-0 w-full" />
         </div>
-      </div>
 
-      <Newsletter />
-      <Footer />
-    </div>
+        {/* Main Content Section */}
+        <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
+          {/* Introduction */}
+          <section className="mb-12">
+            <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
+              {introductionContent.title}
+            </h2>
+            <h3 className="text-4xl font-semibold">
+              {introductionContent.subtitle}
+            </h3>
+            <p className="text-2xl font-normal text-Slate_Gray mt-5">
+              {introductionContent.description}
+            </p>
+          </section>
+
+          {/* Other Sections */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {climateCrisisContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {climateCrisisContent.description}
+            </p>
+          </section>
+
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {unyDefinitionContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {unyDefinitionContent.description}
+            </p>
+          </section>
+
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {envisionedContent.title}
+            </h3>
+            <ul className="list-disc ml-5 mt-5">
+              {envisionedContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  <span>{point.title}</span>{" "}
+                  <span className="text-Slate_Gray">{point.description}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {howUnyWorksContent.title}
+            </h3>
+            <p className="text-2xl mt-5 italic">
+              {howUnyWorksContent.subtitle}
+            </p>
+            <p className="text-2xl font-normal text-Slate_Gray mt-5 text-justify">
+              {howUnyWorksContent.description}
+            </p>
+            <ul className="list-disc ml-5 mt-5">
+              {howUnyWorksContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  <span>{point.title}</span>{" "}
+                  <span className="text-Slate_Gray">{point.description}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Cards Section */}
+          <section className="my-10">
+            <div className="flex flex-wrap items-center justify-between gap-20">
+              {cardsContent.map((card, index) => (
+                <div
+                  key={index}
+                  className="w-[625px] h-auto md:h-[725px] bg-Mint_Green px-7 py-20 rounded-lg"
+                >
+                  <h1 className="text-3xl font-semibold text-black mb-8">
+                    {card.title}
+                  </h1>
+                  <p className="text-2xl mb-8 italic text-justify">
+                    {card.description}
+                  </p>
+                  <ul className="list-disc ml-5 space-y-8">
+                    {card.points.map((point, idx) => (
+                      <li key={idx} className="text-2xl text-Charcoal_Blue">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Contact Section */}
+          <section className="py-14 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
+            <h1 className="text-3xl font-semibold text-black mb-8">
+              {contactContent.title}
+            </h1>
+            {contactContent.description.map((desc, index) => (
+              <p key={index} className="text-2xl font-normal text-justify">
+                {desc}
+              </p>
+            ))}
+            <p className="text-2xl font-normal my-4">
+              {contactContent.callToAction}
+            </p>
+            <ul className="list-disc ml-5">
+              {contactContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal">
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <ul className="list-none mt-5">
+              {contactContent.contactInfo.map((info, index) => (
+                <li key={index} className="text-2xl font-normal">
+                  {info}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Video Section */}
+          <div className="mt-12 flex items-center justify-center">
+            <iframe
+              width="560"
+              height="315"
+              src={videoContent.url}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+
+        <Newsletter />
+        <Footer />
+      </div>
+    </SmoothScroll>
   );
 }
 

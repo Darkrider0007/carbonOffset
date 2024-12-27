@@ -2,10 +2,10 @@ import Navbar from "../../components/Navbar";
 import curve from "../../assets/home/curve.png";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
+import SmoothScroll from "../../components/SmoothScroll";
 
 const bannerContent = {
-  backgroundImage:
-    "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
+  backgroundImage: "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
   title: "Products > Bamboohut",
 };
 
@@ -105,128 +105,144 @@ const contactContent = {
 
 function Bamboohut() {
   return (
-    <div>
-      <Navbar />
-      {/* Banner Section */}
-      <div
-        style={{
-          backgroundImage: `url('${bannerContent.backgroundImage}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          width: "100%",
-        }}
-        className="flex items-center justify-center relative"
-      >
-        <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
-          {bannerContent.title}
-        </h1>
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <img src={curve} className="absolute bottom-0 w-full" />
+    <SmoothScroll>
+      <div>
+        <Navbar />
+        {/* Banner Section */}
+        <div
+          style={{
+            backgroundImage: `url('${bannerContent.backgroundImage}')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "60vh",
+            width: "100%",
+          }}
+          className="flex items-center justify-center relative"
+        >
+          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
+            {bannerContent.title}
+          </h1>
+          <div className="absolute inset-0 bg-black opacity-40"></div>
+          <img src={curve} className="absolute bottom-0 w-full" />
+        </div>
+
+        {/* Main Content Section */}
+        <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
+          {/* Introduction */}
+          <section className="mb-12">
+            <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
+              {introductionContent.title}
+            </h2>
+            <h3 className="text-4xl font-semibold">
+              {introductionContent.subtitle}
+            </h3>
+            <p className="text-2xl font-normal text-Slate_Gray mt-5">
+              {introductionContent.description}
+            </p>
+          </section>
+
+          {/* Green Loyalty Program */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {greenLoyaltyProgramContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {greenLoyaltyProgramContent.description}
+            </p>
+            <ul className="list-disc ml-5 mt-5">
+              {greenLoyaltyProgramContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <h4 className="text-3xl font-semibold mt-10">Benefits:</h4>
+            <ul className="list-disc ml-5 mt-5">
+              {greenLoyaltyProgramContent.benefits.map((benefit, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {benefit}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Sustainable Design */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {sustainableDesignContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {sustainableDesignContent.description}
+            </p>
+            <ul className="list-disc ml-5 mt-5">
+              {sustainableDesignContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Collaboration Opportunities */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {collaborationOpportunitiesContent.title}
+            </h3>
+            <div className="flex flex-wrap justify-between gap-6 mt-12">
+              {collaborationOpportunitiesContent.sections.map(
+                (section, index) => (
+                  <div
+                    key={index}
+                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[500px]"
+                  >
+                    <h4 className="text-3xl font-semibold mb-4">
+                      {section.title}
+                    </h4>
+                    <ul className="list-disc ml-5">
+                      {section.points.map((point, idx) => (
+                        <li key={idx} className="text-2xl font-normal mt-2">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              )}
+            </div>
+          </section>
+
+          {/* Shared Vision */}
+          <section className="py-7  mt-10 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
+            <h3 className="text-4xl font-semibold">
+              {sharedVisionContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {sharedVisionContent.description}
+            </p>
+            <ul className="list-disc ml-5 mt-5">
+              {sharedVisionContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+
+            {/* Contact */}
+
+            <ul className="list-none mt-10">
+              {contactContent.contactInfo.map((info, index) => (
+                <li key={index} className="text-2xl font-normal">
+                  {info}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <Newsletter />
+        <Footer />
       </div>
-
-      {/* Main Content Section */}
-      <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
-        {/* Introduction */}
-        <section className="mb-12">
-          <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
-            {introductionContent.title}
-          </h2>
-          <h3 className="text-4xl font-semibold">
-            {introductionContent.subtitle}
-          </h3>
-          <p className="text-2xl font-normal text-Slate_Gray mt-5">
-            {introductionContent.description}
-          </p>
-        </section>
-
-        {/* Green Loyalty Program */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{greenLoyaltyProgramContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {greenLoyaltyProgramContent.description}
-          </p>
-          <ul className="list-disc ml-5 mt-5">
-            {greenLoyaltyProgramContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-          <h4 className="text-3xl font-semibold mt-10">Benefits:</h4>
-          <ul className="list-disc ml-5 mt-5">
-            {greenLoyaltyProgramContent.benefits.map((benefit, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Sustainable Design */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{sustainableDesignContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {sustainableDesignContent.description}
-          </p>
-          <ul className="list-disc ml-5 mt-5">
-            {sustainableDesignContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Collaboration Opportunities */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{collaborationOpportunitiesContent.title}</h3>
-          <div className="flex flex-wrap justify-between gap-6 mt-12">
-            {collaborationOpportunitiesContent.sections.map((section, index) => (
-              <div key={index} className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[500px]">
-                <h4 className="text-3xl font-semibold mb-4">{section.title}</h4>
-                <ul className="list-disc ml-5">
-                  {section.points.map((point, idx) => (
-                    <li key={idx} className="text-2xl font-normal mt-2">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Shared Vision */}
-        <section className="py-7  mt-10 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
-          <h3 className="text-4xl font-semibold">{sharedVisionContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {sharedVisionContent.description}
-          </p>
-          <ul className="list-disc ml-5 mt-5">
-            {sharedVisionContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-
-          {/* Contact */}
-
-
-          <ul className="list-none mt-10">
-            {contactContent.contactInfo.map((info, index) => (
-              <li key={index} className="text-2xl font-normal">
-                {info}
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-
-      <Newsletter />
-      <Footer />
-    </div>
+    </SmoothScroll>
   );
 }
 
