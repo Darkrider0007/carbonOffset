@@ -56,7 +56,7 @@ export default function AdminCollaborativePlatform() {
         <div className="flex flex-col">
           <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
             <h1 className="text-lg font-bold">
-              Collaborative Participation Platform
+              Collaborative Participation Platform 2
             </h1>
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
