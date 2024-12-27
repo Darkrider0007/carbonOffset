@@ -14,6 +14,7 @@ import mainbg from "../../assets/services/mainbg.png";
 import { countries } from "../../constants/countries";
 import { sendMembership } from "../../api/Membership";
 import SmoothScroll from "../../components/SmoothScroll";
+import { postCollaborativeParticipation } from "../../api/collaborativeParticipation";
 
 type FormData = {
   fullName: string;
@@ -37,6 +38,9 @@ type FormData = {
   idProof?: FileList;
   corporateRegistration?: FileList;
   digitalSignatureName: string;
+  additionalInfo: string;
+  collaborationType: string;
+  collaborationFocus: string;
 };
 
 const CollaborativeParticipationPlatform: React.FC = () => {
@@ -48,14 +52,12 @@ const CollaborativeParticipationPlatform: React.FC = () => {
   } = useForm<FormData>();
   const navigate = useNavigate();
 
-  const [selectedPurpose, setSelectedPurpose] = useState("");
-
   const onSubmit = async (data: FormData) => {
     console.log(data);
     setSubmitting(true);
     try {
       // Placeholder for actual API submission logic
-      const res = await sendMembership(data);
+      const res = await postCollaborativeParticipation(data);
 
       if (res.status == 201) {
         navigate("/");
@@ -239,6 +241,41 @@ const CollaborativeParticipationPlatform: React.FC = () => {
 
           <section className="mt-10 mb-8 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-4 text-green-700">Purpose</h2>
+        <section className="mt-10 mb-8 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4 text-green-700">Purpose</h2>
+          <div className="mb-4">
+            <Label
+              htmlFor="membershipType"
+              className="block text-lg font-medium mb-2"
+            >
+              Select Purpose <span className="text-red-500">*</span>
+            </Label>
+            <select
+              id="membershipType"
+              {...register("membershipType", {
+                required: "Purpose is required",
+              })
+              }
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">-- Select Purpose --</option>
+              <option value="Collaboration">Collaboration</option>
+              <option value="Information Request">Information Request</option>
+            </select>
+            {errors.membershipType && (
+              <p className="text-red-600 text-sm mt-1">
+                {errors.membershipType.message}
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* Collaboration Type Selection */}
+        <section className="mt-10 mb-8 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4 text-green-700">
+            Collaboration Type
+          </h2>
+          <div className="space-y-6">
             <div className="mb-4">
               <Label
                 htmlFor="membershipType"
@@ -250,6 +287,11 @@ const CollaborativeParticipationPlatform: React.FC = () => {
                 id="membershipType"
                 value={selectedPurpose}
                 onChange={(e) => setSelectedPurpose(e.target.value)}
+                id="collaborationType"
+                {...register("collaborationType", {
+                  required: "Collaboration Type is required",
+                })
+                }
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">-- Select Purpose --</option>
@@ -314,6 +356,35 @@ const CollaborativeParticipationPlatform: React.FC = () => {
                   </option>
                 </select>
               </div>
+
+            <div className="mb-4">
+              <Label
+                htmlFor="collaborationFocus"
+                className="block text-lg font-medium mb-2"
+              >
+                Collaboration Focus <span className="text-red-500">*</span>
+              </Label>
+              <select
+                id="collaborationFocus"
+                {...register("collaborationFocus", {
+                  required: "Collaboration Focus is required",
+                })
+                }
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                <option value="">-- Select Collaboration Focus --</option>
+                <option value="Technology/Service Provider">
+                  Technology/Service Provider
+                </option>
+                <option value="Investor">Investor</option>
+                <option value="Pilot Program Collaborator">
+                  Pilot Program Collaborator
+                </option>
+                <option value="Resource Support">
+                  Resource Support (e.g., financial, technical, facilities)
+                </option>
+              </select>
+
             </div>
           </section>
 
@@ -343,6 +414,46 @@ const CollaborativeParticipationPlatform: React.FC = () => {
                 placeholder="Please provide any additional details or messages..."
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[150px]"
               />
+          <div>
+            <input type="checkbox" id="privacyPolicy"
+              {...register("agreePrivacy", { required: "You must agree to the privacy policy" })}
+              className="mr-2" />
+            <Label htmlFor="privacyPolicy">
+              I agree to comply with the data privacy policies
+              <span className="text-red-500">*</span>
+            </Label>
+            {errors.agreePrivacy && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.agreePrivacy.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label
+              htmlFor="additionalInfo"
+              className="block text-lg font-medium"
+            >
+              Additional Information
+            </Label>
+            <textarea
+              id="additionalInfo"
+              {...register("additionalInfo")}
+              placeholder="Please provide any additional details or messages..."
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[150px]"
+            />
+          </div>
+        </section>
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          className="mt-6 bg-green-600 text-white px-6 py-2 rounded"
+          disabled={submitting}
+        >
+          {submitting ? (
+            <div className="flex items-center">
+              Submitting... <Loader2 className="ml-2 animate-spin" size={20} />
+
             </div>
           </section>
           {/* Submit Button */}
