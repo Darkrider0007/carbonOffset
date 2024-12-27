@@ -53,10 +53,10 @@ import store from "./store/store";
 import MembershipForm from "./pages/JoinUs/MembershipForm";
 import CollaborativeParticipationPlatform from "./pages/JoinUs/CollaborativeParticipationPlatform";
 import VolunteerRegistrationForm from "./pages/JoinUs/VolunteerRegistrationForm";
-import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatform";
 import AdminVolunteerRegistration from "./pages/AdminVolunteerRegistration";
 import AdminProposal from "./pages/AdminProposal";
 import AdminMembership from "./pages/AdminMembership";
+import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatform";
 
 const router = createBrowserRouter([
   {
