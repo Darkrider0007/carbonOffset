@@ -10,6 +10,7 @@ import { RiLoader2Fill } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 import { toast } from "../hooks/use-toast";
 import InputPassword from "../components/InputPassword";
+import SmoothScroll from "../components/SmoothScroll";
 
 interface LoginFormInputs {
   email: string;
@@ -85,110 +86,115 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F1F5F9] flex justify-between items-center">
-      <div className="flex flex-col md:flex-row w-full">
-        {/* Left side images */}
-        <div className="hidden md:flex w-full md:w-1/2 bg-cover bg-center items-center">
-          <img
-            src={windowImage}
-            alt="Nature"
-            className="object-cover h-[300px] md:h-[640px] w-full md:w-[680px]"
-          />
-        </div>
-
-        {/* Right side form */}
-        <div className="w-full md:w-1/2 p-8 md:px-32 justify-center">
-          <div
-            onClick={() => navigate("/")}
-            className="absolute top-1 right-1 mb-6 md:mb-0"
-          >
+    <SmoothScroll>
+      <div className="min-h-screen w-full bg-[#F1F5F9] flex justify-between items-center">
+        <div className="flex flex-col md:flex-row w-full">
+          {/* Left side images */}
+          <div className="hidden md:flex w-full md:w-1/2 bg-cover bg-center items-center">
             <img
-              src={Logo}
-              alt="Logo"
-              className="md:right-9 h-20 md:h-36 w-20 md:w-36 object-cover"
+              src={windowImage}
+              alt="Nature"
+              className="object-cover h-[300px] md:h-[640px] w-full md:w-[680px]"
             />
           </div>
 
-          <div className="my-10 gap-5 flex flex-col justify-center items-center">
-            <div className="w-full text-left flex flex-col justify-start">
-              <h1 className="text-3xl md:text-4xl font-semibold">
-                Hello, <span className="text-green-600">Mikołaj!</span>
-              </h1>
-              <p className="text-gray-500 mt-2 text-lg md:text-xl">
-                Log in to 1World1Nation to start creating magic.
-              </p>
+          {/* Right side form */}
+          <div className="w-full md:w-1/2 p-8 md:px-32 justify-center">
+            <div
+              onClick={() => navigate("/")}
+              className="absolute top-1 right-1 mb-6 md:mb-0"
+            >
+              <img
+                src={Logo}
+                alt="Logo"
+                className="md:right-9 h-20 md:h-36 w-20 md:w-36 object-cover"
+              />
             </div>
 
-            {/* Login form */}
-            <div className="flex w-full">
-              <form onSubmit={handleSubmit(onSubmit)} className="mt-6 w-full">
-                <InputField
-                  id="email"
-                  label="Email"
-                  type="email"
-                  placeholder="mikolaj.niznik@gmail.com"
-                  error={errors.email?.message}
-                  {...register("email", { required: "Email is required" })}
-                  inputStyle="pl-3"
-                />
-                <InputPassword
-                  id="password"
-                  label="Password"
-                  placeholder="Password"
-                  error={errors.password?.message}
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                  inputStyle="pl-3"
-                />
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="rememberMe"
-                      {...register("rememberMe")}
-                      className="mr-2"
-                    />
-                    <label htmlFor="rememberMe" className="text-sm">
-                      Remember me
-                    </label>
-                  </div>
-                  <Link to="/forget-password" className="text-sm text-blue-600">
-                    Forgot Password?
-                  </Link>
-                </div>
+            <div className="my-10 gap-5 flex flex-col justify-center items-center">
+              <div className="w-full text-left flex flex-col justify-start">
+                <h1 className="text-3xl md:text-4xl font-semibold">
+                  Hello, <span className="text-green-600">Mikołaj!</span>
+                </h1>
+                <p className="text-gray-500 mt-2 text-lg md:text-xl">
+                  Log in to 1World1Nation to start creating magic.
+                </p>
+              </div>
 
-                <button
-                  type="submit"
-                  className="bg-green-600 text-white p-3 rounded-md w-full mt-10"
-                >
-                  {submit ? (
-                    <div className="flex flex-row w-full items-center justify-center">
-                      <RiLoader2Fill className="animate-spin mr-2" /> Logged in
-                      ...
+              {/* Login form */}
+              <div className="flex w-full">
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-6 w-full">
+                  <InputField
+                    id="email"
+                    label="Email"
+                    type="email"
+                    placeholder="mikolaj.niznik@gmail.com"
+                    error={errors.email?.message}
+                    {...register("email", { required: "Email is required" })}
+                    inputStyle="pl-3"
+                  />
+                  <InputPassword
+                    id="password"
+                    label="Password"
+                    placeholder="Password"
+                    error={errors.password?.message}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                    inputStyle="pl-3"
+                  />
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="rememberMe"
+                        {...register("rememberMe")}
+                        className="mr-2"
+                      />
+                      <label htmlFor="rememberMe" className="text-sm">
+                        Remember me
+                      </label>
                     </div>
-                  ) : (
-                    "Log in"
-                  )}
-                </button>
-              </form>
-            </div>
+                    <Link
+                      to="/forget-password"
+                      className="text-sm text-blue-600"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
 
-            <div className="text-center mt-6 flex flex-row">
-              <p className="text-sm text-gray-500">
-                Don’t have an account?{" "}
-                <span
-                  onClick={() => navigate("/signup")}
-                  className="text-green-600 cursor-pointer"
-                >
-                  Sign Up
-                </span>
-              </p>
+                  <button
+                    type="submit"
+                    className="bg-green-600 text-white p-3 rounded-md w-full mt-10"
+                  >
+                    {submit ? (
+                      <div className="flex flex-row w-full items-center justify-center">
+                        <RiLoader2Fill className="animate-spin mr-2" /> Logged
+                        in ...
+                      </div>
+                    ) : (
+                      "Log in"
+                    )}
+                  </button>
+                </form>
+              </div>
+
+              <div className="text-center mt-6 flex flex-row">
+                <p className="text-sm text-gray-500">
+                  Don’t have an account?{" "}
+                  <span
+                    onClick={() => navigate("/signup")}
+                    className="text-green-600 cursor-pointer"
+                  >
+                    Sign Up
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </SmoothScroll>
   );
 }
 

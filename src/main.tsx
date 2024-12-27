@@ -53,6 +53,7 @@ import store from "./store/store";
 import MembershipForm from "./pages/JoinUs/MembershipForm";
 import CollaborativeParticipationPlatform from "./pages/JoinUs/CollaborativeParticipationPlatform";
 import VolunteerRegistrationForm from "./pages/JoinUs/VolunteerRegistrationForm";
+import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatform";
 
 const router = createBrowserRouter([
   {
@@ -331,6 +332,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Token />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/collaborativePlatform`,
+    element: (
+      <PrivateRoute>
+        <AdminCollaborativePlatform />
       </PrivateRoute>
     ),
   },

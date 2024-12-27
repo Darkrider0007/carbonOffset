@@ -3,6 +3,7 @@ import curve from "../../assets/home/curve.png";
 import mainbg from "../../assets/Products/productsBanner.jpg";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
+import SmoothScroll from "../../components/SmoothScroll";
 
 function Books() {
   type Book = {
@@ -69,68 +70,70 @@ function Books() {
   ];
 
   return (
-    <div>
-      <Navbar />
-      <div
-        style={{
-          backgroundImage: `url(${mainbg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          width: "100%",
-        }}
-        className="flex items-center justify-center relative"
-      >
-        <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
-          Products {">"} Books
-        </h1>
+    <SmoothScroll>
+      <div>
+        <Navbar />
+        <div
+          style={{
+            backgroundImage: `url(${mainbg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "60vh",
+            width: "100%",
+          }}
+          className="flex items-center justify-center relative"
+        >
+          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
+            Products {">"} Books
+          </h1>
 
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <img src={curve} className="absolute bottom-0 w-full" />
-      </div>
-
-      <div className="container mx-auto my-10 px-6">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-10">
-          Our Books
-        </h2>
-
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-          {books.map((book, index) => (
-            <div
-              key={index}
-              className={`border-2 shadow-lg p-2 rounded-lg overflow-hidden flex flex-col sm:flex-row ${
-                index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
-              } bg-white`}
-            >
-              <img
-                src={book.image}
-                alt={book.title}
-                className="w-full sm:w-1/2 object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-              />
-              <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-between">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
-                  <a
-                    href={book.link}
-                    className="text-green-600 hover:text-green-800 transition-colors duration-200"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {book.title}
-                  </a>
-                </h3>
-                <p className="text-gray-700 text-sm sm:text-base mb-4 leading-relaxed">
-                  {book.description}
-                </p>
-              </div>
-            </div>
-          ))}
+          <div className="absolute inset-0 bg-black opacity-40"></div>
+          <img src={curve} className="absolute bottom-0 w-full" />
         </div>
-      </div>
 
-      {/* Newsletter */}
-      <Newsletter />
-      <Footer />
-    </div>
+        <div className="container mx-auto my-10 px-6">
+          <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-10">
+            Our Books
+          </h2>
+
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+            {books.map((book, index) => (
+              <div
+                key={index}
+                className={`border-2 shadow-lg p-2 rounded-lg overflow-hidden flex flex-col sm:flex-row ${
+                  index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+                } bg-white`}
+              >
+                <img
+                  src={book.image}
+                  alt={book.title}
+                  className="w-full sm:w-1/2 object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                />
+                <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-between">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                    <a
+                      href={book.link}
+                      className="text-green-600 hover:text-green-800 transition-colors duration-200"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {book.title}
+                    </a>
+                  </h3>
+                  <p className="text-gray-700 text-sm sm:text-base mb-4 leading-relaxed">
+                    {book.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Newsletter */}
+        <Newsletter />
+        <Footer />
+      </div>
+    </SmoothScroll>
   );
 }
 

@@ -1,5 +1,6 @@
 import { Bar, BarChart, XAxis, YAxis, Tooltip } from "recharts";
 import { ChartConfig, ChartContainer } from "../../components/ui/chart";
+import SmoothScroll from "../../components/SmoothScroll";
 
 // Define TypeScript types for project data
 type Project = {
@@ -44,23 +45,25 @@ export function BarGraph({ projects }: BarGraphProps) {
   );
 
   return (
-    <ChartContainer config={chartConfig} className="min-h-[100px] w-1/2">
-      <BarChart data={chartData} width={600} height={300}>
-        <XAxis dataKey="country" />
-        <YAxis
-          label={{
-            value: "Active Projects",
-            angle: -90,
-            position: "insideLeft",
-          }}
-        />
-        <Tooltip />
-        <Bar
-          dataKey="activeProjects"
-          fill={chartConfig.projects.color}
-          radius={4}
-        />
-      </BarChart>
-    </ChartContainer>
+    <SmoothScroll>
+      <ChartContainer config={chartConfig} className="min-h-[100px] w-1/2">
+        <BarChart data={chartData} width={600} height={300}>
+          <XAxis dataKey="country" />
+          <YAxis
+            label={{
+              value: "Active Projects",
+              angle: -90,
+              position: "insideLeft",
+            }}
+          />
+          <Tooltip />
+          <Bar
+            dataKey="activeProjects"
+            fill={chartConfig.projects.color}
+            radius={4}
+          />
+        </BarChart>
+      </ChartContainer>
+    </SmoothScroll>
   );
 }

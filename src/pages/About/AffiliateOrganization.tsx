@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import curve from "../../assets/home/curve.png";
 import mainbg from "../../assets/services/mainbg.png";
 import Newsletter from "../../components/Newsletter";
+import SmoothScroll from "../../components/SmoothScroll";
 
 const affiliates = [
   {
@@ -44,78 +45,81 @@ const affiliates = [
 
 const AffiliateOrganization = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <div
-        style={{
-          backgroundImage: `url(${mainbg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          width: "100%",
-        }}
-        className="flex items-center justify-center relative"
-      >
-        <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-lg">
-          About Us {">"} Affiliate Organization
-        </h1>
-        <img src={curve} className="absolute bottom-0 w-full" alt="Curve" />
-      </div>
+    <SmoothScroll>
+      <div className="min-h-screen">
+        <Navbar />
+        <div
+          style={{
+            backgroundImage: `url(${mainbg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "60vh",
+            width: "100%",
+          }}
+          className="flex items-center justify-center relative"
+        >
+          <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-lg">
+            About Us {">"} Affiliate Organization
+          </h1>
+          <img src={curve} className="absolute bottom-0 w-full" alt="Curve" />
+        </div>
 
-      <main className="container mx-auto px-6 py-12">
-        <section className="text-center mb-12">
-          <h2 className="text-3xl font-semibold text-green-700 mb-6">
-            Become an Affiliate Organization
-          </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            As an affiliated organization, you become a partner in realizing the
-            dream of creating a unified world with a 100% protected environment.
-            A meeting of the minds is all that’s required to get started. We can
-            pool our collective energies and resources to create new synergies.
-          </p>
-          <p className="mt-4 text-gray-700">
-            To become an affiliate organization, please send an email to:{" "}
-            <a
-              href="mailto:affiliate@1world1nation.org"
-              className="text-green-700 underline"
-            >
-              affiliate@1world1nation.org
-            </a>
-          </p>
-        </section>
-
-        {/* Affiliates Grid */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-          {affiliates.map((affiliate, index) => (
-            <div
-              key={index}
-              className="bg-green-100 rounded-lg shadow-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105"
-            >
+        <main className="container mx-auto px-6 py-12">
+          <section className="text-center mb-12">
+            <h2 className="text-3xl font-semibold text-green-700 mb-6">
+              Become an Affiliate Organization
+            </h2>
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+              As an affiliated organization, you become a partner in realizing
+              the dream of creating a unified world with a 100% protected
+              environment. A meeting of the minds is all that’s required to get
+              started. We can pool our collective energies and resources to
+              create new synergies.
+            </p>
+            <p className="mt-4 text-gray-700">
+              To become an affiliate organization, please send an email to:{" "}
               <a
-                href={affiliate.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full h-full"
+                href="mailto:affiliate@1world1nation.org"
+                className="text-green-700 underline"
               >
-                <img
-                  src={affiliate.imgSrc}
-                  alt={affiliate.name}
-                  className="object-contain h-32 w-full mb-4 rounded"
-                />
-                <h3 className="text-lg font-semibold text-green-800">
-                  {affiliate.name}
-                </h3>
+                affiliate@1world1nation.org
               </a>
-            </div>
-          ))}
-        </section>
-      </main>
+            </p>
+          </section>
 
-      {/* Newsletter */}
-      <Newsletter />
+          {/* Affiliates Grid */}
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+            {affiliates.map((affiliate, index) => (
+              <div
+                key={index}
+                className="bg-green-100 rounded-lg shadow-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105"
+              >
+                <a
+                  href={affiliate.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <img
+                    src={affiliate.imgSrc}
+                    alt={affiliate.name}
+                    className="object-contain h-32 w-full mb-4 rounded"
+                  />
+                  <h3 className="text-lg font-semibold text-green-800">
+                    {affiliate.name}
+                  </h3>
+                </a>
+              </div>
+            ))}
+          </section>
+        </main>
 
-      <Footer />
-    </div>
+        {/* Newsletter */}
+        <Newsletter />
+
+        <Footer />
+      </div>
+    </SmoothScroll>
   );
 };
 

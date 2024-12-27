@@ -24,6 +24,7 @@ import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
 import { logout } from "../api/auth/loginAndLogout";
 import { getUser } from "../api/auth/getUser";
+import SmoothScroll from "../components/SmoothScroll";
 
 // const expenseData = [
 //   {
@@ -111,21 +112,22 @@ export default function UserOffsetDetails() {
   }, []);
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] ">
-      {/* Sidebar for larger screens */}
-      <div className=" border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
-        <Sidebar />
-      </div>
+    <SmoothScroll>
+      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] ">
+        {/* Sidebar for larger screens */}
+        <div className=" border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+          <Sidebar />
+        </div>
 
-      {/* Main Content */}
-      <div className="flex flex-col">
-        {/* Header Section */}
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" to="#">
-            <Package2Icon className="h-6 w-6" />
-            <span className="sr-only">Home</span>
-          </Link>
-          {/* <div className="w-full flex-1">
+        {/* Main Content */}
+        <div className="flex flex-col">
+          {/* Header Section */}
+          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+            <Link className="lg:hidden" to="#">
+              <Package2Icon className="h-6 w-6" />
+              <span className="sr-only">Home</span>
+            </Link>
+            {/* <div className="w-full flex-1">
             <form>
               <div className="relative">
                 <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -137,78 +139,79 @@ export default function UserOffsetDetails() {
               </div>
             </form>
           </div> */}
-          <Button className="ml-auto" onClick={handelLogout}>
-            Logout
-          </Button>
-        </header>
+            <Button className="ml-auto" onClick={handelLogout}>
+              Logout
+            </Button>
+          </header>
 
-        {/* Main Section */}
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-hidden">
-          <h1 className="font-bold">{user ? user.firstName : ""}'s Cards</h1>
+          {/* Main Section */}
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-hidden">
+            <h1 className="font-bold">{user ? user.firstName : ""}'s Cards</h1>
 
-          {/* Cards and Chart Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
-            <Card className="bg-green-600 h-full">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-white">
-                  Available Tokens
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-white">
-                  {user ? user.tokenCount * 10 : 0} Tokens
+            {/* Cards and Chart Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
+              <Card className="bg-green-600 h-full">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-white">
+                    Available Tokens
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">
+                    {user ? user.tokenCount * 10 : 0} Tokens
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-green-600 h-full">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-md font-bold text-white">
+                    Used Tokens
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">0 Tokens</div>
+                </CardContent>
+              </Card>
+
+              {/* Responsive Chart Container */}
+              <div className="col-span-1 lg:col-span-2 w-full h-full">
+                <div className="h-full w-full overflow-x-auto">
+                  <ExpenseChart />
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-green-600 h-full">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-md font-bold text-white">
-                  Used Tokens
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-white">0 Tokens</div>
-              </CardContent>
-            </Card>
-
-            {/* Responsive Chart Container */}
-            <div className="col-span-1 lg:col-span-2 w-full h-full">
-              <div className="h-full w-full overflow-x-auto">
-                <ExpenseChart />
               </div>
             </div>
-          </div>
 
-          {/* Expense Table */}
-          <div className="border shadow-sm rounded-lg p-4 mt-6 overflow-x-auto">
-            <h2 className="font-bold mb-4">Expense Details</h2>
-            <Table className="min-w-full">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Offset Name</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Amount of Tokens</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {expenseData.map((expense) => (
-                  <TableRow key={expense.date}>
-                    <TableCell>{expense.offsetName}</TableCell>
-                    <TableCell>
-                      {format(new Date(expense.date), "PPpp")}
-                    </TableCell>
-                    <TableCell>{expense.amountOfTokens}</TableCell>
-                    <TableCell>{expense.status}</TableCell>
+            {/* Expense Table */}
+            <div className="border shadow-sm rounded-lg p-4 mt-6 overflow-x-auto">
+              <h2 className="font-bold mb-4">Expense Details</h2>
+              <Table className="min-w-full">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Offset Name</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Amount of Tokens</TableHead>
+                    <TableHead>Status</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </main>
+                </TableHeader>
+                <TableBody>
+                  {expenseData.map((expense) => (
+                    <TableRow key={expense.date}>
+                      <TableCell>{expense.offsetName}</TableCell>
+                      <TableCell>
+                        {format(new Date(expense.date), "PPpp")}
+                      </TableCell>
+                      <TableCell>{expense.amountOfTokens}</TableCell>
+                      <TableCell>{expense.status}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </SmoothScroll>
   );
 }
 

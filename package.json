@@ -26,6 +26,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@reduxjs/toolkit": "^2.4.0",
     "@stripe/stripe-js": "^4.4.0",
+    "@studio-freight/react-lenis": "^0.0.47",
     "axios": "^1.7.5",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",

@@ -25,7 +25,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import { Search } from "lucide-react";
 import SmoothScroll from "../components/SmoothScroll";
 
-export default function AdminFarmOnboarding() {
+export default function AdminCollaborativePlatform() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
   const [farmData, setFarmData] = useState<any[]>([]);
   const [approvedFarmData, setApprovedFarmData] = useState<number>();
@@ -110,7 +110,9 @@ export default function AdminFarmOnboarding() {
         </div>
         <div className="flex flex-col">
           <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-            <h1 className="text-lg font-bold">Farm Onboarding</h1>
+            <h1 className="text-lg font-bold">
+              Collaborative Participation Platform
+            </h1>
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -140,7 +142,7 @@ export default function AdminFarmOnboarding() {
               <Card className="shadow-xl">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-black">
-                    Total Farms Onboarded
+                    Total Collaborative Participants
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -180,7 +182,7 @@ export default function AdminFarmOnboarding() {
                 <div className="flex flex-wrap lg:flex-nowrap justify-between items-center mb-4 w-full">
                   {/* Heading */}
                   <h2 className="font-bold text-2xl mb-4 lg:mb-0 w-full lg:w-2/5 ">
-                    Farm Onboarding
+                    Collaborative Participation Platform
                   </h2>
 
                   {/* Filter and Search */}

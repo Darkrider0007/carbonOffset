@@ -2,10 +2,10 @@ import Navbar from "../../components/Navbar";
 import curve from "../../assets/home/curve.png";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
+import SmoothScroll from "../../components/SmoothScroll";
 
 const bannerContent = {
-  backgroundImage:
-    "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
+  backgroundImage: "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
   title: "Products > Divine Healer",
 };
 
@@ -41,22 +41,25 @@ const impactOnBeverages = {
         "Juice and Soda Manufacturers: Enhance the wellness potential of every bottled product without altering taste or production processes.",
         "Hospitality and Cafes: Offer exclusive, health-boosting beverages as a value-add to elevate customer experience.",
       ],
-    }
+    },
   ],
-  summary: "Implemented just before bottling and carbonating, the Divine Healer’s effect is invisible to the eye but invigorating to the body—a revolutionary way to create beverages that stand out in the market."
+  summary:
+    "Implemented just before bottling and carbonating, the Divine Healer’s effect is invisible to the eye but invigorating to the body—a revolutionary way to create beverages that stand out in the market.",
 };
 
 const scientificallyProvenBenefits = {
   title: "Scientifically Proven Benefits",
-  description: "The Divine Healer is not just an idea—it’s backed by science. Studies have confirmed that liquids processed through our nano-filtration system demonstrate properties that:",
+  description:
+    "The Divine Healer is not just an idea—it’s backed by science. Studies have confirmed that liquids processed through our nano-filtration system demonstrate properties that:",
   points: [
     "Promote cellular healing and rejuvenation.",
     "Improve hydration efficiency and energy levels.",
     "Support immunity and overall well-being.",
     "Deliver tangible, measurable health benefits to consumers.",
   ],
-  summary: "Each sip becomes a scientifically enriched step toward a healthier lifestyle.",
-}
+  summary:
+    "Each sip becomes a scientifically enriched step toward a healthier lifestyle.",
+};
 
 const collaborationOpportunitiesContent = {
   title: "Collaboration Opportunities: How We Can Achieve Greater Heights",
@@ -101,14 +104,14 @@ const collaborationOpportunitiesContent = {
 
 const ourCommitment = {
   title: "Our Commitment to Quality and Support",
-  description: "At the Divine Healer, we prioritize quality, durability, and customer satisfaction:",
+  description:
+    "At the Divine Healer, we prioritize quality, durability, and customer satisfaction:",
   points: [
     "1 - Year Warranty: Every system is backed by a comprehensive warranty to ensure reliability and peace of mind.",
     "Ongoing Support: Our expert team offers ongoing assistance, training, and troubleshooting for all clients.",
-    "Global Reach: Our systems are designed to bring wellness benefits to homes, businesses, and industries worldwide."
-
-  ]
-}
+    "Global Reach: Our systems are designed to bring wellness benefits to homes, businesses, and industries worldwide.",
+  ],
+};
 
 const sharedVisionContent = {
   title: "Elevate Your Beverages Today",
@@ -131,159 +134,182 @@ const contactContent = {
 
 function Divinehealer() {
   return (
-    <div>
-      <Navbar />
-      {/* Banner Section */}
-      <div
-        style={{
-          backgroundImage: `url('${bannerContent.backgroundImage}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-          width: "100%",
-        }}
-        className="flex items-center justify-center relative"
-      >
-        <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
-          {bannerContent.title}
-        </h1>
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <img src={curve} className="absolute bottom-0 w-full" />
+    <SmoothScroll>
+      <div>
+        <Navbar />
+        {/* Banner Section */}
+        <div
+          style={{
+            backgroundImage: `url('${bannerContent.backgroundImage}')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "60vh",
+            width: "100%",
+          }}
+          className="flex items-center justify-center relative"
+        >
+          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
+            {bannerContent.title}
+          </h1>
+          <div className="absolute inset-0 bg-black opacity-40"></div>
+          <img src={curve} className="absolute bottom-0 w-full" />
+        </div>
+
+        {/* Main Content Section */}
+        <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
+          {/* Introduction */}
+          <section className="mb-12">
+            <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
+              {introductionContent.title}
+            </h2>
+            <h3 className="text-4xl font-semibold italic text-Slate_Gray">
+              {introductionContent.subtitle}
+            </h3>
+          </section>
+
+          {/* Essence of the Divine Healer */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">{Essence.title}</h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {Essence.description}
+            </p>
+            <h4 className="text-3xl font-semibold mt-5">
+              {Essence.missionTitle}
+            </h4>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {Essence.missionDescription}
+            </p>
+          </section>
+
+          {/* Sustainable Design */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {impactOnBeverages.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {impactOnBeverages.description}
+            </p>
+            <div className="flex flex-wrap justify-between gap-6 mt-12">
+              {impactOnBeverages.section.map((section, index) => (
+                <div
+                  key={index}
+                  className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[400px]"
+                >
+                  <h4 className="text-3xl font-semibold mb-4">
+                    {section.title}
+                  </h4>
+                  <ul className="list-disc ml-5">
+                    {section.points.map((point, idx) => (
+                      <li key={idx} className="text-2xl font-normal mt-2">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {impactOnBeverages.summary}
+            </p>
+          </section>
+          {/* Scientifically Proven Benefits */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {scientificallyProvenBenefits.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {scientificallyProvenBenefits.description}
+            </p>
+            <ul className="list-disc ml-5">
+              {scientificallyProvenBenefits.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {scientificallyProvenBenefits.summary}
+            </p>
+          </section>
+
+          {/* Collaboration Opportunities */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">
+              {collaborationOpportunitiesContent.title}
+            </h3>
+            <div className="flex flex-wrap justify-between gap-6 mt-12">
+              {collaborationOpportunitiesContent.sections.map(
+                (section, index) => (
+                  <div
+                    key={index}
+                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[530px]"
+                  >
+                    <h4 className="text-3xl font-semibold mb-4">
+                      {section.title}
+                    </h4>
+                    <ul className="list-disc ml-5">
+                      {section.points.map((point, idx) => (
+                        <li key={idx} className="text-2xl font-normal mt-2">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              )}
+            </div>
+          </section>
+
+          {/* Our Commitment */}
+          <section className="mt-16">
+            <h3 className="text-4xl font-semibold">{ourCommitment.title}</h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {ourCommitment.description}
+            </p>
+            <ul className="list-disc ml-5">
+              {ourCommitment.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Shared Vision */}
+          <section className="py-7  mt-10 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
+            <h3 className="text-4xl font-semibold">
+              {sharedVisionContent.title}
+            </h3>
+            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+              {sharedVisionContent.description}
+            </p>
+            <h4 className="text-3xl font-semibold mt-5">
+              {sharedVisionContent.subTitle}
+            </h4>
+            <ul className="list-disc ml-5 mt-5">
+              {sharedVisionContent.points.map((point, index) => (
+                <li key={index} className="text-2xl font-normal mt-5">
+                  {point}
+                </li>
+              ))}
+            </ul>
+
+            {/* Contact */}
+
+            <ul className="list-none mt-10">
+              {contactContent.contactInfo.map((info, index) => (
+                <li key={index} className="text-2xl font-normal">
+                  {info}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <Newsletter />
+        <Footer />
       </div>
-
-      {/* Main Content Section */}
-      <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
-        {/* Introduction */}
-        <section className="mb-12">
-          <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
-            {introductionContent.title}
-          </h2>
-          <h3 className="text-4xl font-semibold italic text-Slate_Gray">
-            {introductionContent.subtitle}
-          </h3>
-        </section>
-
-        { /* Essence of the Divine Healer */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{Essence.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {Essence.description}
-          </p>
-          <h4 className="text-3xl font-semibold mt-5">{Essence.missionTitle}</h4>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {Essence.missionDescription}
-          </p>
-        </section>
-
-
-        {/* Sustainable Design */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{impactOnBeverages.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {impactOnBeverages.description}
-          </p>
-          <div className="flex flex-wrap justify-between gap-6 mt-12">
-            {impactOnBeverages.section.map((section, index) => (
-              <div key={index} className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[400px]">
-                <h4 className="text-3xl font-semibold mb-4">{section.title}</h4>
-                <ul className="list-disc ml-5">
-                  {section.points.map((point, idx) => (
-                    <li key={idx} className="text-2xl font-normal mt-2">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {impactOnBeverages.summary}
-          </p>
-        </section>
-        {/* Scientifically Proven Benefits */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{scientificallyProvenBenefits.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {scientificallyProvenBenefits.description}
-          </p>
-          <ul className="list-disc ml-5">
-            {scientificallyProvenBenefits.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {scientificallyProvenBenefits.summary}
-          </p>
-        </section>
-
-
-        {/* Collaboration Opportunities */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{collaborationOpportunitiesContent.title}</h3>
-          <div className="flex flex-wrap justify-between gap-6 mt-12">
-            {collaborationOpportunitiesContent.sections.map((section, index) => (
-              <div key={index} className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[530px]">
-                <h4 className="text-3xl font-semibold mb-4">{section.title}</h4>
-                <ul className="list-disc ml-5">
-                  {section.points.map((point, idx) => (
-                    <li key={idx} className="text-2xl font-normal mt-2">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Our Commitment */}
-        <section className="mt-16">
-          <h3 className="text-4xl font-semibold">{ourCommitment.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {ourCommitment.description}
-          </p>
-          <ul className="list-disc ml-5">
-            {ourCommitment.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Shared Vision */}
-        <section className="py-7  mt-10 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
-          <h3 className="text-4xl font-semibold">{sharedVisionContent.title}</h3>
-          <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-            {sharedVisionContent.description}
-          </p>
-          <h4 className="text-3xl font-semibold mt-5">{sharedVisionContent.subTitle}</h4>
-          <ul className="list-disc ml-5 mt-5">
-            {sharedVisionContent.points.map((point, index) => (
-              <li key={index} className="text-2xl font-normal mt-5">
-                {point}
-              </li>
-            ))}
-          </ul>
-
-          {/* Contact */}
-
-
-          <ul className="list-none mt-10">
-            {contactContent.contactInfo.map((info, index) => (
-              <li key={index} className="text-2xl font-normal">
-                {info}
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-
-      <Newsletter />
-      <Footer />
-    </div>
+    </SmoothScroll>
   );
 }
 
