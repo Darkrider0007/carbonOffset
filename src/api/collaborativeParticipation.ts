@@ -14,3 +14,12 @@ export async function postCollaborativeParticipation(data: any) {
     throw error;
   }
 }
+export async function getCollaborativeParticipationData() {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/collaborativeParticipation`);
+    return { data: res.data, status: res.status };
+  } catch (error) {
+    console.error("Error adding project:", error);
+    throw error;
+  }
+}
