@@ -18,30 +18,32 @@ import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
 import { FaArrowUp } from "react-icons/fa6";
 import SmoothScroll from "../components/SmoothScroll";
-import { getCollaborativeParticipationData } from "../api/collaborativeParticipation";
-import ViewCollaborative from "../components/ViewCollaborative";
+import { getVolunteerRegistrationData } from "../api/volunteerRegistration";
+import ViewRegistrationForm from "../components/ViewRegistrationForm";
 
-export default function AdminCollaborativePlatform() {
+export default function AdminVolunteerRegistration() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
-  const [participationData, setParticipationData] = useState<any[]>([]);
+  const [VolunteerData, setVolunteerData] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedParticipant, setSelectedParticipant] = useState<any>(null);
+  const [selectedVolunteer, setSelectedVolunteer] = useState<any>(null);
 
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
         const res = await getAdminData();
+
         setDashBoardData(res.data);
       } catch (error) {
         console.error("Failed to fetch admin data", error);
       }
     };
 
-    const fetchParticipationData = async () => {
+    const fetchVolunteerData = async () => {
       try {
-        const res = await getCollaborativeParticipationData();
-        if (res.data && res.data.collaborativeParticipation) {
-          setParticipationData(res.data.collaborativeParticipation);
+        const res = await getVolunteerRegistrationData();
+        console.log(res.data);
+        if (res.data) {
+          setVolunteerData(res.data);
         }
       } catch (error) {
         console.error("Failed to fetch participation data", error);
@@ -49,11 +51,11 @@ export default function AdminCollaborativePlatform() {
     };
 
     fetchAdminData();
-    fetchParticipationData();
+    fetchVolunteerData();
   }, []);
 
-  const handleViewDocument = (participant: any) => {
-    setSelectedParticipant(participant);
+  const handleViewDocument = (volunteer: any) => {
+    setSelectedVolunteer(volunteer);
     setIsModalOpen(true);
   };
 
@@ -65,9 +67,7 @@ export default function AdminCollaborativePlatform() {
         </div>
         <div className="flex flex-col">
           <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-            <h1 className="text-lg font-bold">
-              Collaborative Participation Platform
-            </h1>
+            <h1 className="text-lg font-bold">Volunteer Registration Form</h1>
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -95,12 +95,12 @@ export default function AdminCollaborativePlatform() {
               <Card className="shadow-xl">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-black">
-                    Total Collaborative Participants
+                    Total Volunteer Participants
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-black">
-                    {participationData?.length || 0}
+                    {VolunteerData?.length || 0}
                   </div>
                 </CardContent>
               </Card>
@@ -132,7 +132,7 @@ export default function AdminCollaborativePlatform() {
             <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
               <div className="p-4 bg-white">
                 <h2 className="font-bold text-2xl mb-4">
-                  Collaborative Participation Platform
+                  Volunteer Registration Form
                 </h2>
               </div>
 
@@ -155,8 +155,8 @@ export default function AdminCollaborativePlatform() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {participationData && participationData.length > 0 ? (
-                      participationData.map((item: any) => (
+                    {VolunteerData && VolunteerData.length > 0 ? (
+                      VolunteerData.map((item: any) => (
                         <TableRow key={item._id}>
                           <TableCell>{item.fullName || "N/A"}</TableCell>
                           <TableCell>{item.email || "N/A"}</TableCell>
@@ -183,11 +183,10 @@ export default function AdminCollaborativePlatform() {
                 </Table>
               </div>
             </div>
-
-            <ViewCollaborative
+            <ViewRegistrationForm
               isOpen={isModalOpen}
               toggleModal={() => setIsModalOpen(false)}
-              selectedParticipant={selectedParticipant}
+              selectedVolunteer={selectedVolunteer}
             />
           </main>
         </div>
