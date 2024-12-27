@@ -56,7 +56,7 @@ import VolunteerRegistrationForm from "./pages/JoinUs/VolunteerRegistrationForm"
 import AdminVolunteerRegistration from "./pages/AdminVolunteerRegistration";
 import AdminProposal from "./pages/AdminProposal";
 import AdminMembership from "./pages/AdminMembership";
-import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatform";
+import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatforms";
 
 const router = createBrowserRouter([
   {
