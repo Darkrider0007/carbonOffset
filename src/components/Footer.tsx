@@ -5,63 +5,60 @@ import {
   FaFacebook,
   FaInstagramSquare,
   FaYoutube,
+
 } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="bg-green-600 py-10 px-5 md:px-20 flex flex-col items-center">
-      <div className="flex flex-col md:flex-row justify-between w-full mb-5">
-        <div className="w-full md:w-80 mb-5 md:mb-0">
-          <img src={logo} alt="logo" />
-          <h1 className="text-white mt-3">
+    <footer className="bg-green-700 py-12 px-6 md:px-24">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+        <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
+          <img src={logo} alt="logo" className="w-24 mb-4" />
+          <p className="text-white text-center md:text-left max-w-md">
             "1 World 1 Nation" envisions global unity, advocating peace,
-            sustainability, and equity across borders, aiming for a harmonious,
-            interconnected future.
-          </h1>
+            sustainability, and equity across borders for a harmonious future.
+          </p>
         </div>
-        <div className="flex flex-col gap-2 text-white">
-          <h1 className="font-bold">Quick Links</h1>
-          <Link to="/" className="hover:underline">
-            {" "}
-            Home
-          </Link>
-          <Link to="/calculator" className="hover:underline">
-            {" "}
-            Carbon Calculator
-          </Link>
-          <Link to="/projects" className="hover:underline">
-            {" "}
-            Projects
-          </Link>
-          <Link to="/joinUs/submitYourProposal" className="hover:underline">
-            {" "}
-            Submit Your Proposal
-          </Link>
-          <Link to="/about" className="hover:underline">
-            {" "}
-            About Us
-          </Link>
+        <div className="flex flex-col items-center md:items-start">
+          <h2 className="text-white text-lg font-semibold mb-4">Quick Links</h2>
+          <nav className="flex flex-col space-y-2">
+            <Link to="/" className="text-white hover:underline">
+              Home
+            </Link>
+            <Link to="/calculator" className="text-white hover:underline">
+              Carbon Calculator
+            </Link>
+            <Link to="/projects" className="text-white hover:underline">
+              Projects
+            </Link>
+            <Link to="/joinUs/submitYourProposal" className="text-white hover:underline">
+              Submit Your Proposal
+            </Link>
+            <Link to="/about" className="text-white hover:underline">
+              About Us
+            </Link>
+          </nav>
         </div>
       </div>
-      <div className="h-[1px] w-[90%] bg-white my-5" />
-      <div className="w-full flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-white mb-3 md:mb-0">
-          Copyright Reserved @{new Date().getFullYear()}
-        </h1>
-        <div className="flex gap-5">
-          <FaTwitter color="white" size={20} />
+      <hr className="border-t border-white mb-6" />
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <span className="text-white mb-4 md:mb-0">
+          © {new Date().getFullYear()} 1 World 1 Nation. All rights reserved.
+        </span>
+        <div className="flex space-x-4">
+          <FaTwitter className="text-white hover:text-gray-300 cursor-pointer" size={24} />
           <FaYoutube
             onClick={() =>
               window.open("https://www.youtube.com/@1world-1nation", "_blank")
             }
-            color="white"
-            size={20}
+            className="text-white hover:text-gray-300 cursor-pointer"
+            size={24}
           />
-          <FaInstagramSquare color="white" size={20} />
-          <FaFacebook color="white" size={20} />
+          <FaInstagramSquare className="text-white hover:text-gray-300 cursor-pointer" size={24} />
+          <FaFacebook className="text-white hover:text-gray-300 cursor-pointer" size={24} />
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
