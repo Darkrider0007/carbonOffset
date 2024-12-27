@@ -8,32 +8,21 @@ import {
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { deleteFarmOnboard, getFarmOnboard } from "../api/farmOnboard";
-import ViewFarmBoarding from "../components/ViewFarmBoarding";
-import { toast } from "../hooks/use-toast";
-import { AlertDialogDemo } from "../components/AlertDialogDemo";
 import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
 import { FaArrowUp } from "react-icons/fa6";
 import { Search } from "lucide-react";
 import SmoothScroll from "../components/SmoothScroll";
+import { getCollaborativeParticipationData } from "../api/collaborativeParticipation";
 
 export default function AdminCollaborativePlatform() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
-  const [farmData, setFarmData] = useState<any[]>([]);
-  const [approvedFarmData, setApprovedFarmData] = useState<number>();
-  const [filteredData, setFilteredData] = useState<any[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFarm, setSelectedFarm] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -47,13 +36,8 @@ export default function AdminCollaborativePlatform() {
 
     const fetchFarmData = async () => {
       try {
-        const res = await getFarmOnboard();
-        setFarmData(res.data);
-        setFilteredData(res.data);
-        const approvedFarms = res.data.filter(
-          (farm: any) => farm.approvedByAdmin
-        );
-        setApprovedFarmData(approvedFarms.length);
+        const res = await getCollaborativeParticipationData();
+        console.log("res", res);
       } catch (error) {
         console.error("Failed to fetch farm data", error);
       }
@@ -62,45 +46,6 @@ export default function AdminCollaborativePlatform() {
     fetchAdminData();
     fetchFarmData();
   }, []);
-
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    const filteredResults = farmData.filter((farm) => {
-      const matchesQuery =
-        farm.organization?.toLowerCase().includes(lowercasedQuery) ||
-        farm.address?.toLowerCase().includes(lowercasedQuery);
-      const matchesStatus =
-        statusFilter === "All" ||
-        (statusFilter === "Approved" && farm.approvedByAdmin) ||
-        (statusFilter === "Pending" &&
-          !farm.approvedByAdmin &&
-          !farm.isRejected) ||
-        (statusFilter === "Rejected" && farm.isRejected);
-      return matchesQuery && matchesStatus;
-    });
-    setFilteredData(filteredResults);
-  }, [searchQuery, statusFilter, farmData]);
-
-  const handleViewDocument = (farm: any) => {
-    setSelectedFarm(farm);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id: string) => {
-    try {
-      const res = await deleteFarmOnboard(id);
-      if (res.status === 200) {
-        toast({
-          title: "Farm deleted successfully",
-        });
-        const updatedFarmData = farmData.filter((farm) => farm._id !== id);
-        setFarmData(updatedFarmData);
-        setFilteredData(updatedFarmData); // Update filtered data as well
-      }
-    } catch (error) {
-      console.error("Failed to delete farm onboarding data", error);
-    }
-  };
 
   return (
     <SmoothScroll>
@@ -145,11 +90,7 @@ export default function AdminCollaborativePlatform() {
                     Total Collaborative Participants
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    {approvedFarmData || 0}
-                  </div>
-                </CardContent>
+                <CardContent></CardContent>
               </Card>
               <Card className="shadow-xl bg-green-300">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -188,11 +129,7 @@ export default function AdminCollaborativePlatform() {
                   {/* Filter and Search */}
                   <div className="flex items-center gap-4">
                     {/* Filter Dropdown */}
-                    <select
-                      className="p-2 border border-black rounded-md"
-                      value={statusFilter}
-                      onChange={(e) => setStatusFilter(e.target.value)}
-                    >
+                    <select className="p-2 border border-black rounded-md">
                       <option value="All">All</option>
                       <option value="Pending">Pending</option>
                       <option value="Approved">Approved</option>
@@ -235,68 +172,10 @@ export default function AdminCollaborativePlatform() {
                       </TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
-                    {filteredData.length > 0 ? (
-                      filteredData.map((farm, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{farm.organization || "N/A"}</TableCell>
-                          <TableCell>{farm.address || "N/A"}</TableCell>
-                          <TableCell>{farm.area || "N/A"}</TableCell>
-                          <TableCell>
-                            {!farm.isRejected &&
-                              (farm.approvedByAdmin ? (
-                                <div className="bg-green-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                                  Approved
-                                </div>
-                              ) : (
-                                <div className="bg-yellow-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                                  Pending
-                                </div>
-                              ))}
-                            {farm.isRejected && (
-                              <div className="bg-red-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
-                                Rejected
-                              </div>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button
-                                variant="outline"
-                                className="hover:text-white hover:bg-green-600"
-                                onClick={() => handleViewDocument(farm)}
-                              >
-                                View Document
-                              </Button>
-                              <AlertDialogDemo
-                                triggerText="Delete"
-                                title="Are you absolutely sure?"
-                                description="This action cannot be undone. This will permanently delete the farm onboarding data from our servers."
-                                actionText="Continue"
-                                onAction={() => handleDelete(farm._id)}
-                              />
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={5} className="text-center">
-                          No farm data available.
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
+                  <TableBody></TableBody>
                 </Table>
               </div>
             </div>
-            <ViewFarmBoarding
-              isOpen={isModalOpen}
-              toggleModal={() => setIsModalOpen(false)}
-              selectedProject={selectedFarm}
-              onUpdateProject={setFarmData}
-              farmData={farmData}
-            />
           </main>
         </div>
       </div>
