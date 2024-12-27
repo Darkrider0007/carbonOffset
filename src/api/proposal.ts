@@ -37,3 +37,13 @@ export async function sendProposal(data: any) {
     throw error;
   }
 }
+
+export async function getProposalData() {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/proposal`);
+    return res;
+  } catch (error) {
+    console.error("Error fetching proposal data:", error);
+    throw error;
+  }
+}

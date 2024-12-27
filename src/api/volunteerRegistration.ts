@@ -7,7 +7,17 @@ export async function postVolunteerRegistration(data: any) {
     const res = await axios.post(`${BASE_URL}/api/volunteerRegistration`, data);
     return { data: res.data.data, status: res.status };
   } catch (error) {
-    console.error("Error adding project:", error);
+    console.error("Error adding volunteer:", error);
+    throw error;
+  }
+}
+
+export async function getVolunteerRegistrationData() {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/volunteerRegistration`);
+    return { data: res.data, status: res.status };
+  } catch (error) {
+    console.error("Error fetching volunteer data:", error);
     throw error;
   }
 }

@@ -54,6 +54,9 @@ import MembershipForm from "./pages/JoinUs/MembershipForm";
 import CollaborativeParticipationPlatform from "./pages/JoinUs/CollaborativeParticipationPlatform";
 import VolunteerRegistrationForm from "./pages/JoinUs/VolunteerRegistrationForm";
 import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatform";
+import AdminVolunteerRegistration from "./pages/AdminVolunteerRegistration";
+import AdminProposal from "./pages/AdminProposal";
+import AdminMembership from "./pages/AdminMembership";
 
 const router = createBrowserRouter([
   {
@@ -340,6 +343,30 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <AdminCollaborativePlatform />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/membershipForm`,
+    element: (
+      <PrivateRoute>
+        <AdminMembership />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/proposal`,
+    element: (
+      <PrivateRoute>
+        <AdminProposal />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/volunteerRegistration`,
+    element: (
+      <PrivateRoute>
+        <AdminVolunteerRegistration />
       </PrivateRoute>
     ),
   },

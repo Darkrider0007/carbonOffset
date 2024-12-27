@@ -67,3 +67,12 @@ export async function sendMembership(data: any) {
     throw error;
   }
 }
+export async function getMembershipData() {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/membership`);
+    return res;
+  } catch (error) {
+    console.error("Error fetching membership data:", error);
+    throw error;
+  }
+}
