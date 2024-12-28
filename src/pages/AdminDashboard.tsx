@@ -19,11 +19,12 @@ import AddProject from "../components/AddProject";
 import { useEffect, useState } from "react";
 import { deleteProject } from "../api/addProject";
 import { getAdminData } from "../api/admin";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Users, Briefcase } from "lucide-react";
 import { getFarmOnboard } from "../api/farmOnboard";
 import EditProject from "../components/EditProject";
 import { BarGraph } from "./Graphs/BarGraph";
 import SmoothScroll from "../components/SmoothScroll";
+import { GiFarmer } from "react-icons/gi";
 
 interface ProjectData {
   name: string;
@@ -105,110 +106,114 @@ export default function AdminDashboard() {
   return (
     <SmoothScroll>
       <div className="grid w-full lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+        <div className="hidden border-r bg-gradient-to-b from-gray-50 to-white lg:block dark:from-gray-900 dark:to-gray-800">
           <AdminSidebar />
         </div>
-        <div className="flex flex-col">
-          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+        <div className="flex flex-col min-h-screen">
+          <header className="flex h-16 items-center gap-4 border-b bg-white px-6 shadow-sm">
             <h1 className="text-lg font-bold">Admin Dashboard</h1>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card className="shadow-xl bg-green-300">
+          <main className="flex flex-1 flex-col gap-6 p-6 bg-gray-50">
+            {/* Stats Cards */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-br from-emerald-400 to-green-500 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Total User
+                  <CardTitle className="text-md font-bold text-white">
+                    Total Users
                   </CardTitle>
+                  <Users className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {dashBoardData?.totalUsers || 0}
                   </div>
-                </CardContent>
-                <CardContent>
-                  <div className="flex gap-2 items-center">
-                    <FaArrowUp color="green" />
-                    <h1>
-                      <span className="text-green-600">
-                        {Math.abs(dashBoardData?.percentageUserIncrease) || 0}
-                      </span>{" "}
-                      % vs last month
-                    </h1>
+                  <div className="flex items-center gap-2 mt-2 text-sm">
+                    <FaArrowUp />
+                    <span>
+                      {Math.abs(dashBoardData?.percentageUserIncrease) || 0}% vs
+                      last month
+                    </span>
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#8555C1] to-[#B469FF] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-md font-bold text-white">
                     Total Farm Onboarded
                   </CardTitle>
+                  <GiFarmer className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {approvedFarmData || 0}
+                  </div>
+                  <div className="mt-2 text-sm opacity-75">
+                    Total approved farms
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl bg-green-300">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#DB20C4] to-[#F86893] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-md font-bold text-white">
                     Active Projects
                   </CardTitle>
+
+                  <Briefcase className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {dashBoardData?.totalProjects || 0}
                   </div>
-                </CardContent>
-                <CardContent>
-                  <div className="flex gap-2 items-center">
-                    <FaArrowUp color="green" />
-                    <h1>
-                      <span className="text-green-600">
-                        {Math.floor(
-                          Math.abs(dashBoardData?.projectCountPerMonth)
-                        )}
-                      </span>{" "}
+                  <div className="flex items-center gap-2 mt-2 text-sm">
+                    <FaArrowUp />
+                    <span>
+                      {Math.floor(
+                        Math.abs(dashBoardData?.projectCountPerMonth)
+                      )}
                       % vs last month
-                    </h1>
+                    </span>
                   </div>
                 </CardContent>
               </Card>
             </div>
-            <BarGraph projects={projectData} />
-            <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <h2 className="font-bold text-2xl mb-4 md:mb-0">
-                  Active Projects
-                </h2>
-                <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-                  {/* Search Input Container */}
-                  <div className="flex flex-row items-center gap-2 border border-gray-300 rounded-lg text-gray-600 pl-2 focus-within:ring-2 focus-within:ring-green-500 w-full md:w-64 lg:w-80">
-                    <Search className="w-6 h-6 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search projects"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="focus:outline-none p-2 w-full bg-transparent"
-                    />
-                  </div>
-                  {/* Add Project Button */}
-                  <Button
-                    onClick={handleAddProject}
-                    variant="outline"
-                    className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-2 py-2 px-4"
-                  >
-                    <Plus className="w-5 h-5" /> Add Project
-                  </Button>
-                </div>
-              </div>
 
-              {/* Set a fixed height for the table and enable scrolling */}
-              <div className="overflow-y-auto h-96">
-                <Table className="w-full">
+            {/* Bar Graph */}
+            <BarGraph projects={projectData} />
+
+            {/* Projects Table Section */}
+            <Card className="overflow-hidden bg-white flex flex-col">
+              <CardHeader className="border-b bg-gray-50/50 p-6 flex-none">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <h2 className="font-bold text-2xl mb-4 md:mb-0">
+                    Active Projects
+                  </h2>
+                  <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                    <div className="relative w-full md:w-80">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <input
+                        type="text"
+                        placeholder="Search projects..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      />
+                    </div>
+                    <Button
+                      onClick={handleAddProject}
+                      className="bg-green-500 hover:bg-green-600 text-white shadow-lg transform transition-all duration-200 hover:scale-105"
+                    >
+                      <Plus className="w-5 h-5 mr-2" /> Add Project
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <div className="overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <Table className="min-w-full">
                   <TableHeader>
-                    <TableRow>
+                    <TableRow className="bg-gray-50">
                       <TableHead className="text-lg text-black font-semibold">
                         Project Name
                       </TableHead>
@@ -218,7 +223,7 @@ export default function AdminDashboard() {
                       <TableHead className="text-lg text-black font-semibold">
                         Status
                       </TableHead>
-                      <TableHead className="text-lg  text-black font-semibold">
+                      <TableHead className="text-lg text-black font-semibold">
                         User Count
                       </TableHead>
                       <TableHead className="text-lg text-black font-semibold">
@@ -229,47 +234,55 @@ export default function AdminDashboard() {
                   <TableBody>
                     {filteredProjects.length > 0 ? (
                       filteredProjects.map((project, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="flex flex-row items-center justify-start gap-2 w-72">
+                        <TableRow
+                          key={index}
+                          className="hover:bg-gray-50 transition-colors duration-200"
+                        >
+                          <TableCell className="flex items-center gap-3">
                             <img
-                              className="h-10 w-10 border-2 p-1 rounded-full"
+                              className="h-10 w-10 rounded-full object-cover border-2 border-gray-200"
                               src={project.image}
-                              alt=""
+                              alt={project.name}
                             />
-                            {project.name}
+                            <span className="font-medium text-gray-800">
+                              {project.name}
+                            </span>
                           </TableCell>
-                          <TableCell>{project.location}</TableCell>
+                          <TableCell className="text-gray-600">
+                            {project.location}
+                          </TableCell>
                           <TableCell>
-                            <div
-                              className={`p-1 ${
+                            <span
+                              className={`px-3 py-1 rounded-full text-sm font-medium ${
                                 project.status
-                                  ? "bg-green-500 text-white"
-                                  : "bg-red-500 text-white"
-                              } flex justify-center items-center rounded-2xl`}
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
                             >
                               {project.status}
-                            </div>
+                            </span>
                           </TableCell>
-
-                          <TableCell>{project.userCount}</TableCell>
+                          <TableCell className="font-medium text-gray-700">
+                            {project.userCount}
+                          </TableCell>
                           <TableCell>
-                            <div className="flex gap-2 flex-row">
+                            <div className="flex gap-2">
                               <Button
-                                className="bg-green-500 hover:text-white hover:bg-green-600"
                                 onClick={() => {
                                   setSelectedProject(project);
                                   toggleEditModal();
                                 }}
+                                className="bg-blue-500 hover:bg-blue-600 text-white p-2"
+                                size="sm"
                               >
-                                Edit
+                                <Edit2 className="h-4 w-4" />
                               </Button>
                               <Button
-                                className="bg-red-500 hover:text-white hover:bg-red-600"
-                                onClick={() => {
-                                  handleDeleteProject(project._id);
-                                }}
+                                onClick={() => handleDeleteProject(project._id)}
+                                className="bg-red-500 hover:bg-red-600 text-white p-2"
+                                size="sm"
                               >
-                                Delete
+                                <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>
                           </TableCell>
@@ -279,7 +292,7 @@ export default function AdminDashboard() {
                       <TableRow>
                         <TableCell
                           colSpan={5}
-                          className="text-center text-black py-4"
+                          className="text-center py-8 text-gray-500"
                         >
                           No projects found.
                         </TableCell>
@@ -288,7 +301,8 @@ export default function AdminDashboard() {
                   </TableBody>
                 </Table>
               </div>
-            </div>
+            </Card>
+
             <AddProject
               isOpen={isModalOpen}
               toggleModal={toggleModal}

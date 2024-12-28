@@ -22,8 +22,9 @@ import { AlertDialogDemo } from "../components/AlertDialogDemo";
 import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
 import { FaArrowUp } from "react-icons/fa6";
-import { Search } from "lucide-react";
+import { Briefcase, Search, Users } from "lucide-react";
 import SmoothScroll from "../components/SmoothScroll";
+import { GiFarmer } from "react-icons/gi";
 
 export default function AdminFarmOnboarding() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
@@ -104,167 +105,174 @@ export default function AdminFarmOnboarding() {
 
   return (
     <SmoothScroll>
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+      <div className="grid w-full lg:grid-cols-[280px_1fr]">
+        <div className="hidden border-r bg-gradient-to-b from-gray-50 to-white lg:block dark:from-gray-900 dark:to-gray-800">
           <AdminSidebar />
         </div>
-        <div className="flex flex-col">
-          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+        <div className="flex flex-col min-h-screen">
+          <header className="flex h-16 items-center gap-4 border-b bg-white px-6 shadow-sm">
             <h1 className="text-lg font-bold">Farm Onboarding</h1>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card className="shadow-xl bg-green-300">
+
+          <main className="flex flex-1 flex-col gap-6 p-6 bg-gray-50">
+            {/* Stats Cards */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-br from-emerald-400 to-green-500 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-md font-bold text-white">
                     Total Users
                   </CardTitle>
+                  <Users className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {dashBoardData?.totalUsers || 0}
                   </div>
-                </CardContent>
-                <CardContent>
-                  <div className="flex gap-2 items-center">
-                    <FaArrowUp color="green" />
-                    <h1>
-                      <span className="text-green-600">
-                        {Math.abs(dashBoardData?.percentageUserIncrease) || 0}
-                      </span>{" "}
-                      % vs last month
-                    </h1>
+                  <div className="flex items-center gap-2 mt-2 text-sm">
+                    <FaArrowUp />
+                    <span>
+                      {Math.abs(dashBoardData?.percentageUserIncrease) || 0}% vs
+                      last month
+                    </span>
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#8555C1] to-[#B469FF] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-md font-bold text-white">
                     Total Farms Onboarded
                   </CardTitle>
+                  <GiFarmer className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {approvedFarmData || 0}
+                  </div>
+                  <div className="mt-2 text-sm opacity-75">
+                    Total approved farms
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl bg-green-300">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#DB20C4] to-[#F86893] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-md font-bold text-white">
                     Active Projects
                   </CardTitle>
+                  <Briefcase className="h-6 w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-2xl font-bold text-white">
                     {dashBoardData?.totalProjects || 0}
                   </div>
-                </CardContent>
-                <CardContent>
-                  <div className="flex gap-2 items-center">
-                    <FaArrowUp color="green" />
-                    <h1>
-                      <span className="text-green-600">
-                        {Math.floor(
-                          Math.abs(dashBoardData?.projectCountPerMonth || 0)
-                        )}
-                      </span>{" "}
+                  <div className="flex items-center gap-2 mt-2 text-sm">
+                    <FaArrowUp />
+                    <span>
+                      {Math.floor(
+                        Math.abs(dashBoardData?.projectCountPerMonth)
+                      ) || 0}
                       % vs last month
-                    </h1>
+                    </span>
                   </div>
                 </CardContent>
               </Card>
             </div>
-            <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
-              <div className=" p-4  bg-white ">
-                <div className="flex flex-wrap lg:flex-nowrap justify-between items-center mb-4 w-full">
-                  {/* Heading */}
-                  <h2 className="font-bold text-2xl mb-4 lg:mb-0 w-full lg:w-2/5 ">
-                    Farm Onboarding
-                  </h2>
 
-                  {/* Filter and Search */}
-                  <div className="flex items-center gap-4">
-                    {/* Filter Dropdown */}
+            {/* Farm Management Table Section */}
+            <Card className="overflow-hidden bg-white flex flex-col">
+              <CardHeader className="border-b bg-gray-50/50 p-6 flex-none">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <h2 className="font-bold text-2xl mb-4 md:mb-0">
+                    Farm Management
+                  </h2>
+                  <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
                     <select
-                      className="p-2 border border-black rounded-md"
+                      className="w-full md:w-48 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
                     >
-                      <option value="All">All</option>
+                      <option value="All">All Status</option>
                       <option value="Pending">Pending</option>
                       <option value="Approved">Approved</option>
                       <option value="Rejected">Rejected</option>
                     </select>
 
-                    {/* Search Input */}
-                    <form className="flex-1 relative border border-black rounded-md w-72 ">
-                      <Search className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-500" />
+                    <div className="relative w-full md:w-80">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                       <Input
-                        className="w-full bg-white shadow-none appearance-none pl-8 dark:bg-gray-950"
+                        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         placeholder="Search by Organization or Location..."
-                        type="search"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
-                    </form>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </CardHeader>
 
-              <div className="overflow-y-auto h-96">
-                <Table>
+              <div className="overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <Table className="min-w-full">
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="font-bold text-black text-xl">
+                    <TableRow className="bg-gray-50">
+                      <TableHead className="text-lg text-black font-semibold">
                         Organization
                       </TableHead>
-                      <TableHead className="font-bold text-black text-xl">
+                      <TableHead className="text-lg text-black font-semibold">
                         Location
                       </TableHead>
-                      <TableHead className="font-bold text-black text-xl">
+                      <TableHead className="text-lg text-black font-semibold">
                         Area
                       </TableHead>
-                      <TableHead className="font-bold text-black text-xl">
+                      <TableHead className="text-lg text-black font-semibold">
                         Status
                       </TableHead>
-                      <TableHead className="font-bold text-black text-xl">
-                        Action
+                      <TableHead className="text-lg text-black font-semibold">
+                        Actions
                       </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredData.length > 0 ? (
                       filteredData.map((farm, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{farm.organization || "N/A"}</TableCell>
-                          <TableCell>{farm.address || "N/A"}</TableCell>
-                          <TableCell>{farm.area || "N/A"}</TableCell>
+                        <TableRow
+                          key={index}
+                          className="hover:bg-gray-50 transition-colors duration-200"
+                        >
+                          <TableCell className="font-medium text-gray-800">
+                            {farm.organization || "N/A"}
+                          </TableCell>
+                          <TableCell className="text-gray-600">
+                            {farm.address || "N/A"}
+                          </TableCell>
+                          <TableCell className="text-gray-600">
+                            {farm.area || "N/A"}
+                          </TableCell>
                           <TableCell>
                             {!farm.isRejected &&
                               (farm.approvedByAdmin ? (
-                                <div className="bg-green-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                                <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                   Approved
-                                </div>
+                                </span>
                               ) : (
-                                <div className="bg-yellow-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                                <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                   Pending
-                                </div>
+                                </span>
                               ))}
                             {farm.isRejected && (
-                              <div className="bg-red-500 text-white px-4 py-2 rounded-2xl text-center font-semibold">
+                              <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                 Rejected
-                              </div>
+                              </span>
                             )}
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-2">
                               <Button
-                                variant="outline"
-                                className="hover:text-white hover:bg-green-600"
                                 onClick={() => handleViewDocument(farm)}
+                                className="bg-blue-500 hover:bg-blue-600 text-white p-2"
+                                size="sm"
                               >
-                                View Document
+                                View
                               </Button>
                               <AlertDialogDemo
                                 triggerText="Delete"
@@ -279,15 +287,19 @@ export default function AdminFarmOnboarding() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center">
-                          No farm data available.
+                        <TableCell
+                          colSpan={5}
+                          className="text-center py-8 text-gray-500"
+                        >
+                          No farm data available
                         </TableCell>
                       </TableRow>
                     )}
                   </TableBody>
                 </Table>
               </div>
-            </div>
+            </Card>
+
             <ViewFarmBoarding
               isOpen={isModalOpen}
               toggleModal={() => setIsModalOpen(false)}
