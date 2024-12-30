@@ -14,10 +14,19 @@ import {
   updateTokenPerTon,
   updateTokenPrice,
   updateTokenLimit,
-} from "../api/token"; // Assuming there's an updateTokenLimit function in the API
-import { Loader2 } from "lucide-react";
+} from "../api/token";
+import {
+  Coins,
+  DollarSign,
+  Loader2,
+  Menu,
+  PiggyBank,
+  Users,
+} from "lucide-react";
 import { toast } from "../hooks/use-toast";
 import SmoothScroll from "../components/SmoothScroll";
+import { GiGrowth } from "react-icons/gi";
+import { Button } from "../components/ui/button";
 
 export default function Token() {
   const [dashBoardData, setDashBoardData] = useState<any>([]);
@@ -25,6 +34,7 @@ export default function Token() {
   const [updatingPrice, setUpdatingPrice] = useState(false);
   const [updatingAmount, setUpdatingAmount] = useState(false);
   const [updatingLimit, setUpdatingLimit] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const {
     register,
@@ -63,6 +73,10 @@ export default function Token() {
     fetchAdminData();
     fetchToken();
   }, []);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   // Function to handle token price update
   const onUpdateTokenPrice = async (data: any) => {
@@ -120,90 +134,131 @@ export default function Token() {
 
   return (
     <SmoothScroll>
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+      <div className="min-h-screen bg-gray-50">
+        {/* Mobile Sidebar Overlay */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={toggleSidebar}
+          />
+        )}
+
+        {/* Sidebar */}
+        <div
+          className={`fixed lg:fixed w-[280px] h-full z-50 transform transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 border-r bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800`}
+        >
           <AdminSidebar />
         </div>
-        <div className="flex flex-col">
-          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-            <h1 className="text-lg font-bold">Token</h1>
+
+        {/* Main Content */}
+        <div className="lg:pl-[280px]">
+          {/* Header */}
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6 shadow-sm">
+            <Button
+              variant="ghost"
+              className="lg:hidden"
+              onClick={toggleSidebar}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+            <h1 className="text-base md:text-lg font-bold truncate">
+              Token Management
+            </h1>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card className="shadow-xl bg-green-300">
+
+          <main className="p-4 md:p-6 max-w-[1600px] mx-auto">
+            {/* Stats Cards */}
+            <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-6">
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-br from-emerald-400 to-green-500 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Total User
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Total Users
                   </CardTitle>
+                  <Users className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    {dashBoardData?.totalUsers}
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    {dashBoardData?.totalUsers || 0}
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#8555C1] to-[#B469FF] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Total Token Volume
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Token Volume
                   </CardTitle>
+                  <Coins className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    {tokenData?.tokenVolume &&
-                      tokenData?.tokenVolume.toFixed(2)}
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    {tokenData?.tokenVolume
+                      ? tokenData.tokenVolume.toFixed(2)
+                      : "0.00"}
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl bg-green-300">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#DB20C4] to-[#F86893] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Token Current Value
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Current Value
                   </CardTitle>
+                  <DollarSign className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    ${tokenData?.tokenPrice}
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    ${tokenData?.tokenPrice || "0.00"}
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl bg-white">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-blue-500 to-cyan-400 text-white sm:col-span-2 lg:col-span-1">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
                     Token Limit
                   </CardTitle>
+                  <PiggyBank className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    ${tokenData?.tokenLimit}
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    ${tokenData?.tokenLimit || "0.00"}
                   </div>
                 </CardContent>
               </Card>
-              <Card className="shadow-xl bg-green-300">
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-500 to-orange-400 text-white sm:col-span-2 lg:col-span-1">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Token Amount per Ton
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Per Ton
                   </CardTitle>
+                  <GiGrowth className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
-                    ${tokenData?.tokenPerTon}
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    ${tokenData?.tokenPerTon || "0.00"}
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            <div className="grid h-[20vh] gap-4 md:grid-cols-1 xl:grid-cols-2">
-              {/* Update Token Price Card */}
-              <Card className="shadow-xl">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+            {/* Update Forms Section */}
+            <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+              {/* Update Token Price */}
+              <Card className="transform transition-all duration-300 hover:shadow-lg">
+                <CardHeader className="border-b bg-gray-50/50 p-4 md:p-6">
+                  <CardTitle className="text-base md:text-lg font-bold text-gray-800">
                     Update Token Price
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit(onUpdateTokenPrice)}>
-                    <div className="flex gap-4 items-center">
+                <CardContent className="p-4 md:p-6">
+                  <form
+                    onSubmit={handleSubmit(onUpdateTokenPrice)}
+                    className="space-y-4"
+                  >
+                    <div className="relative">
                       <Input
                         type="number"
                         step="0.01"
@@ -220,47 +275,49 @@ export default function Token() {
                             message: "Maximum price is 1000",
                           },
                         })}
-                        className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="bg-white border-gray-200 shadow-sm w-full p-2 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       />
                       {errors.tokenPrice && (
-                        <p className="text-red-500">
+                        <p className="text-red-500 text-sm mt-1">
                           {String(errors.tokenPrice?.message)}
                         </p>
                       )}
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                      >
-                        {updatingPrice ? (
-                          <div className="flex flex-row">
-                            <Loader2 className="animate-spin mr-2" /> Updating
-                            ...
-                          </div>
-                        ) : (
-                          <h1 className="text-white">Update</h1>
-                        )}
-                      </button>
                     </div>
+                    <button
+                      type="submit"
+                      className="w-full px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-medium hover:from-green-600 hover:to-emerald-700 transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
+                      disabled={updatingPrice}
+                    >
+                      {updatingPrice ? (
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                          <span>Updating...</span>
+                        </div>
+                      ) : (
+                        "Update Price"
+                      )}
+                    </button>
                   </form>
                 </CardContent>
               </Card>
 
-              {/* Update Token Amount per Ton Card */}
-              <Card className="shadow-xl">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Update Token Amount per Ton
+              {/* Update Token Amount per Ton */}
+              <Card className="transform transition-all duration-300 hover:shadow-lg">
+                <CardHeader className="border-b bg-gray-50/50 p-4 md:p-6">
+                  <CardTitle className="text-base md:text-lg font-bold text-gray-800">
+                    Update Token per Ton
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-4 md:p-6">
                   <form
                     onSubmit={handleSubmitAmount(onUpdateTokenAmountPerTon)}
+                    className="space-y-4"
                   >
-                    <div className="flex gap-4 items-center">
+                    <div className="relative">
                       <Input
-                        min={0.0001}
                         type="number"
                         step="0.0001"
+                        min={0.0001}
                         placeholder="Enter new token amount per ton"
                         {...registerAmount("tokenAmountPerTon", {
                           required: "Token amount per ton is required",
@@ -273,75 +330,79 @@ export default function Token() {
                             message: "Maximum amount is 100000",
                           },
                         })}
-                        className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="bg-white border-gray-200 shadow-sm w-full p-2 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       />
                       {errorsAmount.tokenAmountPerTon && (
-                        <p className="text-red-500">
+                        <p className="text-red-500 text-sm mt-1">
                           {errorsAmount.tokenAmountPerTon?.message as string}
                         </p>
                       )}
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                      >
-                        {updatingAmount ? (
-                          <div className="flex flex-row">
-                            <Loader2 className="animate-spin mr-2" /> Updating
-                            ...
-                          </div>
-                        ) : (
-                          <h1 className="text-white">Update</h1>
-                        )}
-                      </button>
                     </div>
+                    <button
+                      type="submit"
+                      className="w-full px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-200 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
+                      disabled={updatingAmount}
+                    >
+                      {updatingAmount ? (
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                          <span>Updating...</span>
+                        </div>
+                      ) : (
+                        "Update Amount"
+                      )}
+                    </button>
                   </form>
                 </CardContent>
               </Card>
 
               {/* Update Token Limit */}
-              <Card className="shadow-xl">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
+              <Card className="transform transition-all duration-300 hover:shadow-lg">
+                <CardHeader className="border-b bg-gray-50/50 p-4 md:p-6">
+                  <CardTitle className="text-base md:text-lg font-bold text-gray-800">
                     Update Token Limit
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmitLimit(onUpdateTokenLimit)}>
-                    <div className="flex gap-4 items-center">
+                <CardContent className="p-4 md:p-6">
+                  <form
+                    onSubmit={handleSubmitLimit(onUpdateTokenLimit)}
+                    className="space-y-4"
+                  >
+                    <div className="relative">
                       <Input
-                        min={1}
                         type="number"
+                        min={1}
                         placeholder="Enter new token limit"
                         {...registerLimit("tokenAmountLimit", {
                           required: "Token limit is required",
-                          valueAsNumber: true,
                           min: { value: 1, message: "Minimum limit is 1" },
                           max: {
                             value: 1000000,
                             message: "Maximum limit is 1000000",
                           },
                         })}
-                        className="bg-white border-black shadow-none appearance-none w-full md:w-2/3 lg:w-1/2 p-2 border rounded-md dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="bg-white border-gray-200 shadow-sm w-full p-2 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       />
                       {errorsLimit.tokenAmountLimit && (
-                        <p className="text-red-500">
+                        <p className="text-red-500 text-sm mt-1">
                           {errorsLimit.tokenAmountLimit?.message as string}
                         </p>
                       )}
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                      >
-                        {updatingLimit ? (
-                          <div className="flex flex-row">
-                            <Loader2 className="animate-spin mr-2" /> Updating
-                            ...
-                          </div>
-                        ) : (
-                          <h1 className="text-white">Update</h1>
-                        )}
-                      </button>
                     </div>
+                    <button
+                      type="submit"
+                      className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-cyan-700 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                      disabled={updatingLimit}
+                    >
+                      {updatingLimit ? (
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                          <span>Updating...</span>
+                        </div>
+                      ) : (
+                        "Update Limit"
+                      )}
+                    </button>
                   </form>
                 </CardContent>
               </Card>

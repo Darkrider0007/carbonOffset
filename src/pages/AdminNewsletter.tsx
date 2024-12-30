@@ -17,7 +17,15 @@ import {
 import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { getNewsletter } from "../api/newslatter";
-import { Download, Search } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Mail,
+  Menu,
+  Search,
+  UserCheck,
+} from "lucide-react";
 import SmoothScroll from "../components/SmoothScroll";
 
 export default function AdminNewsletter() {
@@ -26,13 +34,23 @@ export default function AdminNewsletter() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const fetchAllNewsletterSubscribers = async () => {
-      console.log("fetching all newsletter subscribers");
       try {
         const res = await getNewsletter();
-        console.log("res", res.data.percentageIncrease);
         setNewsletterSubscribers(res.data.data);
         setDashBoardData({
           percentageSubscriberIncrease: res.data.percentageIncrease,
@@ -55,7 +73,6 @@ export default function AdminNewsletter() {
     indexOfLastSubscriber
   );
 
-  // CSV generation function
   const downloadCSV = () => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
@@ -72,151 +89,293 @@ export default function AdminNewsletter() {
     document.body.removeChild(link);
   };
 
-  // Change page
   const nextPage = () => setCurrentPage((prevPage) => prevPage + 1);
   const prevPage = () => setCurrentPage((prevPage) => prevPage - 1);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Mobile Card Component for subscriber data
+  const SubscriberCard = ({
+    subscriber,
+    index,
+  }: {
+    subscriber: any;
+    index: number;
+  }) => (
+    <Card className="mb-4">
+      <CardContent className="p-4">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-gray-500">
+              #{indexOfFirstSubscriber + index + 1}
+            </div>
+            <span
+              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                subscriber.isSubscribed
+                  ? "bg-green-100 text-green-800"
+                  : "bg-gray-100 text-gray-800"
+              }`}
+            >
+              {subscriber.isSubscribed ? "Active" : "Inactive"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 text-gray-600">
+            <Mail className="h-4 w-4" />
+            <span className="text-sm break-all">{subscriber.email}</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <SmoothScroll>
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+      <div className="min-h-screen bg-gray-50">
+        {/* Mobile Sidebar Overlay */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={toggleSidebar}
+          />
+        )}
+
+        {/* Sidebar */}
+        <div
+          className={`fixed lg:fixed w-[280px] h-full z-50 transform transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 border-r bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800`}
+        >
           <AdminSidebar />
         </div>
-        <div className="flex flex-col">
-          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-            <h1 className="text-lg font-bold">Newsletters</h1>
+
+        {/* Main Content */}
+        <div className="lg:pl-[280px]">
+          {/* Header */}
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6 shadow-sm">
+            <Button
+              variant="ghost"
+              className="lg:hidden"
+              onClick={toggleSidebar}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+            <h1 className="text-base md:text-lg font-bold truncate">
+              Newsletter Management
+            </h1>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 bg-black/[0.05]">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {/* Card for Newsletter Subscriber Count */}
-              <Card className="shadow-xl bg-green-300">
+
+          <main className="p-4 md:p-6 max-w-[1600px] mx-auto">
+            {/* Stats Cards */}
+            <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 mb-6">
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-br from-emerald-400 to-green-500 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-black">
-                    Total Newsletter Subscribers
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Total Subscribers
                   </CardTitle>
+                  <Mail className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-black">
+                  <div className="text-xl md:text-2xl font-bold text-white">
                     {newsletterSubscribers.length || 0}
                   </div>
-                </CardContent>
-                <CardContent>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex items-center gap-2 mt-2 text-xs md:text-sm">
                     {dashBoardData?.percentageSubscriberIncrease > 0 ? (
                       <>
-                        <FaArrowUp color="green" />
-                        <h1>
-                          <span className="text-green-600">
-                            {Math.abs(
-                              dashBoardData?.percentageSubscriberIncrease
-                            ) || 0}
-                          </span>{" "}
+                        <FaArrowUp />
+                        <span>
+                          {Math.abs(
+                            dashBoardData?.percentageSubscriberIncrease
+                          ) || 0}
                           % vs last month
-                        </h1>
+                        </span>
                       </>
                     ) : (
                       <>
-                        <FaArrowDown color="red" />
-                        <h1>
-                          <span className="text-red-600">
-                            {Math.abs(
-                              dashBoardData?.percentageSubscriberIncrease
-                            ) || 0}
-                          </span>{" "}
+                        <FaArrowDown />
+                        <span>
+                          {Math.abs(
+                            dashBoardData?.percentageSubscriberIncrease
+                          ) || 0}
                           % vs last month
-                        </h1>
+                        </span>
                       </>
                     )}
                   </div>
                 </CardContent>
               </Card>
+
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#8555C1] to-[#B469FF] text-white">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
+                    Active Subscribers
+                  </CardTitle>
+                  <UserCheck className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    {newsletterSubscribers.filter((s: any) => s.isSubscribed)
+                      .length || 0}
+                  </div>
+                  <div className="mt-2 text-xs md:text-sm opacity-75">
+                    Currently active subscribers
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            <div className="border shadow-sm rounded-lg p-4 mt-6 bg-white">
-              <div className="flex flex-row justify-between">
-                <h2 className="font-bold text-2xl mb-4">Subscribers</h2>
-                <div className="flex flex-row items-center gap-2 border border-gray-300 rounded-lg text-gray-600 pl-2 focus-within:ring-1 focus-within:ring-green-500 w-1/4">
-                  <Search className="w-6 h-6 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search subscriber"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="focus:outline-none p-2"
-                  />
+
+            {/* Subscribers Section */}
+            <Card className="shadow-lg">
+              <CardHeader className="border-b bg-gray-50/50 p-4 md:p-6">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <h2 className="font-bold text-xl md:text-2xl text-gray-800">
+                    Subscriber Management
+                  </h2>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="relative flex-grow">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <input
+                        type="text"
+                        placeholder="Search subscribers..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      />
+                    </div>
+
+                    <Button
+                      onClick={downloadCSV}
+                      className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                      <Download className="h-5 w-5 sm:mr-2" />
+                      <span className="ml-2 sm:inline">Export CSV</span>
+                    </Button>
+                  </div>
                 </div>
-                {/* CSV Download Button */}
-                <Button
-                  onClick={downloadCSV}
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-                >
-                  <Download className="w-6 h-6 mr-2" />
-                  Download CSV
-                </Button>
-              </div>
-              {/* Table with scrollable content */}
-              <div className="overflow-y-auto h-96">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Sl No.
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Email
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Is Subscribed
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+              </CardHeader>
+
+              <div className="p-4 md:p-6">
+                {isSmallScreen ? (
+                  // Mobile view - Cards
+                  <div className="space-y-4">
                     {currentSubscribers.length > 0 ? (
                       currentSubscribers.map(
                         (subscriber: any, index: number) => (
-                          <TableRow key={subscriber._id}>
-                            <TableCell className="text-black">
-                              {indexOfFirstSubscriber + index + 1}
-                            </TableCell>
-                            <TableCell className="text-black">
-                              {subscriber.email}
-                            </TableCell>
-                            <TableCell className="text-black">
-                              {subscriber.isSubscribed ? "Yes" : "No"}
-                            </TableCell>
-                          </TableRow>
+                          <SubscriberCard
+                            key={subscriber._id}
+                            subscriber={subscriber}
+                            index={index}
+                          />
                         )
                       )
                     ) : (
-                      <TableRow>
-                        <TableCell
-                          colSpan={3}
-                          className="text-center text-black"
-                        >
-                          No subscribers found.
-                        </TableCell>
-                      </TableRow>
+                      <div className="text-center py-8 text-gray-500">
+                        No subscribers found
+                      </div>
                     )}
-                  </TableBody>
-                </Table>
+                  </div>
+                ) : (
+                  // Desktop view - Table
+                  <div className="overflow-hidden rounded-lg border border-gray-200">
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="bg-gray-50">
+                            <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[80px]">
+                              Sl No.
+                            </TableHead>
+                            <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[250px]">
+                              Email
+                            </TableHead>
+                            <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[100px]">
+                              Status
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {currentSubscribers.length > 0 ? (
+                            currentSubscribers.map(
+                              (subscriber: any, index: number) => (
+                                <TableRow
+                                  key={subscriber._id}
+                                  className="hover:bg-gray-50 transition-colors duration-200"
+                                >
+                                  <TableCell className="font-medium text-sm md:text-base text-gray-700">
+                                    {indexOfFirstSubscriber + index + 1}
+                                  </TableCell>
+                                  <TableCell className="text-sm md:text-base text-gray-600">
+                                    {subscriber.email}
+                                  </TableCell>
+                                  <TableCell>
+                                    <span
+                                      className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                        subscriber.isSubscribed
+                                          ? "bg-green-100 text-green-800"
+                                          : "bg-gray-100 text-gray-800"
+                                      }`}
+                                    >
+                                      {subscriber.isSubscribed
+                                        ? "Active"
+                                        : "Inactive"}
+                                    </span>
+                                  </TableCell>
+                                </TableRow>
+                              )
+                            )
+                          ) : (
+                            <TableRow>
+                              <TableCell
+                                colSpan={3}
+                                className="text-center py-8 text-gray-500"
+                              >
+                                No subscribers found
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Responsive Pagination */}
+                <div className="mt-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  <p className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
+                    Showing {indexOfFirstSubscriber + 1} to{" "}
+                    {Math.min(
+                      indexOfLastSubscriber,
+                      filteredSubscribers.length
+                    )}{" "}
+                    of {filteredSubscribers.length} subscribers
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={prevPage}
+                      disabled={currentPage === 1}
+                      className="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-3 sm:px-4"
+                      size="sm"
+                    >
+                      <ChevronLeft className="h-4 w-4 sm:mr-1" />
+                      <span className="hidden sm:inline">Previous</span>
+                    </Button>
+                    <Button
+                      onClick={nextPage}
+                      disabled={
+                        indexOfLastSubscriber >= filteredSubscribers.length
+                      }
+                      className="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-3 sm:px-4"
+                      size="sm"
+                    >
+                      <span className="hidden sm:inline">Next</span>
+                      <ChevronRight className="h-4 w-4 sm:ml-1" />
+                    </Button>
+                  </div>
+                </div>
               </div>
-              {/* Pagination Buttons */}
-              <div className="flex justify-end gap-2 mt-4">
-                <Button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  className="bg-green-500 hover:bg-green-600 text-white gap-1"
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={nextPage}
-                  disabled={indexOfLastSubscriber >= filteredSubscribers.length}
-                  className="bg-green-500 hover:bg-green-600 text-white gap-1"
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
+            </Card>
           </main>
         </div>
       </div>

@@ -200,6 +200,9 @@ import { logout } from "../api/auth/loginAndLogout";
 import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
 import SmoothScroll from "../components/SmoothScroll";
+import { FaSignOutAlt } from "react-icons/fa";
+import { Coins } from "lucide-react";
+import { TiTicket } from "react-icons/ti";
 
 export default function UserUpdates() {
   const navigate = useNavigate();
@@ -207,7 +210,6 @@ export default function UserUpdates() {
   const location = useLocation();
   const context = useContext(UserContext);
 
-  // Ensure context is defined before accessing properties
   if (!context) {
     throw new Error("UserProfile must be used within a UserContextProvider");
   }
@@ -252,7 +254,6 @@ export default function UserUpdates() {
       }
     };
 
-    // Check if location.state and user are defined
     if (location.state && location.state.user) {
       setUser1(location.state.user);
     } else {
@@ -260,9 +261,8 @@ export default function UserUpdates() {
     }
   }, [location.state]);
 
-  // Handle loading state or empty user
   if (!user) {
-    return <div>Loading...</div>; // Placeholder for loading state
+    return <div>Loading...</div>;
   }
 
   return (
@@ -272,17 +272,20 @@ export default function UserUpdates() {
           <Sidebar />
         </div>
         <div className="flex flex-col h-full">
-          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b px-6 text-white">
             <Link className="lg:hidden" to="#">
               <span className="sr-only">Home</span>
             </Link>
-            <Button className="ml-auto" onClick={handelLogout}>
-              Logout
+            <Button
+              className="ml-auto text-white text-[14px]"
+              onClick={handelLogout}
+            >
+              <FaSignOutAlt className="w-3 h-3 mr-1" /> Logout
             </Button>
           </header>
 
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-            <h1 className="font-bold text-2xl text-gray-800 dark:text-white">
+            <h1 className="font-bold text-3xl text-gray-800 dark:text-white">
               {user.firstName
                 ? `${
                     user.firstName.charAt(0).toUpperCase() +
@@ -291,33 +294,37 @@ export default function UserUpdates() {
                 : "User's Profile"}
             </h1>
 
-            {/* User Information */}
-            <div className="bg-white shadow rounded-lg p-4">
-              <h2 className="text-lg font-semibold">User Details</h2>
-              <p>
-                <strong>ID:</strong> {user._id}
-              </p>
-              <p>
-                <strong>Name:</strong> {user.firstName} {user.lastName}
-              </p>
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
-              <p>
-                <strong>Token Count:</strong> {user.tokenCount} Tokens
-              </p>
-              <p>
-                <strong>Verified:</strong> {user.isVerified ? "Yes" : "No"}
-              </p>
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-gray-800">
+                User Details
+              </h2>
+              <div className="mt-4 space-y-2">
+                <p>
+                  <strong>ID:</strong> {user._id}
+                </p>
+                <p>
+                  <strong>Name:</strong> {user.firstName} {user.lastName}
+                </p>
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Token Count:</strong> {user.tokenCount} Tokens
+                </p>
+                <p>
+                  <strong>Verified:</strong> {user.isVerified ? "Yes" : "No"}
+                </p>
+              </div>
             </div>
 
             {/* Card Grid */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card className="bg-green-600">
+              <Card className="bg-gradient-to-r from-green-500 to-emerald-600">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-white">
                     Available Tokens
                   </CardTitle>
+                  <Coins className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-white">
@@ -326,11 +333,12 @@ export default function UserUpdates() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-green-600">
+              <Card className="bg-gradient-to-r from-green-500 to-emerald-600">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-white">
                     Used Tokens
                   </CardTitle>
+                  <TiTicket className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-white">0 Tokens</div>

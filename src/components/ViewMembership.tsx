@@ -1,3 +1,4 @@
+import CountryFlag from "./CountryFlag";
 import CustomModal from "./CustomModal";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -93,7 +94,19 @@ function ViewMembership({
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="font-medium">Country:</span>
-                      <span>{selectedMember.country || "N/A"}</span>
+                      <div className="flex items-center gap-1">
+                        {selectedMember.country ? (
+                          <>
+                            <CountryFlag
+                              countryName={selectedMember.country}
+                              size="1em"
+                            />
+                            <span>{selectedMember.country}</span>
+                          </>
+                        ) : (
+                          <span>N/A</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
