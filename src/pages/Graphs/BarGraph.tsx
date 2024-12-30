@@ -18,11 +18,11 @@ type BarGraphProps = {
   projects: Project[];
 };
 
-// Chart configuration with single color
+// Enhanced chart configuration with gradient colors
 const chartConfig: ChartConfig = {
   projects: {
     label: "Active Projects",
-    color: "#10b981", // Emerald-500
+    color: "#8B5CF6", // Primary color (violet-500)
   },
 };
 
@@ -47,52 +47,71 @@ export function BarGraph({ projects }: BarGraphProps) {
 
   return (
     <SmoothScroll>
-      <Card className="w-1/2 bg-white shadow-lg">
-        <CardContent className="p-4">
+      <Card className="w-1/2 bg-white shadow-lg rounded-xl">
+        <CardContent className="p-6">
           <ChartContainer config={chartConfig} className="min-h-[100px]">
             <BarChart
               data={chartData}
               width={600}
               height={300}
               margin={{
-                top: 10,
-                right: 20,
-                left: 20,
+                top: 20,
+                right: 30,
+                left: 30,
                 bottom: 20,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              {/* Define gradient */}
+              <defs>
+                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8B5CF6" stopOpacity={1} />
+                  <stop offset="100%" stopColor="#C4B5FD" stopOpacity={0.8} />
+                </linearGradient>
+              </defs>
+
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#e5e7eb"
+                opacity={0.5}
+              />
               <XAxis
                 dataKey="country"
-                tick={{ fill: "#4b5563" }}
+                tick={{ fill: "#4b5563", fontSize: 12 }}
                 tickLine={{ stroke: "#9ca3af" }}
                 axisLine={{ stroke: "#9ca3af" }}
               />
               <YAxis
-                tick={{ fill: "#4b5563" }}
+                tick={{ fill: "#4b5563", fontSize: 12 }}
                 tickLine={{ stroke: "#9ca3af" }}
                 axisLine={{ stroke: "#9ca3af" }}
                 label={{
                   value: "Active Projects",
                   angle: -90,
                   position: "insideLeft",
-                  style: { fill: "#4b5563" },
+                  style: { fill: "#4b5563", fontSize: 14 },
                 }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(255, 255, 255, 0.95)",
+                  backgroundColor: "rgba(255, 255, 255, 0.98)",
                   border: "none",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "12px",
+                  boxShadow:
+                    "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                  padding: "12px",
                 }}
-                cursor={{ fill: "rgba(229, 231, 235, 0.4)" }}
+                cursor={{ fill: "rgba(139, 92, 246, 0.1)" }}
+                labelStyle={{
+                  color: "#4b5563",
+                  fontWeight: "600",
+                  marginBottom: "4px",
+                }}
               />
               <Bar
                 dataKey="activeProjects"
-                fill={chartConfig.projects.color}
-                radius={[4, 4, 0, 0]}
-                className="transition-all duration-300 ease-in-out hover:opacity-80"
+                fill="url(#colorGradient)"
+                radius={[8, 8, 0, 0]}
+                className="transition-all duration-300 ease-in-out hover:opacity-90"
               />
             </BarChart>
           </ChartContainer>

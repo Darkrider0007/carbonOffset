@@ -18,11 +18,10 @@ import { Input } from "../components/ui/input";
 import { deleteFarmOnboard, getFarmOnboard } from "../api/farmOnboard";
 import ViewFarmBoarding from "../components/ViewFarmBoarding";
 import { toast } from "../hooks/use-toast";
-import { AlertDialogDemo } from "../components/AlertDialogDemo";
 import AdminSidebar from "../components/AdminSidebar";
 import { getAdminData } from "../api/admin";
 import { FaArrowUp } from "react-icons/fa6";
-import { Briefcase, Search, Users } from "lucide-react";
+import { Briefcase, Eye, Menu, Search, Trash2, Users } from "lucide-react";
 import SmoothScroll from "../components/SmoothScroll";
 import { GiFarmer } from "react-icons/gi";
 
@@ -35,33 +34,41 @@ export default function AdminFarmOnboarding() {
   const [selectedFarm, setSelectedFarm] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
-        const res = await getAdminData();
-        setDashBoardData(res.data);
-      } catch (error) {
-        console.error("Failed to fetch admin data", error);
-      }
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
     };
 
-    const fetchFarmData = async () => {
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const res = await getFarmOnboard();
-        setFarmData(res.data);
-        setFilteredData(res.data);
-        const approvedFarms = res.data.filter(
+        const [adminRes, farmRes] = await Promise.all([
+          getAdminData(),
+          getFarmOnboard(),
+        ]);
+
+        setDashBoardData(adminRes.data);
+        setFarmData(farmRes.data);
+        setFilteredData(farmRes.data);
+
+        const approvedFarms = farmRes.data.filter(
           (farm: any) => farm.approvedByAdmin
         );
         setApprovedFarmData(approvedFarms.length);
       } catch (error) {
-        console.error("Failed to fetch farm data", error);
+        console.error("Failed to fetch data", error);
       }
     };
 
-    fetchAdminData();
-    fetchFarmData();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -82,6 +89,10 @@ export default function AdminFarmOnboarding() {
     setFilteredData(filteredResults);
   }, [searchQuery, statusFilter, farmData]);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const handleViewDocument = (farm: any) => {
     setSelectedFarm(farm);
     setIsModalOpen(true);
@@ -96,39 +107,126 @@ export default function AdminFarmOnboarding() {
         });
         const updatedFarmData = farmData.filter((farm) => farm._id !== id);
         setFarmData(updatedFarmData);
-        setFilteredData(updatedFarmData); // Update filtered data as well
+        setFilteredData(updatedFarmData);
       }
     } catch (error) {
       console.error("Failed to delete farm onboarding data", error);
     }
   };
 
+  // Mobile Card Component
+  const FarmCard = ({ farm }: { farm: any }) => (
+    <Card className="mb-4">
+      <CardContent className="p-4">
+        <div className="space-y-3">
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm text-gray-500">Organization</label>
+            <div className="font-semibold">{farm.organization || "N/A"}</div>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm text-gray-500">Location</label>
+            <div className="text-gray-700">{farm.address || "N/A"}</div>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm text-gray-500">Area</label>
+            <div className="text-gray-700">{farm.area || "N/A"}</div>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div>
+              {!farm.isRejected && (
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    farm.approvedByAdmin
+                      ? "bg-green-100 text-green-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}
+                >
+                  {farm.approvedByAdmin ? "Approved" : "Pending"}
+                </span>
+              )}
+              {farm.isRejected && (
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                  Rejected
+                </span>
+              )}
+            </div>
+
+            <div className="flex gap-2">
+              <Button
+                onClick={() => handleViewDocument(farm)}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+                size="sm"
+              >
+                <Eye className="h-4 w-4" />
+              </Button>
+              <Button
+                onClick={() => handleDelete(farm._id)}
+                className="bg-red-500 hover:bg-red-600 text-white"
+                size="sm"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <SmoothScroll>
-      <div className="grid w-full lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-gradient-to-b from-gray-50 to-white lg:block dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen bg-gray-50">
+        {/* Mobile Sidebar Overlay */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={toggleSidebar}
+          />
+        )}
+
+        {/* Sidebar */}
+        <div
+          className={`fixed lg:fixed w-[280px] h-full z-50 transform transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 border-r bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800`}
+        >
           <AdminSidebar />
         </div>
-        <div className="flex flex-col min-h-screen">
-          <header className="flex h-16 items-center gap-4 border-b bg-white px-6 shadow-sm">
-            <h1 className="text-lg font-bold">Farm Onboarding</h1>
+
+        {/* Main Content */}
+        <div className="lg:pl-[280px]">
+          {/* Header */}
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6 shadow-sm">
+            <Button
+              variant="ghost"
+              className="lg:hidden"
+              onClick={toggleSidebar}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+            <h1 className="text-base md:text-lg font-bold truncate">
+              Farm Onboarding
+            </h1>
           </header>
 
-          <main className="flex flex-1 flex-col gap-6 p-6 bg-gray-50">
+          <main className="p-4 md:p-6 max-w-[1600px] mx-auto">
             {/* Stats Cards */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-6">
               <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-br from-emerald-400 to-green-500 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-white">
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
                     Total Users
                   </CardTitle>
-                  <Users className="h-6 w-6 opacity-75" />
+                  <Users className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-xl md:text-2xl font-bold text-white">
                     {dashBoardData?.totalUsers || 0}
                   </div>
-                  <div className="flex items-center gap-2 mt-2 text-sm">
+                  <div className="flex items-center gap-2 mt-2 text-xs md:text-sm">
                     <FaArrowUp />
                     <span>
                       {Math.abs(dashBoardData?.percentageUserIncrease) || 0}% vs
@@ -140,33 +238,33 @@ export default function AdminFarmOnboarding() {
 
               <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#8555C1] to-[#B469FF] text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-white">
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
                     Total Farms Onboarded
                   </CardTitle>
-                  <GiFarmer className="h-6 w-6 opacity-75" />
+                  <GiFarmer className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-xl md:text-2xl font-bold text-white">
                     {approvedFarmData || 0}
                   </div>
-                  <div className="mt-2 text-sm opacity-75">
+                  <div className="mt-2 text-xs md:text-sm opacity-75">
                     Total approved farms
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#DB20C4] to-[#F86893] text-white">
+              <Card className="transform transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#DB20C4] to-[#F86893] text-white sm:col-span-2 lg:col-span-1">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-md font-bold text-white">
+                  <CardTitle className="text-sm md:text-md font-bold text-white">
                     Active Projects
                   </CardTitle>
-                  <Briefcase className="h-6 w-6 opacity-75" />
+                  <Briefcase className="h-5 w-5 md:h-6 md:w-6 opacity-75" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-xl md:text-2xl font-bold text-white">
                     {dashBoardData?.totalProjects || 0}
                   </div>
-                  <div className="flex items-center gap-2 mt-2 text-sm">
+                  <div className="flex items-center gap-2 mt-2 text-xs md:text-sm">
                     <FaArrowUp />
                     <span>
                       {Math.floor(
@@ -179,16 +277,16 @@ export default function AdminFarmOnboarding() {
               </Card>
             </div>
 
-            {/* Farm Management Table Section */}
-            <Card className="overflow-hidden bg-white flex flex-col">
-              <CardHeader className="border-b bg-gray-50/50 p-6 flex-none">
+            {/* Farm Management Section */}
+            <Card className="shadow-lg">
+              <CardHeader className="border-b bg-gray-50/50 p-4 md:p-6">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                  <h2 className="font-bold text-2xl mb-4 md:mb-0">
+                  <h2 className="font-bold text-xl md:text-2xl text-gray-800">
                     Farm Management
                   </h2>
-                  <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                  <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                     <select
-                      className="w-full md:w-48 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full md:w-48 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
                     >
@@ -201,7 +299,7 @@ export default function AdminFarmOnboarding() {
                     <div className="relative w-full md:w-80">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                       <Input
-                        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        className="w-full pl-10"
                         placeholder="Search by Organization or Location..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -211,95 +309,117 @@ export default function AdminFarmOnboarding() {
                 </div>
               </CardHeader>
 
-              <div className="overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                <Table className="min-w-full">
-                  <TableHeader>
-                    <TableRow className="bg-gray-50">
-                      <TableHead className="text-lg text-black font-semibold">
-                        Organization
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Location
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Area
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Status
-                      </TableHead>
-                      <TableHead className="text-lg text-black font-semibold">
-                        Actions
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+              <div className="p-4 md:p-6">
+                {isSmallScreen ? (
+                  // Mobile view - Cards
+                  <div className="space-y-4">
                     {filteredData.length > 0 ? (
                       filteredData.map((farm, index) => (
-                        <TableRow
-                          key={index}
-                          className="hover:bg-gray-50 transition-colors duration-200"
-                        >
-                          <TableCell className="font-medium text-gray-800">
-                            {farm.organization || "N/A"}
-                          </TableCell>
-                          <TableCell className="text-gray-600">
-                            {farm.address || "N/A"}
-                          </TableCell>
-                          <TableCell className="text-gray-600">
-                            {farm.area || "N/A"}
-                          </TableCell>
-                          <TableCell>
-                            {!farm.isRejected &&
-                              (farm.approvedByAdmin ? (
-                                <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                  Approved
-                                </span>
-                              ) : (
-                                <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
-                                  Pending
-                                </span>
-                              ))}
-                            {farm.isRejected && (
-                              <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                                Rejected
-                              </span>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button
-                                onClick={() => handleViewDocument(farm)}
-                                className="bg-blue-500 hover:bg-blue-600 text-white p-2"
-                                size="sm"
-                              >
-                                View
-                              </Button>
-                              <AlertDialogDemo
-                                triggerText="Delete"
-                                title="Are you absolutely sure?"
-                                description="This action cannot be undone. This will permanently delete the farm onboarding data from our servers."
-                                actionText="Continue"
-                                onAction={() => handleDelete(farm._id)}
-                              />
-                            </div>
-                          </TableCell>
-                        </TableRow>
+                        <FarmCard key={index} farm={farm} />
                       ))
                     ) : (
-                      <TableRow>
-                        <TableCell
-                          colSpan={5}
-                          className="text-center py-8 text-gray-500"
-                        >
-                          No farm data available
-                        </TableCell>
-                      </TableRow>
+                      <div className="text-center py-8 text-gray-500">
+                        No farm data available
+                      </div>
                     )}
-                  </TableBody>
-                </Table>
+                  </div>
+                ) : (
+                  // Desktop view - Table
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-gray-50">
+                          <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[150px]">
+                            Organization
+                          </TableHead>
+                          <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[200px]">
+                            Location
+                          </TableHead>
+                          <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[100px]">
+                            Area
+                          </TableHead>
+                          <TableHead className="text-base md:text-lg font-semibold text-gray-700 min-w-[100px]">
+                            Status
+                          </TableHead>
+                          <TableHead className="text-base md:text-lg font-semibold text-gray-700">
+                            Actions
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredData.length > 0 ? (
+                          filteredData.map((farm, index) => (
+                            <TableRow
+                              key={index}
+                              className="hover:bg-gray-50 transition-colors duration-200"
+                            >
+                              <TableCell className="font-medium text-sm md:text-base text-gray-800">
+                                {farm.organization || "N/A"}
+                              </TableCell>
+                              <TableCell className="text-sm md:text-base text-gray-600">
+                                {farm.address || "N/A"}
+                              </TableCell>
+                              <TableCell className="text-sm md:text-base text-gray-600">
+                                {farm.area || "N/A"}
+                              </TableCell>
+                              <TableCell>
+                                {!farm.isRejected && (
+                                  <span
+                                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                      farm.approvedByAdmin
+                                        ? "bg-green-100 text-green-800"
+                                        : "bg-yellow-100 text-yellow-800"
+                                    }`}
+                                  >
+                                    {farm.approvedByAdmin
+                                      ? "Approved"
+                                      : "Pending"}
+                                  </span>
+                                )}
+                                {farm.isRejected && (
+                                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                                    Rejected
+                                  </span>
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                <div className="flex gap-2">
+                                  <Button
+                                    onClick={() => handleViewDocument(farm)}
+                                    className="bg-blue-500 hover:bg-blue-600 text-white"
+                                    size="sm"
+                                  >
+                                    <Eye className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    onClick={() => handleDelete(farm._id)}
+                                    className="bg-red-500 hover:bg-red-600 text-white"
+                                    size="sm"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell
+                              colSpan={5}
+                              className="text-center py-8 text-gray-500"
+                            >
+                              No farm data available
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
               </div>
             </Card>
 
+            {/* Modal */}
             <ViewFarmBoarding
               isOpen={isModalOpen}
               toggleModal={() => setIsModalOpen(false)}

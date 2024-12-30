@@ -1,3 +1,4 @@
+import CountryFlag from "./CountryFlag";
 import CustomModal from "./CustomModal";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -71,8 +72,21 @@ function ViewCollaborative({
                     <div className="flex items-center gap-2">
                       <Globe className="h-4 w-4 text-gray-500" />
                       <span className="font-medium">Country:</span>
-                      <span>{selectedParticipant.country || "N/A"}</span>
+                      <div className="flex items-center gap-1">
+                        {selectedParticipant.country ? (
+                          <>
+                            <CountryFlag
+                              countryName={selectedParticipant.country}
+                              size="1em"
+                            />
+                            <span>{selectedParticipant.country}</span>
+                          </>
+                        ) : (
+                          <span>N/A</span>
+                        )}
+                      </div>
                     </div>
+
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="font-medium">State/Region:</span>

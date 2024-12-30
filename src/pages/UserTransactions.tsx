@@ -22,6 +22,9 @@ import { getUser } from "../api/auth/getUser";
 import { toast } from "../hooks/use-toast";
 import { logout } from "../api/auth/loginAndLogout";
 import SmoothScroll from "../components/SmoothScroll";
+import { FaSignOutAlt } from "react-icons/fa";
+import { Coins } from "lucide-react";
+import { TiTicket } from "react-icons/ti";
 
 export default function UserUpdates() {
   const navigate = useNavigate();
@@ -108,8 +111,11 @@ export default function UserUpdates() {
             <Link className="lg:hidden" to="#">
               <span className="sr-only">Home</span>
             </Link>
-            <Button onClick={handelLogout} className="ml-auto">
-              Logout
+            <Button
+              className="ml-auto text-white text-[14px]"
+              onClick={handelLogout}
+            >
+              <FaSignOutAlt className="w-3 h-3 mr-1" /> Logout
             </Button>
           </header>
 
@@ -124,11 +130,12 @@ export default function UserUpdates() {
             </h1>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card className="bg-green-600">
+              <Card className="bg-gradient-to-r from-green-500 to-emerald-600">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-white">
                     Available Tokens
                   </CardTitle>
+                  <Coins className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-white">
@@ -137,11 +144,12 @@ export default function UserUpdates() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-green-600">
+              <Card className="bg-gradient-to-r from-green-500 to-emerald-600">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-md font-bold text-white">
                     Used Tokens
                   </CardTitle>
+                  <TiTicket className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-white">
