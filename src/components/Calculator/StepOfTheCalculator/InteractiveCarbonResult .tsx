@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, TreePineIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { calculate } from "../../../api/calculator";
 import { toast } from "../../../hooks/use-toast";
 import { updateCalculatedState } from "../../../store/features/calculator/calculatorSlice";
+import { Button } from "../../ui/button";
+import { RiRestartLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 interface InteractiveCarbonResultProps {
   userDetails: any;
@@ -191,6 +194,25 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
                 rates averaging 0.5%, this results in 2.75 metric tons of CO2
                 emitted per hectare each year.
               </p>
+              <Button
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+                onClick={() => setCalculationState("initial")}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  Reset Calculation
+                  <RiRestartLine />
+                </div>
+              </Button>
+              <Link
+                to="/offsetNow"
+                state={{ totalEmissions, clientType: 'individual' }}
+                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+              >
+                <div className="flex flex-row items-center justify-center">
+                  Offset Now
+                  <TreePineIcon className="h-6 w-6 ml-2" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

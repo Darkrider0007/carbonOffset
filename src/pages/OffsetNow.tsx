@@ -5,7 +5,7 @@ import main from "../assets/offset/main.png";
 import Footer from "../components/Footer";
 import { FaArrowRight, FaLock } from "react-icons/fa6";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AddToWallet } from "../api/stripe/checkout";
 import { Loader2 } from "lucide-react";
 import { getTokenData } from "../api/token";
@@ -14,9 +14,15 @@ import SmoothScroll from "../components/SmoothScroll";
 
 const OffsetNow = () => {
   const [amount, setAmount] = useState<number>(0);
+  const [fixAmount, setFixAmount] = useState<number>(0);
+  const [fixTokens, setFixTokens] = useState<number>(0);
   const [tokens, setTokens] = useState<number>(0);
-  // const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
+  const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
   const [submitting, setSubmitting] = useState(false);
+
+  const location = useLocation();
+  const { state } = location;
+  console.log(state?.totalEmissions);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -24,46 +30,83 @@ const OffsetNow = () => {
   };
 
   const navigate = useNavigate();
-  // const handleFrequencyClick = (frequency: string) => {
-  //   setSelectedFrequency(frequency);
-  // };
+  const handleFrequencyClick = (frequency: string) => {
+    setSelectedFrequency(frequency);
+  };
 
   const handleAddToWallet = async () => {
     setSubmitting(true);
     try {
-      const res = await AddToWallet({ amount, tokens });
+      const paymentType = selectedFrequency == "One-Time" ? "payment" : "subscription";
+      let duration = 1;
+      if (selectedFrequency === "Monthly") {
+        duration = 1;
+      } else if (selectedFrequency === "Quarterly") {
+        duration = 4;
+      } else if (selectedFrequency === "Yearly") {
+        duration = 12;
+      }
+
+      const res = await AddToWallet({ amount, tokens, paymentType, duration, clientType: state ? state?.clientType : "individual" });
       console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedFrequency === "One-Time") setTokens(amount / 10);
-  //   if (selectedFrequency === "Monthly") setTokens(amount / (10 * 12));
-  //   if (selectedFrequency === "Quarterly") setTokens(amount / (10 * 4));
-  //   if (selectedFrequency === "Yearly") setTokens(amount / 10);
-  // }, [amount, selectedFrequency]);
+  useEffect(() => {
+    if (selectedFrequency === "One-Time" || selectedFrequency === "Yearly") {
+      setAmount(Number(fixAmount.toFixed(2)));
+      setTokens(fixTokens);
+    }
+    if (selectedFrequency === "Monthly") {
+      setAmount(Number((fixAmount / 12).toFixed(2)));
+      setTokens(fixTokens / 12);
+    }
+    if (selectedFrequency === "Quarterly") {
+      setAmount(Number((fixAmount / 4).toFixed(2)));
+      setTokens(fixTokens / 4);
+
+    }
+  }, [selectedFrequency]);
 
   useEffect(() => {
     const amountChange = async () => {
       try {
         const res = await getTokenData();
-        const tokenPrice = res.data.tokenPrice;
-        setTokens(amount / tokenPrice);
+        if (state?.totalEmissions) {
+          const totalAmount = res.data.tokenPerTon * state?.totalEmissions * res.data.tokenPrice;
+          setAmount(Number(totalAmount.toFixed(2)));
+          setFixAmount(Number(totalAmount.toFixed(2)));
+          setTokens(res.data.tokenPerTon * state?.totalEmissions);
+          setFixTokens(res.data.tokenPerTon * state?.totalEmissions);
+
+        } else {
+          const tokenPrice = res.data.tokenPrice;
+          setTokens(amount / tokenPrice);
+        }
       } catch (error) {
         console.log("error", error);
       }
     };
 
     amountChange();
-  }, [amount]);
+  }, []);
+
+
+  useEffect(() => {
+    // Scroll to the <main> element on the first render
+    const mainElement = document.querySelector("main");
+    if (mainElement) {
+      mainElement.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <SmoothScroll>
       <div>
         <Navbar />
-        <div
+        <main
           style={{
             backgroundImage: `url(${main})`,
             backgroundSize: "cover",
@@ -79,14 +122,6 @@ const OffsetNow = () => {
               <h1 className="text-3xl md:text-5xl font-bold text-center">
                 Purchase Carbon Credits
               </h1>
-              <div className="flex gap-2">
-                <button className="bg-white text-green-600 font-bold px-7 py-2 rounded-md">
-                  Dollar/INR Amount
-                </button>
-                {/* <button className="border-2 border-green-600 font-bold px-10 py-2 rounded-md">
-                Credit Amount
-              </button> */}
-              </div>
               <div className="bg-white text-black w-full md:w-[80%] gap-4 p-5 py-10 rounded-md flex flex-col items-center">
                 <h1 className="font-semibold">Enter Dollar Amount</h1>
                 <input
@@ -95,21 +130,21 @@ const OffsetNow = () => {
                   onChange={handleAmountChange}
                   className="w-full h-14 text-2xl md:text-4xl font-bold text-center border-b-2 border-black focus:outline-none focus:border-b-2"
                 />
-                {/* <h1 className="font-semibold">Select Frequency</h1>
-              <div className="flex flex-wrap gap-3 w-full items-center justify-center">
-                {["One-Time", "Monthly", "Quarterly", "Yearly"].map((frequency) => (
-                  <div
-                    key={frequency}
-                    onClick={() => handleFrequencyClick(frequency)}
-                    className={`w-24 md:w-32 text-center py-3 ${selectedFrequency === frequency
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-300"
-                      } hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer`}
-                  >
-                    {frequency}
-                  </div>
-                ))}
-              </div> */}
+                <h1 className="font-semibold">Select Frequency</h1>
+                <div className="flex flex-wrap gap-3 w-full items-center justify-center">
+                  {["One-Time", "Monthly", "Quarterly", "Yearly"].map((frequency) => (
+                    <div
+                      key={frequency}
+                      onClick={() => handleFrequencyClick(frequency)}
+                      className={`w-24 md:w-32 text-center py-3 ${selectedFrequency === frequency
+                        ? "bg-green-600 text-white"
+                        : "bg-gray-300"
+                        } hover:bg-green-600 hover:text-white text-lg font-bold rounded-md cursor-pointer`}
+                    >
+                      {frequency}
+                    </div>
+                  ))}
+                </div>
                 <h1 className="text-xs tracking-[4px] uppercase font-bold">
                   total{" "}
                   <span className="text-green-600">
@@ -135,11 +170,11 @@ const OffsetNow = () => {
               </div>
             </div>
           </div>
-        </div>
+        </main>
 
         {/* calculator  */}
         <div className="bg-[#DEFFDD] flex items-center justify-center pt-8 md:pt-0 p-10 md:p-20 flex-col md:flex-row">
-          <div className="w-full md:w-1/2 flex flex-col gap-5 items-center text-center">
+          <div className="w-full md:w-1/2 flex flex-col gap-5 items-center text-center mt-8">
             <h1 className="uppercase text-xs font-bold">
               unsure about your impact?
             </h1>

@@ -4,7 +4,13 @@ import Cookies from "js-cookie";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const AddToWallet = async ({ amount, tokens }: any) => {
+export const AddToWallet = async ({
+  amount,
+  tokens,
+  paymentType = "subscription",
+  duration = 1,
+  clientType = "individual",
+}: any) => {
   console.log(`Added ${amount} to wallet`);
   const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -21,6 +27,9 @@ export const AddToWallet = async ({ amount, tokens }: any) => {
   const costDetails = {
     totalCost: amount,
     totalCredit: tokens,
+    paymentType,
+    duration,
+    clientType,
   };
 
   try {
