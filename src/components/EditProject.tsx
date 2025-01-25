@@ -113,7 +113,7 @@ function EditProject({
 
   return (
     <CustomModal isOpen={isOpen} toggleModal={toggleModal}>
-      <ScrollArea>
+      <ScrollArea className="max-h-96 overflow-y-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 p-6"

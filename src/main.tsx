@@ -57,6 +57,7 @@ import AdminVolunteerRegistration from "./pages/AdminVolunteerRegistration";
 import AdminProposal from "./pages/AdminProposal";
 import AdminMembership from "./pages/AdminMembership";
 import AdminCollaborativePlatform from "./pages/AdmincollaborativePlatforms";
+import AdminAllBusinessDetails from "./pages/AdminAllBusinessDetails";
 
 const router = createBrowserRouter([
   {
@@ -327,6 +328,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <AdminAllTransactions />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `/admin/${import.meta.env.VITE_ADMIN_ROUTE}/adminAllBusinessDetails`,
+    element: (
+      <PrivateRoute>
+        <AdminAllBusinessDetails />
       </PrivateRoute>
     ),
   },

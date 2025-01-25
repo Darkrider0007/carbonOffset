@@ -38,3 +38,17 @@ export async function updateBusinessDetails(data: any) {
     throw error;
   }
 }
+
+export async function getBusinessDetails() {
+  try {
+    const token = Cookies.get("accessToken");
+    if (!token) {
+      return { message: "No token found" };
+    }
+    const res = await axios.get(`${BASE_URL}/api/businessDetails`);
+    return res.data;
+  } catch (error) {
+    console.error("Error adding project:", error);
+    throw error;
+  }
+}
