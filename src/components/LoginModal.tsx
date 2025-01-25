@@ -3,6 +3,7 @@ import { toast } from "../hooks/use-toast";
 import UserContext from "../context/UserContext";
 import { login } from "../api/auth/loginAndLogout";
 import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -106,9 +107,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           <button
             onClick={handleSubmit}
             disabled={loader}
-            className={`${
-              loader ? "bg-green-300" : "bg-green-500 hover:bg-green-700"
-            } text-white font-bold py-2 px-4 rounded-lg`}
+            className={`${loader ? "bg-green-300" : "bg-green-500 hover:bg-green-700"
+              } text-white font-bold py-2 px-4 rounded-lg`}
           >
             {loader ? (
               <div className="flex items-center gap-2">
@@ -126,6 +126,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           >
             Cancel
           </button>
+        </div>
+        <div className="flex flex-col justify-center items-center mt-4 text-gray-700 font-medium">
+          Don't have an account?
+          <Link to="/signup" className="mt-4 text-green-500">
+            Register here
+          </Link>
         </div>
       </div>
     </div>

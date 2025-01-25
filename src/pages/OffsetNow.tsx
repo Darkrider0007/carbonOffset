@@ -17,7 +17,7 @@ const OffsetNow = () => {
   const [fixAmount, setFixAmount] = useState<number>(0);
   const [fixTokens, setFixTokens] = useState<number>(0);
   const [tokens, setTokens] = useState<number>(0);
-  const [selectedFrequency, setSelectedFrequency] = useState<string>("One-Time");
+  const [selectedFrequency, setSelectedFrequency] = useState<string>("Monthly");
   const [submitting, setSubmitting] = useState(false);
 
   const location = useLocation();
@@ -76,8 +76,8 @@ const OffsetNow = () => {
         const res = await getTokenData();
         if (state?.totalEmissions) {
           const totalAmount = res.data.tokenPerTon * state?.totalEmissions * res.data.tokenPrice;
-          setAmount(Number(totalAmount.toFixed(2)));
           setFixAmount(Number(totalAmount.toFixed(2)));
+          setAmount(Number(((Number(totalAmount.toFixed(2))) / 12).toFixed(2)));
           setTokens(res.data.tokenPerTon * state?.totalEmissions);
           setFixTokens(res.data.tokenPerTon * state?.totalEmissions);
 
