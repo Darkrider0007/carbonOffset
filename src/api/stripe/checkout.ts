@@ -10,6 +10,7 @@ export const AddToWallet = async ({
   paymentType = "subscription",
   duration = 1,
   clientType = "individual",
+  businessId,
 }: any) => {
   console.log(`Added ${amount} to wallet`);
   const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -30,6 +31,7 @@ export const AddToWallet = async ({
     paymentType,
     duration,
     clientType,
+    businessId,
   };
 
   try {

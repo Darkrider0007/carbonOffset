@@ -28,8 +28,7 @@ function CollectOffsetDetails({ businessId }: any) {
         try {
             const res = await updateBusinessDetails(data);
             if (res.data) {
-                console.log(res.data);
-                navigate('/offsetNow', { state: { businessId: businessId, totalEmissions: res.data.totalCarbonEmmision } })
+                navigate('/offsetNow', { state: { clientType: "business", businessId: businessId, totalEmissions: res.data.totalCarbonEmmision } })
                 toast({
                     title: "Success",
                     description: "Your business details have been submitted successfully",

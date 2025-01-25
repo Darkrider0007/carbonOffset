@@ -47,7 +47,7 @@ const OffsetNow = () => {
         duration = 12;
       }
 
-      const res = await AddToWallet({ amount, tokens, paymentType, duration, clientType: state ? state?.clientType : "individual" });
+      const res = await AddToWallet({ amount, tokens, paymentType, duration, clientType: state ? state?.clientType : "individual", businessId: state?.businessId });
       console.log(res);
     } catch (error) {
       console.log(error);
