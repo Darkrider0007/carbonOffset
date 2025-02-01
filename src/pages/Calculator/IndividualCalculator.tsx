@@ -43,11 +43,11 @@ const IndividualCalculator: React.FC = () => {
                 carbon footprint can help you reduce your environmental impact.
               </p>
             </div>
-            <div className="w-full flex justify-center md:justify-end">
+            {/* <div className="w-full flex justify-center md:justify-end">
               <button className="bg-black text-white font-semibold py-2 px-4 md:py-3 md:px-6 lg:py-4 lg:px-10 rounded-xl">
                 More
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-full flex flex-col items-center justify-center py-6 px-4 md:py-10 md:px-8 lg:py-20 lg:px-10">

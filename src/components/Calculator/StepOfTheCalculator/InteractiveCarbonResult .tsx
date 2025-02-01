@@ -205,7 +205,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
               </Button>
               <Link
                 to="/offsetNow"
-                state={{ totalEmissions, clientType: 'individual' }}
+                state={{ totalEmissions: Number(totalEmissions).toFixed(2), clientType: 'individual' }}
                 className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-300"
               >
                 <div className="flex flex-row items-center justify-center">
