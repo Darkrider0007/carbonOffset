@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AddToWallet } from "../api/stripe/checkout";
 import { Loader2 } from "lucide-react";
-import { getTokenData } from "../api/token";
+// import { getTokenData } from "../api/token";
 import Newsletter from "../components/Newsletter";
 import SmoothScroll from "../components/SmoothScroll";
 
@@ -17,7 +17,7 @@ const OffsetNow = () => {
   const [fixAmount, setFixAmount] = useState<number>(0);
   const [fixTokens, setFixTokens] = useState<number>(0);
   const [tokens, setTokens] = useState<number>(0);
-  const [selectedFrequency, setSelectedFrequency] = useState<string>("Monthly");
+  const [selectedFrequency, setSelectedFrequency] = useState<string>("1-Year Plan");
   const [submitting, setSubmitting] = useState(false);
 
   const location = useLocation();
@@ -39,12 +39,12 @@ const OffsetNow = () => {
     try {
       const paymentType = selectedFrequency == "One-Time" ? "payment" : "subscription";
       let duration = 1;
-      if (selectedFrequency === "Monthly") {
+      if (selectedFrequency === "1-Year Plan") {
         duration = 1;
-      } else if (selectedFrequency === "Quarterly") {
-        duration = 4;
-      } else if (selectedFrequency === "Yearly") {
-        duration = 12;
+      } else if (selectedFrequency === "2-Year Plan") {
+        duration = 1;
+      } else if (selectedFrequency === "3-Year Plan") {
+        duration = 1;
       }
 
       const res = await AddToWallet({ amount, tokens, paymentType, duration, clientType: state ? state?.clientType : "individual", businessId: state?.businessId });
@@ -55,17 +55,22 @@ const OffsetNow = () => {
   };
 
   useEffect(() => {
-    if (selectedFrequency === "One-Time" || selectedFrequency === "Yearly") {
+    if (selectedFrequency === "One-Time") {
       setAmount(Number(fixAmount.toFixed(2)));
       setTokens(fixTokens);
     }
-    if (selectedFrequency === "Monthly") {
+    if (selectedFrequency === "1-Year Plan") {
       setAmount(Number((fixAmount / 12).toFixed(2)));
       setTokens(fixTokens / 12);
     }
-    if (selectedFrequency === "Quarterly") {
-      setAmount(Number((fixAmount / 4).toFixed(2)));
-      setTokens(fixTokens / 4);
+    if (selectedFrequency === "2-Year Plan") {
+      setAmount(Number((fixAmount / 24).toFixed(2)));
+      setTokens(fixTokens / 24);
+
+    }
+    if (selectedFrequency === "3-Year Plan") {
+      setAmount(Number((fixAmount / 36).toFixed(2)));
+      setTokens(fixTokens / 36);
 
     }
   }, [selectedFrequency]);
@@ -73,17 +78,19 @@ const OffsetNow = () => {
   useEffect(() => {
     const amountChange = async () => {
       try {
-        const res = await getTokenData();
+        // const res = await getTokenData();
         if (state?.totalEmissions) {
-          const totalAmount = res.data.tokenPerTon * state?.totalEmissions * res.data.tokenPrice;
+          const totalAmount = state?.totalEmissions * 0.36 * 375;
           setFixAmount(Number(totalAmount.toFixed(2)));
           setAmount(Number(((Number(totalAmount.toFixed(2))) / 12).toFixed(2)));
-          setTokens(res.data.tokenPerTon * state?.totalEmissions);
-          setFixTokens(res.data.tokenPerTon * state?.totalEmissions);
+          setTokens(totalAmount / 100);
+          setFixTokens(totalAmount / 100);
+          // setTokens(res.data.tokenPerTon * state?.totalEmissions);
+          // setFixTokens(res.data.tokenPerTon * state?.totalEmissions);
 
         } else {
-          const tokenPrice = res.data.tokenPrice;
-          setTokens(amount / tokenPrice);
+          // const tokenPrice = res.data.tokenPrice;
+          setTokens(amount / 100);
         }
       } catch (error) {
         console.log("error", error);
@@ -126,13 +133,14 @@ const OffsetNow = () => {
                 <h1 className="font-semibold">Enter Dollar Amount</h1>
                 <input
                   placeholder="100 $"
+                  disabled={true}
                   value={amount}
                   onChange={handleAmountChange}
                   className="w-full h-14 text-2xl md:text-4xl font-bold text-center border-b-2 border-black focus:outline-none focus:border-b-2"
                 />
                 <h1 className="font-semibold">Select Frequency</h1>
                 <div className="flex flex-wrap gap-3 w-full items-center justify-center">
-                  {["One-Time", "Monthly", "Quarterly", "Yearly"].map((frequency) => (
+                  {["One-Time", "1-Year Plan", "2-Year Plan", "3-Year Plan"].map((frequency) => (
                     <div
                       key={frequency}
                       onClick={() => handleFrequencyClick(frequency)}
