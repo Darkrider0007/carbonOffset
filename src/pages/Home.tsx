@@ -97,7 +97,7 @@ const Home = () => {
           {/* Button */}
           {user ? (
             <button
-              onClick={() => navigate("/offsetNow")}
+              onClick={() => navigate("/calculator")}
               className="px-5 py-2 my-10 bg-green-600 rounded-xl text-white flex gap-2 items-center font-bold"
             >
               <FaTree /> Offset Now
@@ -197,7 +197,7 @@ const Home = () => {
             </h1>
             <button
               onClick={() => {
-                navigate("/calculator");
+                navigate("/calculator/individual");
               }}
               className="bg-green-600 px-3 py-2 rounded-full"
             >
