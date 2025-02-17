@@ -41,17 +41,17 @@ const FutureData = [
 const ProjectData = [
   {
     title: "Clean Kailash",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptatem eligendi maiores voluptatibus voluptatum velit laboriosam tenetur exercitationem quae assumenda quis dolor hic libero est quam nostrum cumque eos at consequuntur illo, deserunt rerum fugiat. Laudantium, qui, saepe, expedita cupiditate provident aliquid eaque pariatur consequatur omnis esse modi iste voluptatibus!",
+    desc: "Clean Kailash is a movement to protect Mount Kailash’s sacred and ecological balance through responsible tourism, waste management, community empowerment, visitor education, and conservation. Join us in clean-up drives, awareness programs, and sustainable initiatives to preserve this iconic site for future generations.",
     image: projectbg1,
   },
   {
     title: "Urban Green Spaces",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptatem eligendi maiores voluptatibus voluptatum velit laboriosam tenetur exercitationem quae assumenda quis dolor hic libero est quam nostrum cumque eos at consequuntur illo, deserunt rerum fugiat. Laudantium, qui, saepe, expedita cupiditate provident aliquid eaque pariatur consequatur omnis esse modi iste voluptatibus!",
+    desc: "Our Urban Green Spaces project aims to create and maintain green areas within urban environments. These spaces provide essential ecological benefits, improve air quality, and offer recreational areas for communities, contributing to overall well-being and environmental sustainability.",
     image: projectbg2,
   },
   {
-    title: "Sustainable agriculture Practices",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptatem eligendi maiores voluptatibus voluptatum velit laboriosam tenetur exercitationem quae assumenda quis dolor hic libero est quam nostrum cumque eos at consequuntur illo, deserunt rerum fugiat. Laudantium, qui, saepe, expedita cupiditate provident aliquid eaque pariatur consequatur omnis esse modi iste voluptatibus!",
+    title: "Sustainable Agriculture Practices",
+    desc: "Our Sustainable Agriculture Practices project focuses on promoting eco-friendly farming techniques. By encouraging crop rotation, organic farming, and efficient water use, we aim to reduce the environmental impact of agriculture while ensuring food security and supporting local farmers.",
     image: projectbg3,
   },
 ];

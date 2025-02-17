@@ -163,9 +163,21 @@ const sharedVisionContent = {
 
 const contactContent = {
   contactInfo: [
-    "📧 Contact Us Today: info@cmrbitplast.com",
-    "🌍 Learn More: Discover how we can transform infrastructure together at www.cmrbitplast.com.",
-  ],
+    {
+      "type": "email",
+      "icon": "📧",
+      "label": "Contact Us Today:",
+      "value": "info@cmrbitplast.com",
+      "link": "mailto:info@cmrbitplast.com"
+    },
+    {
+      "type": "website",
+      "icon": "🌍",
+      "label": "Learn More:",
+      "value": "Discover how we can transform infrastructure together at www.cmrbitplast.com",
+      "link": "https://www.cmrbitplast.com"
+    }
+  ]
 };
 
 function Cmrbitplast() {
@@ -308,7 +320,7 @@ function Cmrbitplast() {
                 (section, index) => (
                   <div
                     key={index}
-                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[530px]"
+                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[46%] h-auto "
                   >
                     <h4 className="text-3xl font-semibold mb-4">
                       {section.title}
@@ -379,7 +391,10 @@ function Cmrbitplast() {
             <ul className="list-none mt-10">
               {contactContent.contactInfo.map((info, index) => (
                 <li key={index} className="text-2xl font-normal">
-                  {info}
+                  {info.icon} {info.label}{" "}
+                  <a href={info.link} target="_blank" rel="noopener noreferrer">
+                    {info.value}
+                  </a>
                 </li>
               ))}
             </ul>

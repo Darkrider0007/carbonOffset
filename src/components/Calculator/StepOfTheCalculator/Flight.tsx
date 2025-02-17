@@ -51,12 +51,12 @@ function Flight() {
                       The average carbon emissions per passenger mile for a
                       commercial flight is 0.22 pounds. This calculation is
                       based on the assumption that the average passenger vehicle
-                      emits 0.4047 pounds of CO2 per mile.
+                      emits 0.4047 pounds of CO<sub>2</sub> per mile.
                     </p>
                     <p>
-                      The average passenger vehicle emits 0.4047 pounds of CO2
+                      The average passenger vehicle emits 0.4047 pounds of CO<sub>2</sub>
                       per mile. The average commercial flight emits 0.22 pounds
-                      of CO2 per mile.
+                      of CO<sub>2</sub> per mile.
                     </p>
                   </div>
                 }

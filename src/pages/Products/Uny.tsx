@@ -112,9 +112,22 @@ const contactContent = {
     "Prepare to Invest: Stay informed about upcoming opportunities to grow your wealth while supporting the planet.",
   ],
   contactInfo: [
-    "📧 Contact Us: info@ouruny.com",
-    "🌐 Visit Us: www.ouruny.com",
-  ],
+    {
+      "type": "email",
+      "icon": "📧",
+      "label": "Contact Us:",
+      "value": "info@ouruny.com",
+      "link": "mailto:info@ouruny.com"
+    },
+    {
+      "type": "website",
+      "icon": "🌐",
+      "label": "Visit Us:",
+      "value": "www.ouruny.com",
+      "link": "https://www.ouruny.com"
+    }
+  ]
+
 };
 
 const videoContent = {
@@ -214,11 +227,11 @@ function Uny() {
 
           {/* Cards Section */}
           <section className="my-10">
-            <div className="flex flex-wrap items-center justify-between gap-20">
+            <div className="flex flex-wrap justify-between gap-10">
               {cardsContent.map((card, index) => (
                 <div
                   key={index}
-                  className="w-[625px] h-auto md:h-[725px] bg-Mint_Green px-7 py-20 rounded-lg"
+                  className="w-[625px] md:w-[550px] macbook:w-[625px] md:h-auto h-auto bg-Mint_Green px-7 py-20 rounded-lg"
                 >
                   <h1 className="text-3xl font-semibold text-black mb-8">
                     {card.title}
@@ -261,7 +274,10 @@ function Uny() {
             <ul className="list-none mt-5">
               {contactContent.contactInfo.map((info, index) => (
                 <li key={index} className="text-2xl font-normal">
-                  {info}
+                  {info.icon} {info.label}{" "}
+                  <a href={info.link} target="_blank" rel="noopener noreferrer">
+                    {info.value}
+                  </a>
                 </li>
               ))}
             </ul>
