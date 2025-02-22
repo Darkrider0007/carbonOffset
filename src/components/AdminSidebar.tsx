@@ -71,7 +71,6 @@ const AdminSidebar = () => {
       <div className="flex h-[80px] items-center border-b px-6 py-2 bg-white dark:bg-gray-800">
         <NavLink className="flex items-center gap-2 font-semibold text-xl" to="/">
           <img src={logo} alt="logo" className="h-16 w-16" />
-          <span className="text-gray-900 dark:text-gray-50">Carbon Offset</span>
         </NavLink>
       </div>
       <div className="flex-1 overflow-auto w-60 min-h-[90vh] py-2">

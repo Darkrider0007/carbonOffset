@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaTree, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { RiWallet3Fill } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
@@ -89,6 +89,8 @@ const Navbar = () => {
     { path: "/contact", label: "Contact Us" },
   ];
 
+  const navigate = useNavigate();
+
   const isActive = (path: any) => {
     return (
       location.pathname === path ||
@@ -97,9 +99,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full bg-white shadow-lg">
+    <nav className="w-full bg-gray-100 shadow-lg">
       <div className="flex items-center justify-between px-4 py-3 lg:px-10">
-        <h1 className="text-green-600 text-3xl font-bold">Carbon</h1>
+        <div onClick={() => navigate("/")} className="cursor-pointer">
+          <img src="/src/assets/logos/navbarLogo-black.png" alt="logo" className="h-12" />
+        </div>
         <div className="lg:hidden">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
