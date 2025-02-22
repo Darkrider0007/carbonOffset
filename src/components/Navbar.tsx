@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import logo from "../assets/logos/navbarLogo-black.png";
 
 const Navbar = () => {
   const [userData, setUserData] = useState(null);
@@ -102,7 +103,7 @@ const Navbar = () => {
     <nav className="w-full bg-gray-100 shadow-lg">
       <div className="flex items-center justify-between px-4 py-3 lg:px-10">
         <div onClick={() => navigate("/")} className="cursor-pointer">
-          <img src="/src/assets/logos/navbarLogo-black.png" alt="logo" className="h-12" />
+          <img src={logo} alt="logo" className="h-12" />
         </div>
         <div className="lg:hidden">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
