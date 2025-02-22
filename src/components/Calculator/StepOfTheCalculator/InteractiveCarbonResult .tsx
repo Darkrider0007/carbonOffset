@@ -178,7 +178,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
                     {totalEmissions ? totalEmissions.toFixed(4) : "0"}
                   </span>
                   <span className="text-lg sm:text-2xl font-medium text-gray-50">
-                    METRIC TONS CO2
+                    METRIC TONS CO<sub>2</sub>
                   </span>
                 </div>
               </div>
@@ -190,8 +190,8 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
 
               <p className="text-gray-200 text-center text-xs sm:text-sm max-w-xs sm:max-w-lg">
                 On average, a hectare of tropical forest stores carbon equating
-                to 550 metric tons of CO2. With annual tropical deforestation
-                rates averaging 0.5%, this results in 2.75 metric tons of CO2
+                to 550 metric tons of CO<sub>2</sub>. With annual tropical deforestation
+                rates averaging 0.5%, this results in 2.75 metric tons of CO<sub>2</sub>
                 emitted per hectare each year.
               </p>
               <Button

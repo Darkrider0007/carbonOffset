@@ -189,6 +189,20 @@ const About: React.FC = () => {
           />
         </div>
 
+        <div className="w-full flex justify-center items-center my-10 px-4 md:px-0">
+          <iframe
+            width="100%"
+            height="auto"
+            style={{ maxWidth: "650px", aspectRatio: "16/9" }}
+            src="https://www.youtube.com/embed/AH1uw5PbWqQ?si=V2WQNkMELukw2OWR"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+
         {/* Newsletter */}
         <Newsletter />
         <Footer />

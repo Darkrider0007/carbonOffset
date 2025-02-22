@@ -42,7 +42,7 @@ function Newsletter() {
       className="flex flex-col md:flex-row items-center lg:h-[150px] justify-between px-5 md:px-16 py-5 md:py-0"
     >
       <div className="flex gap-5 md:gap-16 items-center">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" className="w-24 mb-4" />
         <h1 className="text-xl text-white">Join Our Newsletter</h1>
       </div>
       <div className="gap-3 mt-5 md:mt-0 flex flex-col ">

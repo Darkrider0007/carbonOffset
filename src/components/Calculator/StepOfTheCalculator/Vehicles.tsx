@@ -50,12 +50,12 @@ function Vehicles() {
                 cardContent={
                   <div className="text-sm text-gray-700">
                     <li>
-                      The average car emits 4.6 metric tons of CO2 per year.
+                      The average car emits 4.6 metric tons of CO<sub>2</sub> per year.
                     </li>
                     <li>
-                      The average car emits 404 grams of CO2 per mile driven.
+                      The average car emits 404 grams of CO<sub>2</sub> per mile driven.
                     </li>
-                    <li>The average car emits 9,000 pounds of CO2 per year.</li>
+                    <li>The average car emits 9,000 pounds of CO<sub>2</sub> per year.</li>
                   </div>
                 }
               />

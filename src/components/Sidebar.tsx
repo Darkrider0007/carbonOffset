@@ -24,7 +24,8 @@ const Sidebar = () => {
       {/* Mobile Dropdown Toggle Button */}
       <div className="md:hidden flex items-center justify-between px-4 py-2">
         <Link className="text-xl font-semibold" to="/">
-          Carbon Offset
+          <img src={logo} alt="logo" className="
+          h-10 w-10" />
         </Link>
         <button
           onClick={toggleDropdown}
@@ -74,10 +75,8 @@ const Sidebar = () => {
       <div className="hidden md:block h-full max-h-screen flex-col gap-2">
         <div className="flex h-[60px] items-center border-b px-6">
           <Link className="flex items-center gap-2 font-semibold" to="/">
-            <img src={logo} alt="logo" className="h-10 w-10" />
-            <span className="text-green-600 font-semibold text-xl">
-              Carbon Offset
-            </span>
+            <img src={logo} alt="logo" className="h-14" />
+
           </Link>
         </div>
         <div className="flex-1 overflow-auto w-60 min-h-[90vh] py-2">

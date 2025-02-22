@@ -98,9 +98,21 @@ const sharedVisionContent = {
 
 const contactContent = {
   contactInfo: [
-    "📧 Contact Us: info@our-bamboo.com",
-    "🌍 Discover Bamboo Hut: Where innovation meets sustainability",
-  ],
+    {
+      "type": "email",
+      "icon": "📧",
+      "label": "Contact Us:",
+      "value": "info@our-bamboo.com",
+      "link": "mailto:info@our-bamboo.com"
+    },
+    {
+      "type": "website",
+      "icon": "🌍",
+      "label": "Discover Bamboo Hut:",
+      "value": "Where innovation meets sustainability",
+      "link": "#"
+    }
+  ]
 };
 
 function Bamboohut() {
@@ -232,7 +244,10 @@ function Bamboohut() {
             <ul className="list-none mt-10">
               {contactContent.contactInfo.map((info, index) => (
                 <li key={index} className="text-2xl font-normal">
-                  {info}
+                  {info.icon} {info.label}{" "}
+                  <a href={info.link} target="_blank" rel="noopener noreferrer">
+                    {info.value}
+                  </a>
                 </li>
               ))}
             </ul>

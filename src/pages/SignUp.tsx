@@ -74,11 +74,13 @@ const SignUp: React.FC = () => {
       <div className="min-h-screen w-full bg-[#F1F5F9] flex items-center justify-center">
         <div className="flex w-full">
           {/* Left side - Logo and Form */}
-          <div className="w-full md:w-1/2 p-8">
+          <div className="w-full md:w-1/2 p-8"
+            onClick={() => navigate("/")}
+          >
             <img
               src={Logo}
               alt="Logo"
-              className="object-cover h-40 w-40 mb-8"
+              className="object-cover h-40 w-40 mb-8 cursor-pointer"
             />
             <div className="flex w-full items-center justify-center">
               <h1 className="text-4xl font-bold mb-6">Join Us Today</h1>
@@ -108,7 +110,7 @@ const SignUp: React.FC = () => {
                 {...register("firstName", {
                   required: "First name is required",
                 })}
-                // ref={firstNameRef}
+              // ref={firstNameRef}
               />
               <InputField
                 id="lastName"
@@ -119,7 +121,7 @@ const SignUp: React.FC = () => {
                 {...register("lastName", {
                   required: "Last name is required",
                 })}
-                // ref={lastNameRef}
+              // ref={lastNameRef}
               />
               <InputField
                 id="email"
@@ -135,7 +137,7 @@ const SignUp: React.FC = () => {
                     message: "Invalid email address",
                   },
                 })}
-                // ref={emailRef}
+              // ref={emailRef}
               />
               <InputPassword
                 id="password"
@@ -150,7 +152,7 @@ const SignUp: React.FC = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                // ref={passwordRef}
+              // ref={passwordRef}
               />
               <InputPassword
                 id="repeatPassword"
@@ -163,7 +165,7 @@ const SignUp: React.FC = () => {
                   validate: (value) =>
                     value === getValues("password") || "Passwords do not match",
                 })}
-                // ref={repeatPasswordRef}
+              // ref={repeatPasswordRef}
               />
 
               <div className="col-span-2">
@@ -175,7 +177,7 @@ const SignUp: React.FC = () => {
                     {...register("terms", {
                       required: "You must agree to the terms and conditions",
                     })}
-                    // ref={termsRef}
+                  // ref={termsRef}
                   />
                   <label htmlFor="terms" className="text-sm">
                     I agree with{" "}

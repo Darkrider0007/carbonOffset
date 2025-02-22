@@ -126,10 +126,26 @@ const sharedVisionContent = {
 };
 
 const contactContent = {
+  // contactInfo: [
+  //   "📧 Contact Us: info@divine-healer.com",
+  //   "🌐 Discover More: Visit www.divine-healer.com to learn how you can integrate this groundbreaking technology into your life or business.",
+  // ],
   contactInfo: [
-    "📧 Contact Us: info@divine-healer.com",
-    "🌐 Discover More: Visit www.divine-healer.com to learn how you can integrate this groundbreaking technology into your life or business.",
-  ],
+    {
+      "type": "email",
+      "icon": "📧",
+      "label": "Contact Us:",
+      "value": "info@divine-healer.com",
+      "link": "mailto:info@divine-healer.com"
+    },
+    {
+      "type": "website",
+      "icon": "🌐",
+      "label": "Discover More:",
+      "value": "Visit www.divine-healer.com to learn how you can integrate this groundbreaking technology into your life or business.",
+      "link": "https://www.divine-healer.com"
+    }
+  ]
 };
 
 function Divinehealer() {
@@ -193,7 +209,7 @@ function Divinehealer() {
               {impactOnBeverages.section.map((section, index) => (
                 <div
                   key={index}
-                  className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[400px]"
+                  className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[46%] h-auto "
                 >
                   <h4 className="text-3xl font-semibold mb-4">
                     {section.title}
@@ -242,7 +258,7 @@ function Divinehealer() {
                 (section, index) => (
                   <div
                     key={index}
-                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[530px]"
+                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[46%] h-auto"
                   >
                     <h4 className="text-3xl font-semibold mb-4">
                       {section.title}
@@ -299,7 +315,10 @@ function Divinehealer() {
             <ul className="list-none mt-10">
               {contactContent.contactInfo.map((info, index) => (
                 <li key={index} className="text-2xl font-normal">
-                  {info}
+                  {info.icon} {info.label}{" "}
+                  <a href={info.link} target="_blank" rel="noopener noreferrer">
+                    {info.value}
+                  </a>
                 </li>
               ))}
             </ul>

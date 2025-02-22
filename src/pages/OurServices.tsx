@@ -47,8 +47,7 @@ const OurServices = () => {
         {/* vehicle and trees */}
         <div className="p-5 md:p-10 flex flex-col">
           <h1 className="text-lg md:text-3xl px-5 md:px-16 my-5 md:my-10 text-center">
-            That’s the average American’s carbon footprint from our home, work,
-            travel, and everything else we do and buy. You can be a leader in
+            That’s the average American’s carbon footprint (about 16 metric tons per year, according to the EPA) from our home, work, travel, and everything else we do and buy. You can be a leader in
             the fight against climate change. Offset your carbon footprint and
             support our industry-leading carbon reduction projects. Thank you!
           </h1>
