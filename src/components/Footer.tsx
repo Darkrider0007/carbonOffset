@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/home/logo.png";
 import {
-  FaTwitter,
   FaFacebook,
   FaInstagramSquare,
   FaYoutube,
 
 } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -46,7 +46,7 @@ const Footer = () => {
           © {new Date().getFullYear()} 1 World 1 Nation. All rights reserved.
         </span>
         <div className="flex space-x-4">
-          <FaTwitter className="text-white hover:text-gray-300 cursor-pointer" size={24} />
+          <FaSquareXTwitter className="text-white hover:text-gray-300 cursor-pointer" size={24} />
           <FaYoutube
             onClick={() =>
               window.open("https://www.youtube.com/@1world-1nation", "_blank")
