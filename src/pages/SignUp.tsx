@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
             <img
               src={Logo}
               alt="Logo"
-              className="object-cover h-40 w-40 mb-8 cursor-pointer"
+              className="object-cover h-16 mb-8 cursor-pointer"
             />
             <div className="flex w-full items-center justify-center">
               <h1 className="text-4xl font-bold mb-6">Join Us Today</h1>

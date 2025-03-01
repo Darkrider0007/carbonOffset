@@ -102,12 +102,12 @@ function Login() {
           <div className="w-full md:w-1/2 p-8 md:px-32 justify-center">
             <div
               onClick={() => navigate("/")}
-              className="absolute top-1 right-1 mb-6 md:mb-0"
+              className="absolute top-3 right-4 mb-6 md:mb-0"
             >
               <img
                 src={Logo}
                 alt="Logo"
-                className="md:right-9 h-20 md:h-36 w-20 md:w-36 object-cover cursor-pointer "
+                className="md:right-9 h-6 md:h-16 object-cover cursor-pointer "
               />
             </div>
 
