@@ -7,6 +7,7 @@ import { updateCalculatedState } from "../../../store/features/calculator/calcul
 import { Button } from "../../ui/button";
 import { RiRestartLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { HiExternalLink } from "react-icons/hi";
 
 interface InteractiveCarbonResultProps {
   userDetails: any;
@@ -193,6 +194,7 @@ const InteractiveCarbonResult: React.FC<InteractiveCarbonResultProps> = ({
                 to 550 metric tons of CO<sub>2</sub>. With annual tropical deforestation
                 rates averaging 0.5%, this results in 2.75 metric tons of CO<sub>2</sub>
                 emitted per hectare each year.
+                <a href="https://climate.mit.edu/ask-mit/how-many-new-trees-would-we-need-offset-our-carbon-emissions" target="_blank" className="flex flex-row items-center justify-center text-green-400"> Learn more <HiExternalLink /></a>
               </p>
               <Button
                 className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-300"
