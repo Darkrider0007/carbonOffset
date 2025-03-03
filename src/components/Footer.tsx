@@ -54,8 +54,15 @@ const Footer = () => {
             className="text-white hover:text-gray-300 cursor-pointer"
             size={24}
           />
-          <FaInstagramSquare className="text-white hover:text-gray-300 cursor-pointer" size={24} />
-          <FaFacebook className="text-white hover:text-gray-300 cursor-pointer" size={24} />
+          <FaInstagramSquare
+            onClick={() =>
+              window.open("https://www.instagram.com/1world1nation1?igsh=MXBxNzQ1NXVmYWRnNg==", "_blank")
+            }
+            className="text-white hover:text-gray-300 cursor-pointer" size={24} />
+          <FaFacebook
+            onClick={() =>
+              window.open("https://www.facebook.com/share/12LcVDvkeB9/?mibextid=wwXIfr", "_blank")}
+            className="text-white hover:text-gray-300 cursor-pointer" size={24} />
         </div>
       </div>
     </footer>
