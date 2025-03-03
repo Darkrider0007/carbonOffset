@@ -107,7 +107,7 @@ function Login() {
               <img
                 src={Logo}
                 alt="Logo"
-                className="md:right-9 h-6 md:h-16 object-cover cursor-pointer "
+                className="md:right-9 h-40 object-cover cursor-pointer "
               />
             </div>
 
