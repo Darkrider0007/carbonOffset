@@ -3,18 +3,19 @@ import mainbg from "../assets/services/mainbg.png";
 import curve from "../assets/home/curve.png";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../components/ui/tabs";
+// import {
+//   Tabs,
+//   TabsContent,
+//   TabsList,
+//   TabsTrigger,
+// } from "../components/ui/tabs";
 import AwardsProgram from "../components/Awards/AwardsProgram";
-import Objectives from "../components/Awards/Objective";
-import { SubmissionGuidelines } from "../components/Awards/SubmissionGuidelines";
-import ContentComponent from "../components/Awards/Content";
+// import Objectives from "../components/Awards/Objective";
+// import { SubmissionGuidelines } from "../components/Awards/SubmissionGuidelines";
+// import ContentComponent from "../components/Awards/Content";
 import BarbaraThieleAwards from "../components/Awards/BarbaraThieleAwards";
 import SmoothScroll from "../components/SmoothScroll";
+// import { MissionSection } from "../components/Awards/MissionSection";
 
 function Awards() {
   return (
@@ -42,30 +43,9 @@ function Awards() {
             alt="decorative curve"
           />
         </div>
-        <main className="min-h-screen  p-4 md:p-8 lg:p-16">
-          <section className="bg-white shadow-lg rounded-lg p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
-            <p className="text-base md:text-lg font-medium">
-              The Society for Universal Oneness brings together people of the
-              world in an endeavor to create a better future.
-            </p>
-
-            <p className="text-base md:text-lg">
-              You are invited to join the team. Be part of a revolution for
-              peace and making the planet a better place, by engaging in
-              meaningful professional activity and lifestyle.
-            </p>
-
-            <p className="text-base md:text-lg">
-              The Society for Universal Oneness (SFUO) is a non-profit
-              organization, aiming for a global presence. SFUO is incorporated
-              in North Carolina, USA, and organizes a network of global
-              volunteers to create positive change. Our future vision includes
-              the establishment of a <strong>futurecity</strong>, a flagship
-              model for global peace and harmony, which can be replicated across
-              the world.
-            </p>
-          </section>
-          <section className="bg-white shadow-lg border-2 mt-4 rounded-lg p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
+        <main className="min-h-screen  py-4 md:py-8 lg:py-16">
+          {/* <MissionSection /> */}
+          {/* <section className="bg-white shadow-lg border-2 mt-4 rounded-lg p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
             <Tabs defaultValue="awards-program" className="w-full">
               <TabsList
                 defaultValue="awards-program"
@@ -115,9 +95,10 @@ function Awards() {
                 <ContentComponent />
               </TabsContent>
             </Tabs>
-          </section>
+          </section> */}
 
-          <section className="bg-white shadow-lg border-2 mt-4 rounded-lg p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
+          <AwardsProgram />
+          <section className="bg-[#5B5B5B] p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
             <BarbaraThieleAwards />
           </section>
         </main>
