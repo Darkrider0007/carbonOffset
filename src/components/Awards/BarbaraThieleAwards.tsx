@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import barbara from "../../assets/Award/BarbaraThiele.png";
 import { Music, Heart, BookOpen, Cat } from "lucide-react";
 import { GiViolin } from "react-icons/gi";

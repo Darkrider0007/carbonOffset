@@ -6,7 +6,6 @@ import mainbg from "../../assets/services/mainbg.png";
 import Newsletter from "../../components/Newsletter";
 import SmoothScroll from "../../components/SmoothScroll";
 import { FaUser, FaBuilding, FaCity, FaChild, FaUndo, FaEnvelope } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 // Animation variants
