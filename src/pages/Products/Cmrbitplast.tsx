@@ -21,8 +21,7 @@ import {
   FaShieldAlt,
   FaGlobeAmericas,
   FaUsers,
-  FaEnvelope,
-  FaGlobe
+  FaEnvelope
 } from 'react-icons/fa';
 
 // Animation variants
@@ -197,28 +196,6 @@ const collaborationOpportunitiesContent = {
         "Educate and Share: Spread awareness about the environmental and economic benefits of waste plastic roads.",
       ],
     },
-  ],
-};
-
-const collaborationBenefits = {
-  title: "Benefits of Collaboration",
-  description: "Collaborating with CMR Bitplast provides mutual benefits and drives global change:",
-  points: [
-    "Environmental Impact: Reduce plastic pollution, conserve resources, and lower carbon emissions.",
-    "Sustainable Infrastructure: Build durable roads that last longer and require less maintenance.",
-    "Economic Growth: Lower costs and create opportunities for businesses in the waste management and construction sectors",
-    "Community Development: Improve road connectivity in underserved regions while reducing environmental hazards.",
-    "Innovation and Leadership: Be part of a revolutionary technology that sets new standards for sustainable infrastructure.",
-  ],
-};
-
-const ourCommitment = {
-  title: "Looking Forward: Building a Sustainable Future Together",
-  description: "The success of CMR Bitplast wet process technology marks the beginning of a global shift toward greener infrastructure. As we look ahead, we envision:",
-  points: [
-    "Broader Adoption: Scaling the technology across regions, nations, and continents.",
-    "Enhanced Innovation: Continuous improvement in technology to address evolving infrastructure demands.",
-    "Global Collaboration: Partnering with stakeholders to create a world where roads are built sustainably and responsibly.",
   ],
 };
 
