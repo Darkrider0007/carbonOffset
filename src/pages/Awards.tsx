@@ -98,7 +98,7 @@ function Awards() {
           </section> */}
 
           <AwardsProgram />
-          <section className="bg-[#5B5B5B] p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
+          <section className="bg-[#6e6e6e39] p-4 md:p-8 lg:p-12 text-gray-700 space-y-4 md:space-y-6">
             <BarbaraThieleAwards />
           </section>
         </main>

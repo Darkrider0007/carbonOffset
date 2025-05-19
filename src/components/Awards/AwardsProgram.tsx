@@ -3,7 +3,7 @@ import { Award, Mail, FileText, Users, Star, BookOpen, Camera, FlaskConical, Fil
 import { FaChild } from "react-icons/fa";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import React from "react";
+import React, { useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 const AwardsProgram = () => {
@@ -56,7 +56,34 @@ const AwardsProgram = () => {
 
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
-  )
+  );
+
+  const [api, setApi] = React.useState<any>();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    api.on("select", () => {
+      setCurrentSlide(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const goToSlide = (index: number) => {
+    if (api) {
+      api.scrollTo(index);
+      setCurrentSlide(index);
+    }
+  };
+
+  const tabs = [
+    { name: "About", index: 0 },
+    { name: "Nomination Process", index: 1 },
+    { name: "Categories", index: 2 },
+    { name: "Selection", index: 3 }
+  ];
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-12">
@@ -74,12 +101,33 @@ const AwardsProgram = () => {
         </p>
       </motion.div>
 
+      {/* Tab Navigation */}
+      <div className="flex justify-center mb-8">
+        <div className="inline-flex rounded-lg bg-green-50 p-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.index}
+              onClick={() => goToSlide(tab.index)}
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                currentSlide === tab.index
+                  ? "bg-white shadow text-green-700"
+                  : "text-green-600 hover:bg-green-100"
+              }`}
+            >
+              {tab.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Main Carousel */}
       <Carousel
+        setApi={setApi}
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
-        className="w-full">
+        className="w-full"
+      >
         <CarouselContent>
           {/* Slide 1: About the Awards */}
           <CarouselItem>

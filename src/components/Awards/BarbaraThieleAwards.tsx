@@ -111,7 +111,7 @@ function BarbaraThieleAwards() {
               the "Birth of Humanity," and Nov 6 as the "Day of Forgiveness."
             </p>
 
-            <motion.div
+            {/* <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="pt-4"
@@ -125,7 +125,7 @@ function BarbaraThieleAwards() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>

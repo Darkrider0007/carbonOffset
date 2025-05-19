@@ -54,7 +54,7 @@ function Books() {
     {
       title: "Respect – Bring Our Compassion Together To Heal Mother Earth",
       description:
-        "This book redefines how we perceive matter, urging us to see all existence as a blend of consciousness, energy, and knowledge. Challenging the notion of resources as mere commodities, it advocates for respecting and conserving Earth’s elements as integral to our survival. By shifting our mindset to honor resources, we can preserve them for future generations. Through practical steps for individuals, communities, and businesses, this guide offers actionable solutions—from reducing consumption and adopting eco-friendly practices to reshaping our future in harmony with the planet. Together, we can leave Earth cleaner and greener than we found it.",
+        "This book redefines how we perceive matter, urging us to see all existence as a blend of consciousness, energy, and knowledge. Challenging the notion of resources as mere commodities, it advocates for respecting and conserving Earth's elements as integral to our survival. By shifting our mindset to honor resources, we can preserve them for future generations. Through practical steps for individuals, communities, and businesses, this guide offers actionable solutions—from reducing consumption and adopting eco-friendly practices to reshaping our future in harmony with the planet. Together, we can leave Earth cleaner and greener than we found it.",
       image:
         "https://1world1nation.org/wp-content/uploads/2024/02/Picture122.png",
       link: "#",
@@ -71,63 +71,92 @@ function Books() {
 
   return (
     <SmoothScroll>
-      <div>
+      <div className="bg-gray-50">
         <Navbar />
-        <div
-          style={{
-            backgroundImage: `url(${mainbg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "60vh",
-            width: "100%",
-          }}
-          className="flex items-center justify-center relative"
-        >
-          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
-            Products {">"} Books
-          </h1>
-
-          <div className="absolute inset-0 bg-black opacity-40"></div>
-          <img src={curve} className="absolute bottom-0 w-full" />
+        
+        {/* Hero Section */}
+        <div className="relative h-[60vh] w-full overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${mainbg})` }}
+          >
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+          </div>
+          
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+            <h1 className="text-white font-bold text-lg mt-20 text-center">
+              EXPLORE OUR COLLECTION OF THOUGHT-PROVOKING BOOKS
+            </h1>
+            <h1 className="text-white text-4xl md:text-6xl font-bold w-full md:w-1/2 text-center">
+              Products <span className="text-green-300">{'>'}</span> Books
+            </h1>
+          </div>
+          
+          <img 
+            src={curve} 
+            className="absolute bottom-0 w-full" 
+            alt="Curve divider" 
+          />
         </div>
 
-        <div className="container mx-auto my-10 px-6">
-          <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-10">
-            Our Books
-          </h2>
+        {/* Books Section */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-green-600">Books</span>
+            </h2>
+            <div className="w-20 h-1 bg-green-500 mx-auto"></div>
+          </div>
 
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {books.map((book, index) => (
-              <div
+              <div 
                 key={index}
-                className={`border-2 shadow-lg p-2 rounded-lg overflow-hidden flex flex-col sm:flex-row ${
-                  index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
-                } bg-white`}
+                className="group relative flex flex-col md:flex-row h-full bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
               >
-                <img
-                  src={book.image}
-                  alt={book.title}
-                  className="w-full sm:w-1/2 object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-                />
-                <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-between">
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                <div className="relative md:w-1/3 h-64 md:h-auto overflow-hidden">
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
+                
+                <div className="md:w-2/3 p-6 flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
                     <a
                       href={book.link}
-                      className="text-green-600 hover:text-green-800 transition-colors duration-200"
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:underline"
                     >
                       {book.title}
                     </a>
                   </h3>
-                  <p className="text-gray-700 text-sm sm:text-base mb-4 leading-relaxed">
-                    {book.description}
+                  
+                  <p className="text-gray-600 mb-4 flex-grow">
+                    {book.description.length > 200 
+                      ? `${book.description.substring(0, 200)}...`
+                      : book.description}
                   </p>
+                  
+                  <a
+                    href={book.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-green-600 hover:text-green-800 font-medium transition-colors"
+                  >
+                    View on Amazon
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Newsletter */}
         <Newsletter />

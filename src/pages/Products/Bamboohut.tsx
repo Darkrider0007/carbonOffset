@@ -3,6 +3,7 @@ import curve from "../../assets/home/curve.png";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
 import SmoothScroll from "../../components/SmoothScroll";
+import { FaLeaf } from "react-icons/fa";
 
 const bannerContent = {
   backgroundImage: "https://i.ibb.co/ZLGq4sX/Getty-Images-1441429474-cmp-1.png",
@@ -47,7 +48,7 @@ const sustainableDesignContent = {
 const collaborationOpportunitiesContent = {
   title: "Collaboration Opportunities: Together We Reach New Heights",
   description:
-    "Bamboo Hut thrives on collaboration. Whether you’re an individual, student, company, or organization, you can contribute to and benefit from this sustainable revolution.",
+    "Bamboo Hut thrives on collaboration. Whether you're an individual, student, company, or organization, you can contribute to and benefit from this sustainable revolution.",
   sections: [
     {
       title: "For Individuals and Families:",
@@ -118,9 +119,10 @@ const contactContent = {
 function Bamboohut() {
   return (
     <SmoothScroll>
-      <div>
+      <div className="bg-gray-50">
         <Navbar />
-        {/* Banner Section */}
+        
+        {/* Hero Banner */}
         <div
           style={{
             backgroundImage: `url('${bannerContent.backgroundImage}')`,
@@ -131,126 +133,163 @@ function Bamboohut() {
           }}
           className="flex items-center justify-center relative"
         >
-          <h1 className="text-3xl z-20 md:text-5xl font-bold text-white">
+          <h1 className="text-4xl z-20 md:text-6xl font-bold text-white">
             {bannerContent.title}
           </h1>
           <div className="absolute inset-0 bg-black opacity-40"></div>
-          <img src={curve} className="absolute bottom-0 w-full" />
+          <img src={curve} className="absolute bottom-0 w-full" alt="curve" />
         </div>
 
-        {/* Main Content Section */}
-        <div className="p-8 md:p-16 w-full mx-auto text-gray-800">
+        {/* Main Content */}
+        <div className="container mx-auto px-4 md:px-20 lg:px-40 py-16">
           {/* Introduction */}
-          <section className="mb-12">
-            <h2 className="text-5xl font-semibold text-Kelly_Green mb-20">
-              {introductionContent.title}
-            </h2>
-            <h3 className="text-4xl font-semibold">
-              {introductionContent.subtitle}
-            </h3>
-            <p className="text-2xl font-normal text-Slate_Gray mt-5">
-              {introductionContent.description}
-            </p>
+          <section className="mb-20">
+            <div className="flex flex-col md:flex-row gap-12 items-start">
+              <div className="md:w-1/2">
+                <div className="flex gap-2 items-center mb-4">
+                  <FaLeaf color="green" />{" "}
+                  <h1 className="uppercase font-bold text-sm text-green-600">
+                    Sustainable Living
+                  </h1>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                  {introductionContent.title}
+                </h2>
+              </div>
+              <div className="md:w-1/2">
+                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                  {introductionContent.subtitle}
+                </h3>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {introductionContent.description}
+                </p>
+              </div>
+            </div>
           </section>
 
           {/* Green Loyalty Program */}
-          <section className="mt-16">
-            <h3 className="text-4xl font-semibold">
+          <section className="my-20 bg-white rounded-xl shadow-lg p-8 md:p-12">
+            <h3 className="text-3xl font-bold text-green-600 mb-8">
               {greenLoyaltyProgramContent.title}
             </h3>
-            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+            <p className="text-lg text-gray-600 mb-8">
               {greenLoyaltyProgramContent.description}
             </p>
-            <ul className="list-disc ml-5 mt-5">
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
               {greenLoyaltyProgramContent.points.map((point, index) => (
-                <li key={index} className="text-2xl font-normal mt-5">
-                  {point}
-                </li>
+                <div key={index} className="bg-green-50 p-6 rounded-lg">
+                  <div className="text-green-600 text-2xl font-bold mb-2">{index + 1}.</div>
+                  <p className="text-gray-700">{point}</p>
+                </div>
               ))}
-            </ul>
-            <h4 className="text-3xl font-semibold mt-10">Benefits:</h4>
-            <ul className="list-disc ml-5 mt-5">
+            </div>
+            
+            <h4 className="text-2xl font-bold text-green-600 mb-6">Benefits:</h4>
+            <ul className="space-y-4">
               {greenLoyaltyProgramContent.benefits.map((benefit, index) => (
-                <li key={index} className="text-2xl font-normal mt-5">
-                  {benefit}
+                <li key={index} className="flex items-start">
+                  <span className="text-green-500 mr-3">✓</span>
+                  <span className="text-gray-700">{benefit}</span>
                 </li>
               ))}
             </ul>
           </section>
 
           {/* Sustainable Design */}
-          <section className="mt-16">
-            <h3 className="text-4xl font-semibold">
-              {sustainableDesignContent.title}
-            </h3>
-            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
-              {sustainableDesignContent.description}
-            </p>
-            <ul className="list-disc ml-5 mt-5">
-              {sustainableDesignContent.points.map((point, index) => (
-                <li key={index} className="text-2xl font-normal mt-5">
-                  {point}
-                </li>
-              ))}
-            </ul>
+          <section className="my-20">
+            <div className="flex flex-col md:flex-row gap-12">
+              <div className="md:w-1/2">
+                <h3 className="text-3xl font-bold text-green-600 mb-6">
+                  {sustainableDesignContent.title}
+                </h3>
+                <div className="w-16 h-1 bg-green-400 mb-6"></div>
+                <p className="text-lg text-gray-600">
+                  {sustainableDesignContent.description}
+                </p>
+              </div>
+              <div className="md:w-1/2">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {sustainableDesignContent.points.map((point, index) => (
+                    <div key={index} className="border-l-4 border-green-400 pl-4 py-2">
+                      <p className="text-gray-700">{point}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Collaboration Opportunities */}
-          <section className="mt-16">
-            <h3 className="text-4xl font-semibold">
+          <section className="my-20">
+            <h3 className="text-3xl font-bold text-green-600 mb-8 text-center">
               {collaborationOpportunitiesContent.title}
             </h3>
-            <div className="flex flex-wrap justify-between gap-6 mt-12">
-              {collaborationOpportunitiesContent.sections.map(
-                (section, index) => (
-                  <div
-                    key={index}
-                    className="bg-Mint_Green shadow-md rounded-lg p-6 w-full md:w-[49%] h-auto md:h-[500px]"
-                  >
-                    <h4 className="text-3xl font-semibold mb-4">
+            <p className="text-lg text-gray-600 mb-12 text-center">
+              {collaborationOpportunitiesContent.description}
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              {collaborationOpportunitiesContent.sections.map((section, index) => (
+                <div 
+                  key={index} 
+                  className={`rounded-xl overflow-hidden shadow-lg ${index % 2 === 0 ? 'bg-green-600 text-white' : 'bg-white'}`}
+                >
+                  <div className="p-8">
+                    <h4 className={`text-2xl font-bold mb-6 ${index % 2 === 0 ? 'text-white' : 'text-green-600'}`}>
                       {section.title}
                     </h4>
-                    <ul className="list-disc ml-5">
+                    <ul className="space-y-4">
                       {section.points.map((point, idx) => (
-                        <li key={idx} className="text-2xl font-normal mt-2">
-                          {point}
+                        <li key={idx} className="flex items-start">
+                          <span className={`mr-3 ${index % 2 === 0 ? 'text-green-300' : 'text-green-500'}`}>•</span>
+                          <span className={index % 2 === 0 ? 'text-green-50' : 'text-gray-700'}>{point}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                )
-              )}
+                </div>
+              ))}
             </div>
           </section>
 
           {/* Shared Vision */}
-          <section className="py-7  mt-10 px-7 border-2 border-gray-300 rounded-lg shadow-lg">
-            <h3 className="text-4xl font-semibold">
+          <section className="my-20 bg-green-600 rounded-xl p-8 md:p-12 text-white">
+            <h3 className="text-3xl font-bold mb-8">
               {sharedVisionContent.title}
             </h3>
-            <p className="text-2xl font-normal text-justify text-Slate_Gray mt-5">
+            <p className="text-lg mb-8">
               {sharedVisionContent.description}
             </p>
-            <ul className="list-disc ml-5 mt-5">
+            <ul className="space-y-6 mb-12">
               {sharedVisionContent.points.map((point, index) => (
-                <li key={index} className="text-2xl font-normal mt-5">
-                  {point}
+                <li key={index} className="flex items-start">
+                  <span className="text-green-200 text-xl mr-4">{index + 1}.</span>
+                  <span className="text-lg">{point}</span>
                 </li>
               ))}
             </ul>
 
             {/* Contact */}
-
-            <ul className="list-none mt-10">
-              {contactContent.contactInfo.map((info, index) => (
-                <li key={index} className="text-2xl font-normal">
-                  {info.icon} {info.label}{" "}
-                  <a href={info.link} target="_blank" rel="noopener noreferrer">
-                    {info.value}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 max-w-2xl">
+              <h4 className="text-2xl font-bold mb-6">Get in Touch</h4>
+              <ul className="space-y-4">
+                {contactContent.contactInfo.map((info, index) => (
+                  <li key={index} className="flex items-center">
+                    <span className="text-2xl mr-4">{info.icon}</span>
+                    <span className="mr-2 font-medium">{info.label}</span>
+                    <a 
+                      href={info.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-green-200 hover:underline"
+                    >
+                      {info.value}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
         </div>
 
