@@ -276,7 +276,7 @@ function Cmrbitplast() {
           }}
           className="flex items-center justify-center relative overflow-hidden"
         >
-          <motion.h1 
+          <motion.h1
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -287,17 +287,17 @@ function Cmrbitplast() {
 
           <div className="absolute inset-0 bg-black opacity-40 z-10"></div>
 
-          <motion.img 
+          <motion.img
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            src={curve} 
-            className="absolute bottom-0 w-full z-20" 
+            src={curve}
+            className="absolute bottom-0 w-full z-20"
           />
         </motion.div>
 
         {/* Stats Bar */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -307,8 +307,8 @@ function Cmrbitplast() {
           <div className="container mx-auto px-6 ">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   variants={itemVariants}
                   className="text-center text-white"
                 >
@@ -326,7 +326,7 @@ function Cmrbitplast() {
         {/* Main Content */}
         <div className="container mx-auto px-6 py-16">
           {/* Introduction */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -346,7 +346,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* Innovation Section with Tabs */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -366,7 +366,7 @@ function Cmrbitplast() {
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                   {innovationForGreenerTomorrow.describe}
                 </p>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="bg-green-50 p-6 rounded-lg border-l-4 border-green-400"
                 >
@@ -390,7 +390,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* Accreditation Section */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -409,8 +409,8 @@ function Cmrbitplast() {
 
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 {accreditationAndCertification.points.map((point, index) => (
-                  <motion.div 
-                    key={index} 
+                  <motion.div
+                    key={index}
                     initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -427,7 +427,7 @@ function Cmrbitplast() {
                 ))}
               </div>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -439,60 +439,108 @@ function Cmrbitplast() {
               </motion.div>
             </div>
           </motion.section>
-
-          {/* Environmental Impact with Slider */}
-          <motion.section 
+          
+          {/* Environmental Impact with Interactive Cards */}
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
             className="mb-24"
           >
-            <div className="flex items-center mb-10">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaRecycle className="text-green-600 text-2xl" />
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900">
+            <div className="text-center mb-16">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-4xl font-bold text-gray-900 mb-4"
+              >
                 {EnvironmentalImpactandSustainability.title}
-              </h3>
+              </motion.h2>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="w-24 h-1 bg-green-500 mx-auto mb-6"
+              />
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-xl text-gray-600 max-w-3xl mx-auto"
+              >
+                {EnvironmentalImpactandSustainability.description}
+              </motion.p>
             </div>
 
-            <div className="grid md:grid-cols-1 gap-12 items-center">
-              <div>
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  {EnvironmentalImpactandSustainability.description}
-                </p>
-
-                <Swiper
-                  modules={[Pagination, Autoplay]}
-                  spaceBetween={30}
-                  slidesPerView={1}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 5000 }}
-                  className="h-64"
+            <div className="grid md:grid-cols-3 gap-8">
+              {EnvironmentalImpactandSustainability.points.map((point, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg h-96"
                 >
-                  {EnvironmentalImpactandSustainability.points.map((point, index) => (
-                    <SwiperSlide key={index}>
-                      <motion.div 
-                        whileHover={{ y: -5 }}
-                        className="bg-white p-6 rounded-xl shadow-md h-full flex flex-col justify-center"
-                      >
-                        <div className="text-green-500 text-4xl mb-4">
-                          {index === 0 && <FaRecycle />}
-                          {index === 1 && <FaLeaf />}
-                          {index === 2 && <FaGlobeAmericas />}
-                        </div>
-                        <p className="text-lg text-gray-600">{point}</p>
-                      </motion.div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+                  {/* Background Image with overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-700/90 to-green-900/90 z-10"></div>
+                  <div className="absolute inset-0 bg-gray-900 opacity-30 z-0">
+                    <img
+                      src={[
+                        "https://images.unsplash.com/photo-1610355977372-c5d864a0a5c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                      ][index]}
+                      alt=""
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative z-20 h-full flex flex-col justify-end p-8 text-white">
+                    <div className="mb-4 text-green-300 text-4xl">
+                      {index === 0 && <FaRecycle />}
+                      {index === 1 && <FaLeaf />}
+                      {index === 2 && <FaGlobeAmericas />}
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-3">
+                      {point.split(':')[0]}
+                    </h3>
+                    <p className="text-white/90 mb-6">
+                      {point.split(':')[1]}
+                    </p>
+
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "100%" }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + index * 0.1, duration: 0.8 }}
+                      className="h-1 bg-green-400 origin-left"
+                    />
+                  </div>
+                </motion.div>
+              ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="mt-16 bg-green-50 p-8 rounded-xl max-w-4xl mx-auto text-center"
+            >
+              <p className="text-xl text-gray-700">
+                {EnvironmentalImpactandSustainability.summary}
+              </p>
+            </motion.div>
           </motion.section>
 
           {/* Implementation Achievements */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -514,8 +562,8 @@ function Cmrbitplast() {
 
             <div className="grid md:grid-cols-3 gap-6">
               {implementationAndAchievements.points.map((point, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   variants={itemVariants}
                   whileHover={{ y: -10 }}
                   className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -530,7 +578,7 @@ function Cmrbitplast() {
               ))}
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -544,7 +592,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* Superiority Section with Comparison Table */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -576,8 +624,8 @@ function Cmrbitplast() {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {SuperiorityOverTraditionalMethods.points.map((point, index) => (
-                      <motion.tr 
-                        key={index} 
+                      <motion.tr
+                        key={index}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -607,7 +655,7 @@ function Cmrbitplast() {
                 </table>
               </div>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -622,7 +670,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* Collaboration Opportunities */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -642,7 +690,7 @@ function Cmrbitplast() {
               {collaborationOpportunitiesContent.description}
             </p>
 
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.005 }}
               className="bg-white rounded-xl shadow-md overflow-hidden"
             >
@@ -661,7 +709,7 @@ function Cmrbitplast() {
                 ))}
               </div>
 
-              <motion.div 
+              <motion.div
                 key={activeTab}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -676,7 +724,7 @@ function Cmrbitplast() {
                 </h4>
                 <ul className="space-y-3">
                   {collaborationOpportunitiesContent.sections[activeTab].points.map((point, idx) => (
-                    <motion.li 
+                    <motion.li
                       key={idx}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -693,7 +741,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* Testimonials Slider */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -717,7 +765,7 @@ function Cmrbitplast() {
             >
               {testimonials.map((testimonial, index) => (
                 <SwiperSlide key={index}>
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.02 }}
                     className="bg-white/10 p-8 rounded-xl h-full backdrop-blur-sm"
                   >
@@ -732,7 +780,7 @@ function Cmrbitplast() {
           </motion.section>
 
           {/* CTA Section */}
-          <motion.section 
+          <motion.section
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -749,8 +797,8 @@ function Cmrbitplast() {
                 </p>
                 <ul className="space-y-4 mb-8">
                   {sharedVisionContent.points.map((point, index) => (
-                    <motion.li 
-                      key={index} 
+                    <motion.li
+                      key={index}
                       variants={itemVariants}
                       className="flex items-start"
                     >
@@ -768,8 +816,8 @@ function Cmrbitplast() {
 
                 <ul className="space-y-4">
                   {contactContent.contactInfo.map((info, index) => (
-                    <motion.li 
-                      key={index} 
+                    <motion.li
+                      key={index}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
