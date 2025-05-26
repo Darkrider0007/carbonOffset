@@ -3,7 +3,7 @@ import curve from "../../assets/home/curve.png";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
 import SmoothScroll from "../../components/SmoothScroll";
-import { FaLeaf, FaGlobe, FaMoneyBillWave, FaHandHoldingHeart, FaEnvelope, FaGlobeAmericas,  FaChevronRight } from "react-icons/fa";
+import { FaLeaf, FaGlobe, FaMoneyBillWave, FaHandHoldingHeart, FaEnvelope, FaGlobeAmericas, FaChevronRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
@@ -56,7 +56,7 @@ function Uny() {
 
         {/* Hero Section with Animated Background */}
         <div className="relative h-[70vh] bg-gradient-to-r from-green-700 to-teal-800 overflow-hidden">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -66,7 +66,7 @@ function Uny() {
           </motion.div>
 
           <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
-            <motion.h1 
+            <motion.h1
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
@@ -74,7 +74,7 @@ function Uny() {
             >
               Welcome to <span className="text-green-300">UNY</span>
             </motion.h1>
-            
+
             <motion.p
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -84,31 +84,91 @@ function Uny() {
               The World's First Digital Green Currency
             </motion.p>
 
-      
+
           </div>
 
           <img src={curve} className="absolute bottom-0 w-full z-20" alt="curve" />
         </div>
 
-        {/* Climate Crisis Section */}
-        <div className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+        {/* Modern Climate Crisis Section */}
+        <div className="relative py-20 bg-gradient-to-br from-white to-green-50 overflow-hidden">
+          {/* Animated background elements */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 z-0"
+          >
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80')] bg-cover bg-center opacity-20" />
+          </motion.div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col md:flex-row gap-8 items-center"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             >
-              <div className="md:w-1/2">
-                <div className="flex items-center gap-4 mb-6">
-                  <FaGlobe className="text-green-600 text-4xl" />
-                  <h2 className="text-3xl md:text-4xl font-bold">Addressing the Global Climate Crisis</h2>
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-4 p-3 bg-green-100 rounded-full pr-6">
+                  <motion.div
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <FaGlobe className="text-green-600 text-3xl md:text-4xl" />
+                  </motion.div>
+                  <h2 className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-600">
+                    Addressing the Global Climate Crisis
+                  </h2>
                 </div>
-                <p className="text-lg text-gray-600 leading-relaxed">
+
+                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
                   Climate change is the defining challenge of our time. UNY is currently in its development phase as the world's first digital green currency designed to drive sustainability, economic growth, and environmental equity.
                 </p>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { value: "100%", label: "Sustainable" },
+                    { value: "24/7", label: "Global Impact" }
+                  ].map((stat, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ y: -5 }}
+                      className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all"
+                    >
+                      <p className="text-3xl font-bold text-green-600">{stat.value}</p>
+                      <p className="text-gray-500">{stat.label}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
+
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="relative"
+              >
+                <div className="relative aspect-[4/3] bg-gradient-to-tr from-green-100 to-teal-100 rounded-2xl overflow-hidden shadow-lg">
+                  <img
+                    src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    alt="Climate action"
+                    className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-green-800/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <p className="text-sm font-medium">UNY Initiative</p>
+                    <h3 className="text-xl font-bold mt-1">Building a Greener Future</h3>
+                  </div>
+                </div>
+
+                {/* Decorative elements */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-green-200/50 blur-xl" />
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-full bg-teal-200/50 blur-xl" />
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -116,7 +176,7 @@ function Uny() {
         {/* What is UNY Section */}
         <div className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -192,7 +252,7 @@ function Uny() {
         {/* Cards Section */}
         <div className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -247,7 +307,7 @@ function Uny() {
         {/* Video Section */}
         <div className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -272,7 +332,7 @@ function Uny() {
         {/* Contact Section */}
         <div className="py-16 bg-gradient-to-r from-green-700 to-teal-800 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
